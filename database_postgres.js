@@ -38,10 +38,10 @@ export class dataBasePostgresRevenues {
 
   async create_revenue(revenue) {
     
-    const users = await sql`INSERT INTO revenues (member, type, payment, reference_mounth, date, user_id) VALUES (${revenue.member}, ${revenue.type}, ${revenue.payment}, ${revenue.reference_mounth}, ${revenue.date}, ${revenue.user_id}) RETURNING *`
-    return users
+    const revenues = await sql`INSERT INTO revenues (member, type, payment, reference_mounth, date, user_id) VALUES (${revenue.member}, ${revenue.type}, ${revenue.payment}, ${revenue.reference_mounth}, ${revenue.date}, ${revenue.user_id}) RETURNING *`
+    return revenues
   }
-  async list_user(search) {
+  async list_revenues(search) {
     let revenues
     if (search) {
        revenues = await sql`SELECT * FROM revenues WHERE member ILIKE ${'%' + search + '%'  }`
@@ -49,17 +49,44 @@ export class dataBasePostgresRevenues {
       revenues = await sql`SELECT * FROM revenues`
     }
 
-    return users
+    return revenues
 
   }
 
-  async edit_user(revenueID, revenue) {
+  async edit_revenues(revenueID, revenue) {
     const { member, type, payment, reference_mounth, date, user_id } = revenue
 
-    await sql`UPDATE revenues SET  member = ${member}, type = ${type}, payment = ${payment}, reference_mounth = ${reference_mounth}, date = ${date}, user_is = ${user_id} WHERE id = ${revenueID}`
+    await sql`UPDATE revenues SET  member = ${member}, type = ${type}, payment = ${payment}, reference_mounth = ${reference_mounth}, date = ${date}, user_id = ${user_id} WHERE id = ${revenueID}`
   }
 
-  async delete_user(revenueID) {
+  async delete_revenues(revenueID) {
     await sql`DELETE FROM revenues WHERE id = ${revenueID}`
+  }
+}
+
+
+//Exprenses
+export class dataBasePostgresExpenses {
+
+  async create_expense(expense) { 
+    const expenses = await sql`INSERT INTO expenses (title, category, payment, reference_mounth, date, beneficiary, user_id) VALUES (${expense.title}, ${expense.category}, ${expense.payment}, ${expense.reference_mounth}, ${expense.date}, ${expense.beneficiary}, ${expense.user_id}) RETURNING *`
+    return users
+  }
+  async list_expenses(search) {
+    let expenses
+    if (search) {
+       expenses = await sql`SELECT * FROM expenses WHERE title ILIKE ${'%' + search + '%'  }`
+    } else {
+      expenses = await sql`SELECT * FROM expenses`
+    }
+    return expenses
+
+  }
+  async edit_expenses(expenseID, expense) {
+    const { title, category, payment, reference_mounth, date, beneficiary, user_id } = expense
+    await sql`UPDATE expenses SET  title = ${title}, catefory = ${category}, payment = ${payment}, reference_mounth = ${reference_mounth}, date = ${date}, beneficiary = ${beneficiary}, user_id = ${user_is} WHERE id = ${expenseID}  ` 
+  }
+  async delete_expenses(expenseID) {
+    await sql`DELETE DROM expenses WHERE ID = ${expenseID}`
   }
 }

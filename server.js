@@ -6,6 +6,7 @@ const server = fastify()
 const database_users = new dataBasePostgresUsers()
 const database_revenues = new dataBasePostgresRevenues()
 
+//USERS
 server.post('/users', async (request, reply) => {
   const { name, email, password } = request.body
   await database_users.create_user({ 
@@ -46,6 +47,7 @@ server.delete('/users/:id', async (request, reply) => {
   return reply.status(204).send()
 })
 
+//REVENUES
 server.post('/revenues', async (request, reply) => {
   const { member, type, payment, reference_mounth, date, user_id } = request.body
   await database_revenues.create_revenue({
@@ -53,11 +55,36 @@ server.post('/revenues', async (request, reply) => {
     type,
     payment,
     reference_mounth,
-    date,
+    date: new Date(date),
     user_id
    })
   reply.status(201).send()
   console.log("Deu bom")
+})
+server.get('/revenues', async (request, reply) => {
+  const search = request.query.search
+  const revenues = await database_revenues.list_revenues(search)
+  return reply.status(200).send(revenues)
+})
+
+server.put('/revenues/:id', async (request, reply) => {
+  const revenuesID = request.params.id
+  const { member, type, payment, reference_mounth, date, user_id} = request.body
+  await database_revenues.edit_revenues(revenuesID, {
+    member,
+    type,
+    payment,
+    reference_mounth,
+    date,
+    user_id
+
+  })
+  return reply.status(204).send()
+})
+server.delete('/revenues/:id', async (request, reply) => {
+  const revenuesID = request.params.id
+  await database_revenues.delete_revenues(revenuesID)
+  return reply.status(204).send()
 })
 
 server.listen(
