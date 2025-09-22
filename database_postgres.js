@@ -84,9 +84,33 @@ export class dataBasePostgresExpenses {
   }
   async edit_expenses(expenseID, expense) {
     const { title, category, payment, reference_mounth, date, beneficiary, user_id } = expense
-    await sql`UPDATE expenses SET  title = ${title}, catefory = ${category}, payment = ${payment}, reference_mounth = ${reference_mounth}, date = ${date}, beneficiary = ${beneficiary}, user_id = ${user_is} WHERE id = ${expenseID}  ` 
+    await sql`UPDATE expenses SET  title = ${title}, catefory = ${category}, payment = ${payment}, reference_mounth = ${reference_mounth}, date = ${date}, beneficiary = ${beneficiary}, user_id = ${user_id} WHERE id = ${expenseID}  ` 
   }
   async delete_expenses(expenseID) {
     await sql`DELETE DROM expenses WHERE ID = ${expenseID}`
+  }
+}
+
+class dataBasePostgresMembers {
+
+  async create_member(member) {
+    const members = await sql`INSERT INTO members (name, user_id) VALUES (${member.name}, ${member.user_id}) RETURNING *` 
+    return members
+  } 
+  async list_member(search) {
+    let members
+    if (search){
+      members = await sql `SELECT * FROM members WHERE name ILIKE ${'%'+ search + '%'}`
+    } else {
+      members = await sql`SELECT * FROM members`
+    }
+    return members
+  }
+  async edit_member(memberID, member) {
+    const { name, user_id } = member
+    await sql`UPDATE members SET name = ${name}, user_id = ${user_id} WHERE id = ${memberID}`
+  }
+  async delete_member(memberID) {
+    await sql`DELETE FROM members WHERE id = ${memberID}`
   }
 }
