@@ -1,7 +1,12 @@
 import { fastify } from 'fastify'
 import {  dataBasePostgresUsers, dataBasePostgresRevenues, dataBasePostgresExpenses, dataBasePostgresMembers } from './database_postgres.js'
+import cors from '@fastify/cors'
 
 const server = fastify()
+const fastify = require('fastify')({ logger: true });
+fastify.register(require('@fastify/cors'), {
+  origin: '*'
+});
 
 const database_users = new dataBasePostgresUsers()
 const database_revenues = new dataBasePostgresRevenues()
@@ -51,10 +56,11 @@ server.delete('/users/:id', async (request, reply) => {
 
 //REVENUES
 server.post('/revenues', async (request, reply) => {
-  const { member, type, payment, reference_mounth, date, user_id } = request.body
+  const { member, type, value, payment, reference_mounth, date, user_id } = request.body
   await database_revenues.create_revenue({
     member,
     type,
+    value,
     payment,
     reference_mounth,
     date: new Date(date),

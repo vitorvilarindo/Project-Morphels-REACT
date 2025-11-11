@@ -38,7 +38,7 @@ export class dataBasePostgresRevenues {
 
   async create_revenue(revenue) {
     
-    const revenues = await sql`INSERT INTO revenues (member, type, payment, reference_mounth, date, user_id) VALUES (${revenue.member}, ${revenue.type}, ${revenue.payment}, ${revenue.reference_mounth}, ${revenue.date}, ${revenue.user_id}) RETURNING *`
+    const revenues = await sql`INSERT INTO revenues (member, type, value, payment, reference_mounth, date, user_id) VALUES (${revenue.member}, ${revenue.type}, ${revenue.value}, ${revenue.payment}, ${revenue.reference_mounth}, ${revenue.date}, ${revenue.user_id}) RETURNING *`
     return revenues
   }
   async list_revenues(search) {
@@ -54,9 +54,9 @@ export class dataBasePostgresRevenues {
   }
 
   async edit_revenues(revenueID, revenue) {
-    const { member, type, payment, reference_mounth, date, user_id } = revenue
+    const { member, type, value, payment, reference_mounth, date, user_id } = revenue
 
-    await sql`UPDATE revenues SET  member = ${member}, type = ${type}, payment = ${payment}, reference_mounth = ${reference_mounth}, date = ${date}, user_id = ${user_id} WHERE id = ${revenueID}`
+    await sql`UPDATE revenues SET  member = ${member}, type = ${type}, value = ${value}, payment = ${payment}, reference_mounth = ${reference_mounth}, date = ${date}, user_id = ${user_id} WHERE id = ${revenueID}`
   }
 
   async delete_revenues(revenueID) {
@@ -91,7 +91,7 @@ export class dataBasePostgresExpenses {
   }
 }
 
-class dataBasePostgresMembers {
+export class dataBasePostgresMembers {
 
   async create_member(member) {
     const members = await sql`INSERT INTO members (name, user_id) VALUES (${member.name}, ${member.user_id}) RETURNING *` 

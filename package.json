@@ -21,7 +21,9 @@
   "homepage": "https://github.com/vitorvilarindo/Project-Morphels-REACT#readme",
   "dependencies": {
     "@neondatabase/serverless": "^1.0.1",
+    "cors": "^2.8.5",
     "fastify": "^5.5.0",
+    "fastify-cors": "^6.0.3",
     "neon": "^2.0.0",
     "postgres": "^3.4.7"
   },
