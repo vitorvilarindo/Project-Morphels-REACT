@@ -61,6 +61,7 @@ export class dataBasePostgresRevenues {
 
   async delete_revenues(revenueID) {
     await sql`DELETE FROM revenues WHERE id = ${revenueID}`
+    
   }
 }
 

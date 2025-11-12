@@ -3,11 +3,10 @@ import {  dataBasePostgresUsers, dataBasePostgresRevenues, dataBasePostgresExpen
 import cors from '@fastify/cors'
 
 const server = fastify()
-const fastify = require('fastify')({ logger: true });
-fastify.register(require('@fastify/cors'), {
-  origin: '*'
-});
-
+server.register(cors,{
+  origin: '*',
+  methods: ['GET','PUT','POST','DELETE']
+})
 const database_users = new dataBasePostgresUsers()
 const database_revenues = new dataBasePostgresRevenues()
 const database_expenses = new dataBasePostgresExpenses()
@@ -77,10 +76,11 @@ server.get('/revenues', async (request, reply) => {
 
 server.put('/revenues/:id', async (request, reply) => {
   const revenuesID = request.params.id
-  const { member, type, payment, reference_mounth, date, user_id} = request.body
+  const { member, type, value, payment, reference_mounth, date, user_id} = request.body
   await database_revenues.edit_revenues(revenuesID, {
     member,
     type,
+    value,
     payment,
     reference_mounth,
     date,
