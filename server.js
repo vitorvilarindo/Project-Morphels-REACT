@@ -55,15 +55,15 @@ server.delete('/users/:id', async (request, reply) => {
 
 //REVENUES
 server.post('/revenues', async (request, reply) => {
-  const { member, type, value, payment, reference_mounth, date, user_id } = request.body
+  const { member, type, value, payment, date } = request.body
   await database_revenues.create_revenue({
     member,
     type,
     value,
     payment,
-    reference_mounth,
+    reference_mounth: "NOVEMBER",
     date: new Date(date),
-    user_id
+    user_id: "422a0acd-0210-4723-9622-c2b554ee8d60"
    })
   reply.status(201).send()
   console.log("Deu bom")
