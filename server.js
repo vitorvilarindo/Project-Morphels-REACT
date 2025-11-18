@@ -62,7 +62,7 @@ server.post('/revenues', async (request, reply) => {
     value,
     payment,
     reference_mounth: "NOVEMBER",
-    date: new Date(date),
+    date,
     user_id: "422a0acd-0210-4723-9622-c2b554ee8d60"
    })
   reply.status(201).send()
@@ -76,15 +76,15 @@ server.get('/revenues', async (request, reply) => {
 
 server.put('/revenues/:id', async (request, reply) => {
   const revenuesID = request.params.id
-  const { member, type, value, payment, reference_mounth, date, user_id} = request.body
+  const { member, type, value, payment, date} = request.body
   await database_revenues.edit_revenues(revenuesID, {
     member,
     type,
     value,
     payment,
-    reference_mounth,
+    reference_mounth: "NOVEMBER",
     date,
-    user_id
+    user_id: "422a0acd-0210-4723-9622-c2b554ee8d60"
 
   })
   return reply.status(204).send()
