@@ -70,8 +70,8 @@ export class dataBasePostgresRevenues {
 export class dataBasePostgresExpenses {
 
   async create_expense(expense) { 
-    const expenses = await sql`INSERT INTO expenses (title, category, payment, reference_mounth, date, beneficiary, user_id) VALUES (${expense.title}, ${expense.category}, ${expense.payment}, ${expense.reference_mounth}, ${expense.date}, ${expense.beneficiary}, ${expense.user_id}) RETURNING *`
-    return users
+    const expenses = await sql`INSERT INTO expenses (title, category, value, payment, reference_mounth, date, beneficiary, user_id) VALUES (${expense.title}, ${expense.category}, ${expense.value}, ${expense.payment}, ${expense.reference_mounth}, ${expense.date}, ${expense.beneficiary}, ${expense.user_id}) RETURNING *`
+    return expenses
   }
   async list_expenses(search) {
     let expenses

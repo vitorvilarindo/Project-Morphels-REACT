@@ -97,26 +97,23 @@ server.delete('/revenues/:id', async (request, reply) => {
 
 //EXPENSES
 server.post('/expenses', async (request, reply) => {
-  const { title, category, payment, reference_mounth, date, beneficiary, user_id } = request.body
+  const { title, category, value, payment, date, beneficiary } = request.body
   await database_expenses.create_expense({
     title,
     category,
+    value,
     payment,
-    reference_mounth,
-    date: new Date(date),
+    reference_mounth: "NOVEMBER",
+    date,
     beneficiary,
-    user_id
+    user_id: "422a0acd-0210-4723-9622-c2b554ee8d60"
   })
   reply.status(201).send()
   console.log("Deu bom")
 })
 server.get('/expenses', async (request, reply) => {
   const search = request.query.search
-  if (search) {
-    const expenses = await database_expenses.list_expenses(search)
-  } else {
-    const expenses = await database_expenses.list_expenses()
-  }
+  const expenses = await database_expenses.list_expenses(search)
   return reply.status(200).send(expenses)
 })
 server.put('/expenses/:id',async (request,reply) => {
