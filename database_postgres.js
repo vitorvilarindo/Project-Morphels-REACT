@@ -84,8 +84,9 @@ export class dataBasePostgresExpenses {
 
   }
   async edit_expenses(expenseID, expense) {
-    const { title, category, payment, reference_mounth, date, beneficiary, user_id } = expense
-    await sql`UPDATE expenses SET  title = ${title}, catefory = ${category}, payment = ${payment}, reference_mounth = ${reference_mounth}, date = ${date}, beneficiary = ${beneficiary}, user_id = ${user_id} WHERE id = ${expenseID}  ` 
+    const { title, category, value, payment, reference_mounth, date, beneficiary, user_id } = expense
+
+    await sql`UPDATE expenses SET  title = ${title}, category = ${category}, value = ${value}, payment = ${payment}, reference_mounth = ${reference_mounth}, date = ${date}, beneficiary = ${beneficiary}, user_id = ${user_id} WHERE id = ${expenseID}  ` 
   }
   async delete_expenses(expenseID) {
     await sql`DELETE DROM expenses WHERE ID = ${expenseID}`

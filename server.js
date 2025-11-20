@@ -116,18 +116,19 @@ server.get('/expenses', async (request, reply) => {
   const expenses = await database_expenses.list_expenses(search)
   return reply.status(200).send(expenses)
 })
-server.put('/expenses/:id',async (request,reply) => {
+server.put('/expenses/:id', async (request,reply) => {
   const expenseID = request.params.id
-  const {title, category, payment, reference_mounth, date, beneficiary, user_id} = request.body
-await database_expenses.edit_expenses(expenseID, {
-  title,
-  category,
-  payment,
-  reference_mounth,
-  date,
-  beneficiary,
-  user_id
-})
+  const {title, category, value, payment, date, beneficiary} = request.body
+  await database_expenses.edit_expenses(expenseID, {
+    title,
+    category,
+    value,
+    payment,
+    reference_mounth: "NOVEMBER",
+    date,
+    beneficiary,
+    user_id: "422a0acd-0210-4723-9622-c2b554ee8d60"
+  })
 return reply.status(204).send()
 })
 server.delete('/expenses/:id', async (request, reply) => {
