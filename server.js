@@ -140,7 +140,7 @@ server.delete('/expenses/:id', async (request, reply) => {
 //MEMBERS
 server.post('/members', async (request, reply) => {
   const { name, user_id } = request.body
-  await database_members.create_member({
+  await database_members.create_members({
     name,
     user_id
   })
@@ -154,7 +154,10 @@ server.get('/members', async (request, reply) => {
   } else {
     const members = await database_members.list_members()
   }
+  if (memebers) {
   return reply.status(200).send(members)
+  }
+  return reply.status(200).send([])
 })
 server.put('/members/:id', async (request, reply) => {
   const memberID = request.params.id

@@ -95,11 +95,11 @@ export class dataBasePostgresExpenses {
 
 export class dataBasePostgresMembers {
 
-  async create_member(member) {
+  async create_members(member) {
     const members = await sql`INSERT INTO members (name, user_id) VALUES (${member.name}, ${member.user_id}) RETURNING *` 
     return members
   } 
-  async list_member(search) {
+  async list_members(search) {
     let members
     if (search){
       members = await sql `SELECT * FROM members WHERE name ILIKE ${'%'+ search + '%'}`
@@ -108,11 +108,11 @@ export class dataBasePostgresMembers {
     }
     return members
   }
-  async edit_member(memberID, member) {
+  async edit_members(memberID, member) {
     const { name, user_id } = member
     await sql`UPDATE members SET name = ${name}, user_id = ${user_id} WHERE id = ${memberID}`
   }
-  async delete_member(memberID) {
+  async delete_members(memberID) {
     await sql`DELETE FROM members WHERE id = ${memberID}`
   }
 }
