@@ -26,8 +26,6 @@ server.post('/users', async (request, reply) => {
 
 server.get('/users', async (request, reply) => {
   const search = request.query.search
-
-
   const videos = await database_users.list_user(search)
   return reply.status(200).send(videos)
 })
@@ -139,25 +137,22 @@ server.delete('/expenses/:id', async (request, reply) => {
 
 //MEMBERS
 server.post('/members', async (request, reply) => {
-  const { name, user_id } = request.body
+  const { name, cellphone, date_birth, pixkey, pixtype } = request.body
   await database_members.create_members({
     name,
-    user_id
+    cellphone,
+    date_birth,
+    pixkey,
+    pixtype,
+    user_id: "422a0acd-0210-4723-9622-c2b554ee8d60"
   })
   reply.status(201).send()
   console.log("Deu bom")
 })
 server.get('/members', async (request, reply) => {
   const search = request.query.search
-  if (search) {
-    const members = await database_members.list_members(search)
-  } else {
-    const members = await database_members.list_members()
-  }
-  if (memebers) {
+  const members = await database_members.list_members(search)
   return reply.status(200).send(members)
-  }
-  return reply.status(200).send([])
 })
 server.put('/members/:id', async (request, reply) => {
   const memberID = request.params.id

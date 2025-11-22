@@ -85,9 +85,15 @@ export class dataBasePostgresExpenses {
   }
   async edit_expenses(expenseID, expense) {
     const { title, category, value, payment, reference_mounth, date, beneficiary, user_id } = expense
-
-    await sql`UPDATE expenses SET  title = ${title}, category = ${category}, value = ${value}, payment = ${payment}, reference_mounth = ${reference_mounth}, date = ${date}, beneficiary = ${beneficiary}, user_id = ${user_id} WHERE id = ${expenseID}  ` 
+    try{
+      await sql`UPDATE expenses SET  title = ${title}, category = ${category}, value = ${value}, payment = ${payment}, reference_mounth = ${reference_mounth}, date = ${date}, beneficiary = ${beneficiary}, user_id = ${user_id} WHERE id = ${expenseID}` 
+    }
+    catch (error){
+      console.error("Error updating expense:", error);
+      throw error; // rethrow so caller can handle
+    }
   }
+  
   async delete_expenses(expenseID) {
     await sql`DELETE DROM expenses WHERE ID = ${expenseID}`
   }
@@ -96,15 +102,27 @@ export class dataBasePostgresExpenses {
 export class dataBasePostgresMembers {
 
   async create_members(member) {
-    const members = await sql`INSERT INTO members (name, user_id) VALUES (${member.name}, ${member.user_id}) RETURNING *` 
-    return members
+    try {
+    const members = await sql`
+      INSERT INTO members (name, cellphone, date_birth, pixkey, pixtype, user_id)
+      VALUES (${member.name}, ${member.cellphone}, ${member.date_birth}, ${member.pixkey}, ${member.pixtype}, ${member.user_id})
+      RETURNING *;
+    `;
+    return members; // usually returns an array of rows
+    } catch (error) {
+      console.error("Error inserting member:", error);
+      throw error; // rethrow so caller can handle
+    }
+
   } 
+
   async list_members(search) {
     let members
     if (search){
       members = await sql `SELECT * FROM members WHERE name ILIKE ${'%'+ search + '%'}`
     } else {
       members = await sql`SELECT * FROM members`
+      console.log(members)
     }
     return members
   }
