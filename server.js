@@ -182,6 +182,7 @@ server.listen(
 
 server.post('/companies', async (request, reply) => {
   const { CNPJ, company_name, fantasy_name, estate_registration, municipal_registration, open_date, situation, cep, street, number, complement, neighborhood, city, UF, cellphone, email, CNAE, activity_description, pixkey, pixtype } = request.body
+  console.log(request.body)
   await database_companies.create_company({
     CNPJ,
     company_name,
