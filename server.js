@@ -1,5 +1,5 @@
 import { fastify } from 'fastify'
-import {  dataBasePostgresUsers, dataBasePostgresRevenues, dataBasePostgresExpenses, dataBasePostgresMembers, dataBasePostgresCompanies } from './database_postgres.js'
+import dataBasePostgresRevenues, {  dataBasePostgresUsers, dataBasePostgresExpenses, dataBasePostgresMembers, dataBasePostgresCompanies } from './database_postgres.js'
 import cors from '@fastify/cors'
 
 const server = fastify()
@@ -67,11 +67,31 @@ server.post('/revenues', async (request, reply) => {
   reply.status(201).send()
   console.log("Deu bom")
 })
+
 server.get('/revenues', async (request, reply) => {
   const search = request.query.search
   const revenues = await database_revenues.list_revenues(search)
   return reply.status(200).send(revenues)
 })
+
+server.get('/revenues/filter', async (request, reply) => {
+    const type = request.query.type
+    let start_data = request.query.date1
+    let end_date = request.query.date2
+
+    console.log(start_data)
+    if(start_data === ""){
+        start_data = "1900-01-01"
+    }
+    if (end_date === ""){
+        end_date = `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`
+    }
+
+    const revenues = await database_revenues.filter_revenues(type, start_data, end_date)
+
+    return reply.status(200).send(revenues)
+})
+
 
 server.put('/revenues/:id', async (request, reply) => {
   const revenuesID = request.params.id

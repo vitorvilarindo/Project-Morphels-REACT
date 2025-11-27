@@ -34,7 +34,7 @@ export class dataBasePostgresUsers {
 
 }
 
-export class dataBasePostgresRevenues {
+class dataBasePostgresRevenues {
 
   async create_revenue(revenue) {
     
@@ -53,6 +53,22 @@ export class dataBasePostgresRevenues {
 
   }
 
+  async filter_revenues(type, start_date, end_date) {
+      try{
+          let revenues
+          revenues = await sql`SELECT *
+                       FROM revenues
+                       WHERE type ILIKE '%' || ${type} || '%'
+                         OR date BETWEEN ${start_date}::date AND ${end_date}::date;
+      `
+          return revenues
+      }
+      catch (error){
+          console.error("Error updating expense:", error);
+          throw error; // rethrow so caller can handle
+      }
+  }
+
   async edit_revenues(revenueID, revenue) {
     const { member, type, value, payment, reference_mounth, date, user_id } = revenue
 
@@ -64,6 +80,8 @@ export class dataBasePostgresRevenues {
     
   }
 }
+
+export default dataBasePostgresRevenues
 
 
 //Exprenses
