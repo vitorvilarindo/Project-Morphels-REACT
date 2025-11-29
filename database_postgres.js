@@ -1,5 +1,6 @@
 import { randomUUID } from "node:crypto";
-import { sql} from "./db.js"; 
+import { sql} from "./db.js";
+import * as sea from "node:sea";
 
 export class dataBasePostgresUsers {
 
@@ -57,10 +58,11 @@ class dataBasePostgresRevenues {
       try{
           let revenues
           revenues = await sql`SELECT *
-                       FROM revenues
-                       WHERE type ILIKE '%' || ${type} || '%'
-                         OR date BETWEEN ${start_date}::date AND ${end_date}::date;
-      `
+                               FROM revenues
+                               WHERE type ILIKE '%' || ${type} || '%'
+                                  OR date >= ${start_date}::date
+                                  OR date <= ${end_date}::date
+          `
           return revenues
       }
       catch (error){
@@ -76,7 +78,12 @@ class dataBasePostgresRevenues {
   }
 
   async delete_revenues(revenueID) {
-    await sql`DELETE FROM revenues WHERE id = ${revenueID}`
+      try {
+          await sql`DELETE FROM revenues WHERE id = ${revenueID}`
+      }catch (error){
+          console.error("Error updating revenue:", error);
+      }
+
     
   }
 }
@@ -94,13 +101,30 @@ export class dataBasePostgresExpenses {
   async list_expenses(search) {
     let expenses
     if (search) {
-       expenses = await sql`SELECT * FROM expenses WHERE title ILIKE ${'%' + search + '%'  }`
+       expenses = await sql`SELECT * FROM expenses WHERE title ILIKE ${'%' + search + '%'  } OR beneficiary ILIKE ILIKE ${'%' + search + '%'  }`
     } else {
       expenses = await sql`SELECT * FROM expenses`
     }
     return expenses
 
   }
+
+  async filter_expenses(type, start_date, end_date) {
+        try{
+            let revenues
+            revenues = await sql`SELECT *
+                       FROM expenses
+                       WHERE type ILIKE '%' || ${type} || '%'
+                         OR date BETWEEN ${start_date}::date AND ${end_date}::date;
+      `
+            return revenues
+        }
+        catch (error){
+            console.error("Error updating expense:", error);
+            throw error; // rethrow so caller can handle
+        }
+    }
+
   async edit_expenses(expenseID, expense) {
     const { title, category, value, payment, reference_mounth, date, beneficiary, user_id } = expense
     try{
@@ -209,17 +233,31 @@ export class dataBasePostgresCompanies {
 
   async list_companies(search) {
     let companies
-    try {if (search) {
-        companies = await sql`SELECT * FROM companies WHERE company_name ILIKE ${'%' + search + '%'  }`
-    } else {
-      companies = await sql`SELECT * FROM companies`
+    try {
+        if (search) {
+            companies = await sql`SELECT *
+                              FROM companies
+                              WHERE company_name ILIKE '%' || ${search} || '%'
+                                OR fantasy_name ILIKE '%' || ${search} || '%'
+                                OR cnpj ILIKE '%' || ${search} || '%'
+                                OR estate_registration '%' || ${search} || '%'
+                                OR municipal_registration '%' || ${search} || '%'
+                                OR cnae '%' || ${search} || '%'
+                                OR activity_description '%' || ${search} || '%'
+                                OR pixkey '%' || ${search} || '%' ;
+        `
+        } else {
+          companies = await sql`SELECT * FROM companies`
+        }
+        return companies
     }
-    return companies}
     catch (error) {
       console.error("Error listing companies:", error);
       throw error; // rethrow so caller can handle
     }
   }
+
+
   async edit_companies(companyID, company) {
     const { CNPJ, company_name, fantasy_name, estate_registration, municipal_registration, open_date, situation, cep, street, number, complement, neighborhood, city, UF, cellphone, email, CNAE, activity_description, pixkey, pixtype, user_id } = company
 

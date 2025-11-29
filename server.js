@@ -76,18 +76,20 @@ server.get('/revenues', async (request, reply) => {
 
 server.get('/revenues/filter', async (request, reply) => {
     const type = request.query.type
-    let start_data = request.query.date1
+    let start_date = request.query.date1
     let end_date = request.query.date2
 
-    console.log(start_data)
-    if(start_data === ""){
-        start_data = "1900-01-01"
+
+    if(start_date === ""){
+        start_date = "1900-01-01"
+        console.log(start_data)
     }
     if (end_date === ""){
-        end_date = `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`
+        end_date = `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()}`
+        console.log(end_date)
     }
 
-    const revenues = await database_revenues.filter_revenues(type, start_data, end_date)
+    const revenues = await database_revenues.filter_revenues(type, start_date, end_date)
 
     return reply.status(200).send(revenues)
 })
@@ -134,6 +136,24 @@ server.get('/expenses', async (request, reply) => {
   const search = request.query.search
   const expenses = await database_expenses.list_expenses(search)
   return reply.status(200).send(expenses)
+})
+
+server.get('/expences/filter', async (request, reply) => {
+    const type = request.query.type
+    let start_data = request.query.date1
+    let end_date = request.query.date2
+
+    console.log(start_data)
+    if(start_data === ""){
+        start_data = "1900-01-01"
+    }
+    if (end_date === ""){
+        end_date = `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`
+    }
+
+    const revenues = await database_expenses.filter_expenses(type, start_data, end_date)
+
+    return reply.status(200).send(revenues)
 })
 server.put('/expenses/:id', async (request,reply) => {
   const expenseID = request.params.id
