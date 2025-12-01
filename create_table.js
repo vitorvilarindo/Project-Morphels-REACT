@@ -31,7 +31,6 @@ import { sql } from './db.js'
 //   type              VARCHAR(50) NOT NULL,
 //   value             NUMERIC(12,2) NOT NULL,
 //   payment           VARCHAR(25) NOT NULL,
-//   reference_mounth  VARCHAR(15) NOT NULL,
 //   date              TIMESTAMP NOT NULL,
 //   user_id           UUID REFERENCES users(id)
 //   );
@@ -43,10 +42,9 @@ import { sql } from './db.js'
 // CREATE TABLE IF NOT EXISTS expenses (
 //   id                    UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 //   title                 VARCHAR(200) NOT NULL,
-//   category              VARCHAR(50) NOT NULL,
+//   type                  VARCHAR(50) NOT NULL,
 //   value                 NUMERIC(12,2) NOT NULL,
 //   payment               VARCHAR(25) NOT NULL,
-//   reference_mounth      VARCHAR(15) NOT NULL,
 //   date                  TIMESTAMP NOT NULL,
 //   beneficiary           VARCHAR(200) NOT NULL,
 //   user_id               UUID REFERENCES users(id)
@@ -55,19 +53,19 @@ import { sql } from './db.js'
 //   console.log('tabela criada com sucesso  ')
 // })
 
-sql`
-CREATE TABLE IF NOT EXISTS members (
-  id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  name        VARCHAR(200) NOT NULL,
-  cellphone  VARCHAR(20) NOT NULL,
-  date_birth  DATE NOT NULL,
-  pixkey      VARCHAR(100) NOT NULL,
-  pixtype     VARCHAR(20) NOT NULL,
-  user_id     UUID REFERENCES users(id)
-  );
-`.then(() => {
-  console.log('tabela criada com sucesso  ')
-})
+//sql`
+//CREATE TABLE IF NOT EXISTS members (
+//  id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+//  name        VARCHAR(200) NOT NULL,
+//  cellphone  VARCHAR(20) NOT NULL,
+//  date_birth  DATE NOT NULL,
+//  pixkey      VARCHAR(100) NOT NULL,
+//  pixtype     VARCHAR(20) NOT NULL,
+//  user_id     UUID REFERENCES users(id)
+//  );
+//`.then(() => {
+//  console.log('tabela criada com sucesso  ')
+//})
 
 // sql`
 // CREATE TABLE IF NOT EXISTS companies (
@@ -97,3 +95,7 @@ CREATE TABLE IF NOT EXISTS members (
 // `.then(() => {
 //   console.log('tabela criada com sucesso  ')
 // })
+
+// sql`
+//     ALTER TABLE users ADD COLUMN designation VARCHAR(50)
+// `.then(() => {console.log('tabela criada com sucesso  ')})

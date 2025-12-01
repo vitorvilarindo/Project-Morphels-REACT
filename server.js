@@ -1,5 +1,10 @@
-import { fastify } from 'fastify'
-import dataBasePostgresRevenues, {  dataBasePostgresUsers, dataBasePostgresExpenses, dataBasePostgresMembers, dataBasePostgresCompanies } from './database_postgres.js'
+import {fastify} from 'fastify'
+import dataBasePostgresRevenues, {
+    dataBasePostgresCompanies,
+    dataBasePostgresExpenses,
+    dataBasePostgresMembers,
+    dataBasePostgresUsers
+} from './database_postgres.js'
 import cors from '@fastify/cors'
 
 const server = fastify()
@@ -25,10 +30,17 @@ server.post('/users', async (request, reply) => {
   console.log("Deu bom")
 })
 
-server.get('/users', async (request, reply) => {
-  const search = request.query.search
-  const videos = await database_users.list_user(search)
-  return reply.status(200).send(videos)
+server.post('/users/login', async (request, reply) => {
+    try {
+        const {loginEmail, loginPassword}  = request.body
+        console.log(loginEmail)
+        const response = await database_users.login(loginEmail, loginPassword)
+        console.log(response)
+        return reply.status(200).send(response)
+    }catch (error) {
+        console.log(error)
+    }
+
 })
 
 server.put('/users/:id', async (request, reply) => {
@@ -75,18 +87,26 @@ server.get('/revenues', async (request, reply) => {
 })
 
 server.get('/revenues/filter', async (request, reply) => {
-    const type = request.query.type
+    let type = request.query.type
     let start_date = request.query.date1
     let end_date = request.query.date2
 
 
+    if (type === "All"){
+        type = ""
+    }
+
     if(start_date === ""){
-        start_date = "1900-01-01"
-        console.log(start_data)
+        const revenues_date = await database_revenues.list_revenues_date()
+        const timestamps = revenues_date.map(d => new Date(d.date).getTime());
+
+        start_date = new Date(Math.min(...timestamps));
     }
     if (end_date === ""){
-        end_date = `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()}`
-        console.log(end_date)
+        const revenues_date = await database_revenues.list_revenues_date()
+        const timestamps = revenues_date.map(d => new Date(d.date).getTime());
+
+        end_date = new Date(Math.max(...timestamps))
     }
 
     const revenues = await database_revenues.filter_revenues(type, start_date, end_date)
@@ -103,7 +123,6 @@ server.put('/revenues/:id', async (request, reply) => {
     type,
     value,
     payment,
-    reference_mounth: "NOVEMBER",
     date,
     user_id: "422a0acd-0210-4723-9622-c2b554ee8d60"
 
@@ -118,13 +137,12 @@ server.delete('/revenues/:id', async (request, reply) => {
 
 //EXPENSES
 server.post('/expenses', async (request, reply) => {
-  const { title, category, value, payment, date, beneficiary } = request.body
+  const { title, type, value, payment, date, beneficiary } = request.body
   await database_expenses.create_expense({
     title,
-    category,
+    type,
     value,
     payment,
-    reference_mounth: "NOVEMBER",
     date,
     beneficiary,
     user_id: "422a0acd-0210-4723-9622-c2b554ee8d60"
@@ -132,28 +150,39 @@ server.post('/expenses', async (request, reply) => {
   reply.status(201).send()
   console.log("Deu bom")
 })
+
 server.get('/expenses', async (request, reply) => {
   const search = request.query.search
   const expenses = await database_expenses.list_expenses(search)
   return reply.status(200).send(expenses)
 })
 
-server.get('/expences/filter', async (request, reply) => {
-    const type = request.query.type
-    let start_data = request.query.date1
+server.get('/expenses/filter', async (request, reply) => {
+    let type = request.query.type
+    let start_date = request.query.date1
     let end_date = request.query.date2
 
-    console.log(start_data)
-    if(start_data === ""){
-        start_data = "1900-01-01"
+
+    if (type === "All"){
+        type = ""
+    }
+
+    if(start_date === ""){
+        const expenses_date = await database_expenses.list_expenses_date()
+        const timestamps = expenses_date.map(d => new Date(d.date).getTime());
+
+        start_date = new Date(Math.min(...timestamps));
     }
     if (end_date === ""){
-        end_date = `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`
+        const expenses_date = await database_expenses.list_expenses_date()
+        const timestamps = expenses_date.map(d => new Date(d.date).getTime());
+
+        end_date = new Date(Math.max(...timestamps))
     }
 
-    const revenues = await database_expenses.filter_expenses(type, start_data, end_date)
+    const expenses = await database_expenses.filter_expenses(type, start_date, end_date)
 
-    return reply.status(200).send(revenues)
+    return reply.status(200).send(expenses)
 })
 server.put('/expenses/:id', async (request,reply) => {
   const expenseID = request.params.id
@@ -163,7 +192,6 @@ server.put('/expenses/:id', async (request,reply) => {
     category,
     value,
     payment,
-    reference_mounth: "NOVEMBER",
     date,
     beneficiary,
     user_id: "422a0acd-0210-4723-9622-c2b554ee8d60"
