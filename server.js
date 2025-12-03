@@ -1,4 +1,6 @@
 import {fastify} from 'fastify'
+import { hash } from "bcrypt"
+import {randomInt} from 'node:crypto'
 import dataBasePostgresRevenues, {
     dataBasePostgresCompanies,
     dataBasePostgresExpenses,
@@ -21,10 +23,15 @@ const database_companies = new dataBasePostgresCompanies()
 //USERS
 server.post('/users', async (request, reply) => {
   const { name, email, password } = request.body
-  await database_users.create_user({ 
-    name,
-    email,
-    password
+
+    const randomSalt = randomInt(10, 16)
+    const encryptedPassword = await hash(password, randomSalt)
+
+    console.log(encryptedPassword, randomSalt)
+  await database_users.create_user({
+      name,
+      email,
+      encryptedPassword
    })
   reply.status(201).send()
   console.log("Deu bom")

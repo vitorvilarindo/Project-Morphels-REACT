@@ -1,4 +1,4 @@
-import { randomUUID } from "node:crypto";
+import bcrypt, { compare } from "bcrypt"
 import { sql} from "./db.js";
 import * as sea from "node:sea";
 
@@ -6,7 +6,7 @@ export class dataBasePostgresUsers {
 
   async create_user(user) {
     
-    const users = await sql`INSERT INTO users (name, email, password) VALUES (${user.name}, ${user.email}, ${user.password}) RETURNING *`
+    const users = await sql`INSERT INTO users (name, email, password) VALUES (${user.name}, ${user.email}, ${user.encryptedPassword}) RETURNING *`
     return users
   }
     
@@ -21,12 +21,20 @@ export class dataBasePostgresUsers {
                   success: false,
                   route: "/",
               }
-          } else if (user[0].password === loginPassword) {
-              console.log(user[0].password === loginPassword)
+          }
+
+          const isValidPassword = await bcrypt.compare(loginPassword, user[0].password)
+
+          if (isValidPassword) {
+              console.log(user[0].password, loginPassword)
               return {
                   success: true,
                   route: "/main",
               }
+          }
+          return {
+              success: false,
+              route: "/",
           }
       }catch (error) {
         console.log(error)

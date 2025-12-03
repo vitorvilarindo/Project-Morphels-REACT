@@ -97,5 +97,5 @@ import { sql } from './db.js'
 // })
 
 // sql`
-//     ALTER TABLE users ADD COLUMN designation VARCHAR(50)
+//     ALTER TABLE users ALTER COLUMN password TYPE VARCHAR(200)
 // `.then(() => {console.log('tabela criada com sucesso  ')})

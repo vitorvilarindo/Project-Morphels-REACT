@@ -1,0 +1,22 @@
+####
+#POST http://localhost:3000/users
+#Content-Type: application/json
+#
+#{
+#  "name": "José",
+#  "email": "jose@gmail.com",
+#  "password": "jose123"
+#}
+
+###
+POST http://localhost:3000/users/login
+Content-Type: application/json
+
+{
+  "loginEmail": "jose@gmail.com",
+  "loginPassword": "jose12"
+}
+
+
+###
+DELETE http://localhost:3000/users/3004983e-6181-47ee-8aaf-a747e36d71f9
