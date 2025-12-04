@@ -1,13 +1,12 @@
-import bcrypt, { compare } from "bcrypt"
-import { sql} from "./db.js";
-import * as sea from "node:sea";
+import "dotenv/config";
+import bcrypt from "bcrypt"
+import {sql} from "./db.js";
 
 export class dataBasePostgresUsers {
 
   async create_user(user) {
-    
-    const users = await sql`INSERT INTO users (name, email, password) VALUES (${user.name}, ${user.email}, ${user.encryptedPassword}) RETURNING *`
-    return users
+
+  return await sql`INSERT INTO users (name, email, password) VALUES (${user.name}, ${user.email}, ${user.encryptedPassword}) RETURNING *`
   }
     
 
@@ -15,7 +14,6 @@ export class dataBasePostgresUsers {
     let user
       try{
           user = await sql`SELECT password FROM users WHERE email ILIKE ${'%' + loginEmail + '%'}`
-          console.log(user[0].password)
           if (user[0].password == null) {
               return {
                   success: false,
@@ -26,7 +24,6 @@ export class dataBasePostgresUsers {
           const isValidPassword = await bcrypt.compare(loginPassword, user[0].password)
 
           if (isValidPassword) {
-              console.log(user[0].password, loginPassword)
               return {
                   success: true,
                   route: "/main",
@@ -57,9 +54,8 @@ export class dataBasePostgresUsers {
 class dataBasePostgresRevenues {
 
   async create_revenue(revenue) {
-    
-    const revenues = await sql`INSERT INTO revenues (member, type, value, payment, date, user_id) VALUES (${revenue.member}, ${revenue.type}, ${revenue.value}, ${revenue.payment}, ${revenue.date}, ${revenue.user_id}) RETURNING *`
-    return revenues
+
+  return await sql`INSERT INTO revenues (member, type, value, payment, date, user_id) VALUES (${revenue.member}, ${revenue.type}, ${revenue.value}, ${revenue.payment}, ${revenue.date}, ${revenue.user_id}) RETURNING *`
   }
   async list_revenues(search) {
     let revenues
@@ -118,9 +114,9 @@ export default dataBasePostgresRevenues
 //Exprenses
 export class dataBasePostgresExpenses {
 
-  async create_expense(expense) { 
-    const expenses = await sql`INSERT INTO expenses (title, type, value, payment, date, beneficiary, user_id) VALUES (${expense.title}, ${expense.type}, ${expense.value}, ${expense.payment}, ${expense.date}, ${expense.beneficiary}, ${expense.user_id}) RETURNING *`
-    return expenses
+  async create_expense(expense) {
+
+    return await sql`INSERT INTO expenses (title, type, value, payment, date, beneficiary, user_id) VALUES (${expense.title}, ${expense.type}, ${expense.value}, ${expense.payment}, ${expense.date}, ${expense.beneficiary}, ${expense.user_id}) RETURNING *`
   }
   async list_expenses(search) {
     let expenses
@@ -175,12 +171,11 @@ export class dataBasePostgresMembers {
 
   async create_members(member) {
     try {
-    const members = await sql`
+        return await sql`
       INSERT INTO members (name, cellphone, date_birth, pixkey, pixtype, user_id)
       VALUES (${member.name}, ${member.cellphone}, ${member.date_birth}, ${member.pixkey}, ${member.pixtype}, ${member.user_id})
       RETURNING *;
-    `;
-    return members; // usually returns an array of rows
+    `; // usually returns an array of rows
     } catch (error) {
       console.error("Error inserting member:", error);
       throw error; // rethrow so caller can handle
@@ -208,7 +203,8 @@ export class dataBasePostgresMembers {
 
 export class dataBasePostgresCompanies {
   async create_company(company) {
-    try {const companies = await sql`INSERT INTO companies (
+      try {
+          return await sql`INSERT INTO companies (
     CNPJ, 
     company_name, 
     fantasy_name, 
@@ -251,7 +247,6 @@ export class dataBasePostgresCompanies {
     ${company.pixkey}, 
     ${company.pixtype}, 
     ${company.user_id}) RETURNING *`
-    return companies
   }
     catch (error) {
       console.error("Error inserting company:", error);

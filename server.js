@@ -1,4 +1,6 @@
-import {fastify} from 'fastify'
+import Fastify from 'fastify'
+import cookie from '@fastify/cookie'
+import jwt from '@fastify/jwt'
 import { hash } from "bcrypt"
 import {randomInt} from 'node:crypto'
 import dataBasePostgresRevenues, {
@@ -9,11 +11,20 @@ import dataBasePostgresRevenues, {
 } from './database_postgres.js'
 import cors from '@fastify/cors'
 
-const server = fastify()
+
+const server = Fastify({logger: true})
 server.register(cors,{
-  origin: '*',
-  methods: ['GET','PUT','POST','DELETE']
+    origin: 'http://localhost:5173',
+    methods: ['GET', 'PUT', 'POST', 'DELETE'],
+    credentials: true
 })
+
+server.register(jwt, {
+    secret: process.env.JWT_SECRET_KEY
+})
+
+server.register(cookie)
+
 const database_users = new dataBasePostgresUsers()
 const database_revenues = new dataBasePostgresRevenues()
 const database_expenses = new dataBasePostgresExpenses()
@@ -40,15 +51,46 @@ server.post('/users', async (request, reply) => {
 server.post('/users/login', async (request, reply) => {
     try {
         const {loginEmail, loginPassword}  = request.body
-        console.log(loginEmail)
         const response = await database_users.login(loginEmail, loginPassword)
-        console.log(response)
+
+        if (response.success === false) {
+            return reply.status(200).send(response)
+        }
+        const token = server.jwt.sign({ user: loginEmail },{expiresIn: '1h'})
+        console.log(token)
+
+        reply.setCookie('token', token, {
+                httpOnly: true,   // não acessível via JS (mais seguro)
+                secure: false,     // só em HTTPS (em produção)
+                sameSite: 'strict',
+                path: '/'
+            })
         return reply.status(200).send(response)
     }catch (error) {
         console.log(error)
     }
 
 })
+
+server.post('/users/profile', async (request, reply) => {
+    try {
+        const { token } = request.cookies
+        console.log("aqui esta " + token)
+
+        if (!token) {
+            return reply.status(401).send({ error: 'Token ausente' })
+        }
+
+        const decoded = await server.jwt.verify(token)
+
+        console.log("Deu bom" + decoded.user)
+
+        return reply.status(200).send({ user: decoded.user })
+    } catch (err) {
+        return reply.status(401).send({ error: 'Token inválido ou expirado' })
+    }
+})
+
 
 server.put('/users/:id', async (request, reply) => {
   const userID = request.params.id

@@ -20,12 +20,15 @@
   },
   "homepage": "https://github.com/vitorvilarindo/Project-Morphels-REACT#readme",
   "dependencies": {
+    "@fastify/cookie": "^11.0.2",
     "@fastify/cors": "^11.1.0",
+    "@fastify/jwt": "^10.0.0",
     "@neondatabase/serverless": "^1.0.1",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
-    "fastify": "^5.5.0",
+    "fastify": "^5.6.2",
     "fastify-cors": "^6.0.3",
+    "jsonwebtoken": "^9.0.3",
     "neon": "^2.0.0",
     "postgres": "^3.4.7"
   },
