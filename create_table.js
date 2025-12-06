@@ -99,3 +99,62 @@ import { sql } from './db.js'
 // sql`
 //     ALTER TABLE users ALTER COLUMN password TYPE VARCHAR(200)
 // `.then(() => {console.log('tabela criada com sucesso  ')})
+
+// Create table "churchs"
+// await sql`
+//     CREATE TABLE IF NOT EXISTS sectors (
+//         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+//         sector VARCHAR(50) NOT NULL,
+//         sectorial_cordenator VARCHAR(100) NOT NULL,
+//         vice_sectorial_cordenator VARCHAR(100) NOT NULL
+//     )
+// `;
+//
+// await sql`
+//     CREATE TABLE IF NOT EXISTS churchs (
+//         id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+//         name            VARCHAR(200) NOT NULL,
+//         sector          UUID REFERENCES sectors(id),
+//         shepherd        VARCHAR(100) NOT NULL,
+//         email           VARCHAR(200) NOT NULL,
+//         register_code   VARCHAR(200) NOT NULL,
+//         members_number  NUMERIC(12, 2) NOT NULL
+//     )
+// `;
+//
+// await sql`
+//     CREATE TABLE IF NOT EXISTS users_churchs (
+//         user_id   UUID REFERENCES users(id) ON DELETE CASCADE,
+//         church_id UUID REFERENCES churchs(id) ON DELETE CASCADE,
+//         PRIMARY KEY (user_id, church_id)
+//     )
+// `;
+//
+// // Alterações nas tabelas
+// await sql`ALTER TABLE members DROP COLUMN IF EXISTS user_id`;
+// await sql`ALTER TABLE companies DROP COLUMN IF EXISTS user_id`;
+// await sql`ALTER TABLE expenses DROP COLUMN IF EXISTS user_id`;
+// await sql`ALTER TABLE revenues DROP COLUMN IF EXISTS user_id`;
+
+await sql`
+    ALTER TABLE members
+        ADD COLUMN IF NOT EXISTS sector UUID REFERENCES sectors(id),
+        ADD COLUMN IF NOT EXISTS church UUID REFERENCES churchs(id)
+`;
+//
+// await sql`
+//     ALTER TABLE users
+//         ADD COLUMN IF NOT EXISTS sector UUID REFERENCES sectors(id)
+// `;
+
+// await sql`
+//     ALTER TABLE members
+//         DROP COLUMN IF EXISTS sector,
+//         DROP COLUMN IF EXISTS church_id
+// `;
+//
+// await sql`
+//     ALTER TABLE users
+//         DROP COLUMN IF EXISTS sector
+// `;
+//
