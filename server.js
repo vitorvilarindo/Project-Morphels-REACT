@@ -1,366 +1,43 @@
 import Fastify from 'fastify'
 import cookie from '@fastify/cookie'
 import jwt from '@fastify/jwt'
-import { hash } from "bcrypt"
-import {randomInt} from 'node:crypto'
-import dataBasePostgresRevenues, {
-    dataBasePostgresCompanies,
-    dataBasePostgresExpenses,
-    dataBasePostgresMembers,
-    dataBasePostgresUsers
-} from './database_postgres.js'
 import cors from '@fastify/cors'
 
+import usersRoutes from "./routes/usersRoutes.js";
+import revenuesRoutes from "./routes/revenuesRoutes.js";
+import expensesRoutes from "./routes/expensesRoutes.js";
+import membersRoutes from "./routes/membersRoutes.js";
+import companiesRoutes from "./routes/companiesRoutes.js";
 
-const server = Fastify({logger: true})
-server.register(cors,{
+const server = Fastify({ logger: true })
+
+// CORS primeiro
+server.register(cors, {
     origin: 'http://localhost:5173',
-    methods: ['GET', 'PUT', 'POST', 'DELETE'],
+    methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
     credentials: true
 })
 
-server.register(jwt, {
-    secret: process.env.JWT_SECRET_KEY
-})
-
+// JWT e cookies
+server.register(jwt, { secret: process.env.JWT_SECRET_KEY })
 server.register(cookie)
 
-const database_users = new dataBasePostgresUsers()
-const database_revenues = new dataBasePostgresRevenues()
-const database_expenses = new dataBasePostgresExpenses()
-const database_members = new dataBasePostgresMembers()
-const database_companies = new dataBasePostgresCompanies()
+// Rotas
+server.register(usersRoutes)
+server.register(revenuesRoutes)
+server.register(expensesRoutes)
+server.register(membersRoutes)
+server.register(companiesRoutes)
 
-//USERS
-server.post('/users', async (request, reply) => {
-  const { name, email, password } = request.body
-
-    const randomSalt = randomInt(10, 16)
-    const encryptedPassword = await hash(password, randomSalt)
-
-    console.log(encryptedPassword, randomSalt)
-  await database_users.create_user({
-      name,
-      email,
-      encryptedPassword
-   })
-  reply.status(201).send()
-  console.log("Deu bom")
-})
-
-server.post('/users/login', async (request, reply) => {
+// Start
+const start = async () => {
     try {
-        const {loginEmail, loginPassword}  = request.body
-        const response = await database_users.login(loginEmail, loginPassword)
-
-        if (response.success === false) {
-            return reply.status(200).send(response)
-        }
-        const token = server.jwt.sign({ user: loginEmail },{expiresIn: '1h'})
-        console.log(token)
-
-        reply.setCookie('token', token, {
-                httpOnly: true,   // não acessível via JS (mais seguro)
-                secure: false,     // só em HTTPS (em produção)
-                sameSite: 'strict',
-                path: '/'
-            })
-        return reply.status(200).send(response)
-    }catch (error) {
-        console.log(error)
-    }
-
-})
-
-server.post('/users/profile', async (request, reply) => {
-    try {
-        const { token } = request.cookies
-        console.log("aqui esta " + token)
-
-        if (!token) {
-            return reply.status(401).send({ error: 'Token ausente' })
-        }
-
-        const decoded = await server.jwt.verify(token)
-
-        console.log("Deu bom" + decoded.user)
-
-        return reply.status(200).send({ user: decoded.user })
+        await server.listen({ port: 3000 })
+        console.log('🚀 Servidor rodando em http://localhost:3000')
     } catch (err) {
-        return reply.status(401).send({ error: 'Token inválido ou expirado' })
+        server.log.error(err)
+        process.exit(1)
     }
-})
-
-
-server.put('/users/:id', async (request, reply) => {
-  const userID = request.params.id
-  const { name, email, password } = request.body
-
-  await database_users.edit_user(userID, { 
-    name,
-    email,
-    password
-  })
-
-  return reply.status(204).send()
-})
-
-server.delete('/users/:id', async (request, reply) => {
-  const userID = request.params.id
-
-  await database_users.delete_user(userID)
-
-  return reply.status(204).send()
-})
-
-//REVENUES
-server.post('/revenues', async (request, reply) => {
-  const { member, type, value, payment, date } = request.body
-  await database_revenues.create_revenue({
-    member,
-    type,
-    value,
-    payment,
-    reference_mounth: "NOVEMBER",
-    date,
-    user_id: "422a0acd-0210-4723-9622-c2b554ee8d60"
-   })
-  reply.status(201).send()
-  console.log("Deu bom")
-})
-
-server.get('/revenues', async (request, reply) => {
-  const search = request.query.search
-  const revenues = await database_revenues.list_revenues(search)
-  return reply.status(200).send(revenues)
-})
-
-server.get('/revenues/filter', async (request, reply) => {
-    let type = request.query.type
-    let start_date = request.query.date1
-    let end_date = request.query.date2
-
-
-    if (type === "All"){
-        type = ""
-    }
-
-    if(start_date === ""){
-        const revenues_date = await database_revenues.list_revenues_date()
-        const timestamps = revenues_date.map(d => new Date(d.date).getTime());
-
-        start_date = new Date(Math.min(...timestamps));
-    }
-    if (end_date === ""){
-        const revenues_date = await database_revenues.list_revenues_date()
-        const timestamps = revenues_date.map(d => new Date(d.date).getTime());
-
-        end_date = new Date(Math.max(...timestamps))
-    }
-
-    const revenues = await database_revenues.filter_revenues(type, start_date, end_date)
-
-    return reply.status(200).send(revenues)
-})
-
-
-server.put('/revenues/:id', async (request, reply) => {
-  const revenuesID = request.params.id
-  const { member, type, value, payment, date} = request.body
-  await database_revenues.edit_revenues(revenuesID, {
-    member,
-    type,
-    value,
-    payment,
-    date,
-    user_id: "422a0acd-0210-4723-9622-c2b554ee8d60"
-
-  })
-  return reply.status(204).send()
-})
-server.delete('/revenues/:id', async (request, reply) => {
-  const revenuesID = request.params.id
-  await database_revenues.delete_revenues(revenuesID)
-  return reply.status(204).send()
-})
-
-//EXPENSES
-server.post('/expenses', async (request, reply) => {
-  const { title, type, value, payment, date, beneficiary } = request.body
-  await database_expenses.create_expense({
-    title,
-    type,
-    value,
-    payment,
-    date,
-    beneficiary,
-    user_id: "422a0acd-0210-4723-9622-c2b554ee8d60"
-  })
-  reply.status(201).send()
-  console.log("Deu bom")
-})
-
-server.get('/expenses', async (request, reply) => {
-  const search = request.query.search
-  const expenses = await database_expenses.list_expenses(search)
-  return reply.status(200).send(expenses)
-})
-
-server.get('/expenses/filter', async (request, reply) => {
-    let type = request.query.type
-    let start_date = request.query.date1
-    let end_date = request.query.date2
-
-
-    if (type === "All"){
-        type = ""
-    }
-
-    if(start_date === ""){
-        const expenses_date = await database_expenses.list_expenses_date()
-        const timestamps = expenses_date.map(d => new Date(d.date).getTime());
-
-        start_date = new Date(Math.min(...timestamps));
-    }
-    if (end_date === ""){
-        const expenses_date = await database_expenses.list_expenses_date()
-        const timestamps = expenses_date.map(d => new Date(d.date).getTime());
-
-        end_date = new Date(Math.max(...timestamps))
-    }
-
-    const expenses = await database_expenses.filter_expenses(type, start_date, end_date)
-
-    return reply.status(200).send(expenses)
-})
-server.put('/expenses/:id', async (request,reply) => {
-  const expenseID = request.params.id
-  const {title, category, value, payment, date, beneficiary} = request.body
-  await database_expenses.edit_expenses(expenseID, {
-    title,
-    category,
-    value,
-    payment,
-    date,
-    beneficiary,
-    user_id: "422a0acd-0210-4723-9622-c2b554ee8d60"
-  })
-return reply.status(204).send()
-})
-server.delete('/expenses/:id', async (request, reply) => {
-  const expenseID = request.params.id
-  await database_expenses.delete_expenses(expenseID )
-  return reply.status(204).send()
-})
-
-//MEMBERS
-
-server.post('/members', async (request, reply) => {
-  const { name, cellphone, date_birth, pixkey, pixtype } = request.body
-  await database_members.create_members({
-    name,
-    cellphone,
-    date_birth,
-    pixkey,
-    pixtype,
-    user_id: "422a0acd-0210-4723-9622-c2b554ee8d60"
-  })
-  reply.status(201).send()
-  console.log("Deu bom")
-})
-
-server.get('/members', async (request, reply) => {
-  const search = request.query.search
-  const members = await database_members.list_members(search)
-  return reply.status(200).send(members)
-})
-
-server.put('/members/:id', async (request, reply) => {
-  const memberID = request.params.id
-  const { name, user_id } = request.body
-  await database_members.edit_members(memberID, {
-    name,
-    user_id
-  })
-  return reply.status(204).send()
-})
-
-server.delete('/members/:id', async (request, reply) => {
-  const memberID = request.params.id
-  await database_members.delete_members(memberID)
-  return reply.status(204).send()
-})
-
-server.listen(
-  { port: 3000}
-)
-
-// COMPANIES
-
-server.post('/companies', async (request, reply) => {
-  const { CNPJ, company_name, fantasy_name, estate_registration, municipal_registration, open_date, situation, cep, street, number, complement, neighborhood, city, UF, cellphone, email, CNAE, activity_description, pixkey, pixtype } = request.body
-  console.log(request.body)
-  await database_companies.create_company({
-    CNPJ,
-    company_name,
-    fantasy_name,
-    estate_registration,
-    municipal_registration,
-    open_date,
-    situation,
-    cep,
-    street,
-    number,
-    complement,
-    neighborhood,
-    city,
-    UF,
-    cellphone,
-    email,
-    CNAE,
-    activity_description,
-    pixkey,
-    pixtype,
-    user_id: "422a0acd-0210-4723-9622-c2b554ee8d60"
-  })
-  reply.status(201).send()
-  console.log("Deu bom")
-})
-server.get('/companies', async (request, reply) => {
-  const search = request.query.search
-  const companies = await database_companies.list_companies(search)
-  return reply.status(200).send(companies)
-})
-server.put('/companies/:id', async (request, reply) => {
-  const companyID = request.params.id
-  const { CNPJ, company_name, fantasy_name, estate_registration, municipal_registration, open_date, situation, cep, street, number, complement, neighborhood, city, UF, cellphone, email, CNAE, activity_description, pixkey, pixtype, user_id } = request.body
-  await database_companies.edit_companies(companyID, {
-    CNPJ,
-    company_name,
-    fantasy_name,
-    estate_registration,
-    municipal_registration,
-    open_date,
-    situation,
-    cep,
-    street,
-    number,
-    complement,
-    neighborhood,
-    city,
-    UF,
-    cellphone,
-    email,
-    CNAE,
-    activity_description,
-    pixkey,
-    pixtype,
-    user_id
-  })
-  return reply.status(204).send()
-})
-server.delete('/companies/:id', async (request, reply) => {
-  const companyID = request.params.id
-  await database_companies.delete_companies(companyID)
-  return reply.status(204).send()
-})
+}
+start()

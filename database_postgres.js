@@ -8,7 +8,7 @@ export class dataBasePostgresUsers {
 
   return await sql`INSERT INTO users (name, email, password) VALUES (${user.name}, ${user.email}, ${user.encryptedPassword}) RETURNING *`
   }
-    
+
 
   async login(loginEmail, loginPassword) {
     let user
@@ -51,11 +51,59 @@ export class dataBasePostgresUsers {
 
 }
 
-class dataBasePostgresRevenues {
+export class dataBasePostgresSectors {
+    async create_sector(sector){
+        return await sql`INSERT INTO sectors ( sector, sectorial_cordenator, vice_sectorial_cordenator) VALUES (${sector.sector}, ${sector.sectorial_cordenator}, ${sector.vice_sectorial_cordenator}) RETURNING *`
+    }
+
+    async list_sector (search){
+
+        if (search) {
+            return await sql`SELECT * FROM sectors WHERE sector = ${search}`
+        }
+        return await sql`SELECT * FROM sectors`
+
+    }
+
+    async edit_sector (sectorI, sectorID){
+        const {sector, sectorial_cordenator, vice_sectorial_cordenator} = sectorI
+        await sql`UPDATE sectors SET sector = ${sector}, sectorial_cordenator = ${sectorial_cordenator}, vice_sectorial_cordenator = ${vice_sectorial_cordenator} WHERE id = ${sectorID}`
+    }
+
+    async delete_sector (sectorID) {
+        await sql`DELETE FROM sectors WHERE id = ${sectorID}`
+    }
+}
+
+export class dataBasePostgresChurchs {
+    async create_church(church){
+        return await sql`INSERT INTO churchs (name, sector, shepherd) VALUES (${church.name}, ${church.sector}, ${church.shepherd}) RETURNING *`
+    }
+
+    async list_church (search){
+
+        if (search) {
+            return await sql`SELECT * FROM churchs WHERE name = ${search}`
+        }
+        return await sql`SELECT * FROM churchs`
+
+    }
+
+    async edit_church (church, churchID){
+        const {name, sector, shepherd} = church
+        await sql`UPDATE churchs SET name = ${name}, sector = ${sector}, shepherd = ${shepherd} WHERE id = ${churchID}`
+    }
+
+    async delete_church (churchID) {
+        await sql`DELETE FROM churchs WHERE id = ${churchID}`
+    }
+}
+
+export class dataBasePostgresRevenues {
 
   async create_revenue(revenue) {
 
-  return await sql`INSERT INTO revenues (member, type, value, payment, date, user_id) VALUES (${revenue.member}, ${revenue.type}, ${revenue.value}, ${revenue.payment}, ${revenue.date}, ${revenue.user_id}) RETURNING *`
+  return await sql`INSERT INTO revenues (member, type, value, payment, date ) VALUES (${revenue.member}, ${revenue.type}, ${revenue.value}, ${revenue.payment}, ${revenue.date}) RETURNING *`
   }
   async list_revenues(search) {
     let revenues
@@ -92,9 +140,9 @@ class dataBasePostgresRevenues {
   }
 
   async edit_revenues(revenueID, revenue) {
-    const { member, type, value, payment, date, user_id } = revenue
+    const { member, type, value, payment, date,  } = revenue
 
-    await sql`UPDATE revenues SET  member = ${member}, type = ${type}, value = ${value}, payment = ${payment}, date = ${date}, user_id = ${user_id} WHERE id = ${revenueID}`
+    await sql`UPDATE revenues SET  member = ${member}, type = ${type}, value = ${value}, payment = ${payment}, date = ${date} WHERE id = ${revenueID}`
   }
 
   async delete_revenues(revenueID) {
@@ -108,7 +156,6 @@ class dataBasePostgresRevenues {
   }
 }
 
-export default dataBasePostgresRevenues
 
 
 //Exprenses
@@ -116,7 +163,7 @@ export class dataBasePostgresExpenses {
 
   async create_expense(expense) {
 
-    return await sql`INSERT INTO expenses (title, type, value, payment, date, beneficiary, user_id) VALUES (${expense.title}, ${expense.type}, ${expense.value}, ${expense.payment}, ${expense.date}, ${expense.beneficiary}, ${expense.user_id}) RETURNING *`
+    return await sql`INSERT INTO expenses (title, type, value, payment, date, beneficiary ) VALUES (${expense.title}, ${expense.type}, ${expense.value}, ${expense.payment}, ${expense.date}, ${expense.beneficiary}) RETURNING *`
   }
   async list_expenses(search) {
     let expenses
@@ -152,9 +199,9 @@ export class dataBasePostgresExpenses {
     }
 
   async edit_expenses(expenseID, expense) {
-    const { title, type, value, payment, date, beneficiary, user_id } = expense
+    const { title, type, value, payment, date, beneficiary,  } = expense
     try{
-      await sql`UPDATE expenses SET  title = ${title}, type = ${type}, value = ${value}, payment = ${payment}, date = ${date}, beneficiary = ${beneficiary}, user_id = ${user_id} WHERE id = ${expenseID}`
+      await sql`UPDATE expenses SET  title = ${title}, type = ${type}, value = ${value}, payment = ${payment}, date = ${date}, beneficiary = ${beneficiary} WHERE id = ${expenseID}`
     }
     catch (error){
       console.error("Error updating expense:", error);
@@ -172,8 +219,8 @@ export class dataBasePostgresMembers {
   async create_members(member) {
     try {
         return await sql`
-      INSERT INTO members (name, cellphone, date_birth, pixkey, pixtype, user_id)
-      VALUES (${member.name}, ${member.cellphone}, ${member.date_birth}, ${member.pixkey}, ${member.pixtype}, ${member.user_id})
+      INSERT INTO members (name, cellphone, date_birth, pixkey, pixtype)
+      VALUES (${member.name}, ${member.cellphone}, ${member.date_birth}, ${member.pixkey}, ${member.pixtype})
       RETURNING *;
     `; // usually returns an array of rows
     } catch (error) {
@@ -193,8 +240,8 @@ export class dataBasePostgresMembers {
     return members
   }
   async edit_members(memberID, member) {
-    const { name, user_id } = member
-    await sql`UPDATE members SET name = ${name}, user_id = ${user_id} WHERE id = ${memberID}`
+    const { name,  } = member
+    await sql`UPDATE members SET name = ${name} WHERE id = ${memberID}`
   }
   async delete_members(memberID) {
     await sql`DELETE FROM members WHERE id = ${memberID}`
@@ -224,8 +271,8 @@ export class dataBasePostgresCompanies {
     CNAE, 
     activity_description, 
     pixkey, 
-    pixtype, 
-    user_id) VALUES (
+    pixtype 
+    ) VALUES (
     ${company.CNPJ}, 
     ${company.company_name}, 
     ${company.fantasy_name}, 
@@ -245,8 +292,8 @@ export class dataBasePostgresCompanies {
     ${company.CNAE}, 
     ${company.activity_description}, 
     ${company.pixkey}, 
-    ${company.pixtype}, 
-    ${company.user_id}) RETURNING *`
+    ${company.pixtype}
+    ) RETURNING *`
   }
     catch (error) {
       console.error("Error inserting company:", error);
@@ -283,9 +330,9 @@ export class dataBasePostgresCompanies {
 
 
   async edit_companies(companyID, company) {
-    const { CNPJ, company_name, fantasy_name, estate_registration, municipal_registration, open_date, situation, cep, street, number, complement, neighborhood, city, UF, cellphone, email, CNAE, activity_description, pixkey, pixtype, user_id } = company
+    const { CNPJ, company_name, fantasy_name, estate_registration, municipal_registration, open_date, situation, cep, street, number, complement, neighborhood, city, UF, cellphone, email, CNAE, activity_description, pixkey, pixtype,  } = company
 
-    try {await sql`UPDATE companies SET  CNPJ = ${CNPJ}, company_name = ${company_name}, fantasy_name = ${fantasy_name}, estate_registration = ${estate_registration}, municipal_registration = ${municipal_registration}, open_date = ${open_date}, situation = ${situation}, cep = ${cep}, street = ${street}, number = ${number}, complement = ${complement}, neighborhood = ${neighborhood}, city = ${city}, UF = ${UF}, cellphone = ${cellphone}, email = ${email}, CNAE = ${CNAE}, activity_description = ${activity_description}, pixkey = ${pixkey}, pixtype = ${pixtype}, user_id = ${user_id} WHERE id = ${companyID}`}
+    try {await sql`UPDATE companies SET  CNPJ = ${CNPJ}, company_name = ${company_name}, fantasy_name = ${fantasy_name}, estate_registration = ${estate_registration}, municipal_registration = ${municipal_registration}, open_date = ${open_date}, situation = ${situation}, cep = ${cep}, street = ${street}, number = ${number}, complement = ${complement}, neighborhood = ${neighborhood}, city = ${city}, UF = ${UF}, cellphone = ${cellphone}, email = ${email}, CNAE = ${CNAE}, activity_description = ${activity_description}, pixkey = ${pixkey}, pixtype = ${pixtype} WHERE id = ${companyID}`}
     catch (error) {
       console.error("Error updating company:", error);
       throw error; // rethrow so caller can handle

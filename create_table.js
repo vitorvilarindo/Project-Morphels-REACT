@@ -110,41 +110,45 @@ import { sql } from './db.js'
 //     )
 // `;
 //
-// await sql`
-//     CREATE TABLE IF NOT EXISTS churchs (
-//         id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-//         name            VARCHAR(200) NOT NULL,
-//         sector          UUID REFERENCES sectors(id),
-//         shepherd        VARCHAR(100) NOT NULL,
-//         email           VARCHAR(200) NOT NULL,
-//         register_code   VARCHAR(200) NOT NULL,
-//         members_number  NUMERIC(12, 2) NOT NULL
-//     )
-// `;
-//
-// await sql`
-//     CREATE TABLE IF NOT EXISTS users_churchs (
-//         user_id   UUID REFERENCES users(id) ON DELETE CASCADE,
-//         church_id UUID REFERENCES churchs(id) ON DELETE CASCADE,
-//         PRIMARY KEY (user_id, church_id)
-//     )
-// `;
-//
+await sql`
+    CREATE TABLE IF NOT EXISTS roles (
+        id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        name            VARCHAR(200) NOT NULL,
+        description     VARCHAR(200) NOT NULL,
+    )
+`;
+
+await sql`
+    CREATE TABLE IF NOT EXISTS permissions (
+        id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        name            VARCHAR(200) NOT NULL,
+        description     VARCHAR(200) NOT NULL,
+    )
+`;
+
+await sql`
+    CREATE TABLE IF NOT EXISTS permisions_roles (
+        permision_id REFERENCES permissions(id) ON DELETE CASCADE,
+        role_id REFERENCES roles(id) ON DELETE CASCADE,
+        PRIMERY KEY (permision_id, role_id) 
+    )
+`
+
 // // Alterações nas tabelas
 // await sql`ALTER TABLE members DROP COLUMN IF EXISTS user_id`;
 // await sql`ALTER TABLE companies DROP COLUMN IF EXISTS user_id`;
 // await sql`ALTER TABLE expenses DROP COLUMN IF EXISTS user_id`;
 // await sql`ALTER TABLE revenues DROP COLUMN IF EXISTS user_id`;
 
-await sql`
-    ALTER TABLE members
-        ADD COLUMN IF NOT EXISTS sector UUID REFERENCES sectors(id),
-        ADD COLUMN IF NOT EXISTS church UUID REFERENCES churchs(id)
-`;
+// await sql`
+//     ALTER TABLE revenues
+//         ADD COLUMN IF NOT EXISTS church UUID REFERENCES churchs(id)
+//
+// `;
 //
 // await sql`
-//     ALTER TABLE users
-//         ADD COLUMN IF NOT EXISTS sector UUID REFERENCES sectors(id)
+//     ALTER TABLE expenses
+//         ADD COLUMN IF NOT EXISTS church UUID REFERENCES churchs(id)
 // `;
 
 // await sql`
@@ -154,7 +158,7 @@ await sql`
 // `;
 //
 // await sql`
-//     ALTER TABLE users
-//         DROP COLUMN IF EXISTS sector
+//     ALTER TABLE churchs
+//         DROP COLUMN IF EXISTS members_number
 // `;
-//
+
