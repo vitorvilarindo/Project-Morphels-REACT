@@ -8,6 +8,9 @@ import revenuesRoutes from "./routes/revenuesRoutes.js";
 import expensesRoutes from "./routes/expensesRoutes.js";
 import membersRoutes from "./routes/membersRoutes.js";
 import companiesRoutes from "./routes/companiesRoutes.js";
+import permissionsRoutes from "./routes/permissionsRoutes.js";
+import rolesRoutes from "./routes/rolesRoutes.js";
+import sectorsRoutes from "./routes/sectorsRoutes.js";
 
 const server = Fastify({ logger: true })
 
@@ -20,8 +23,29 @@ server.register(cors, {
 })
 
 // JWT e cookies
-server.register(jwt, { secret: process.env.JWT_SECRET_KEY })
+server.register(jwt, { secret: process.env.JWT_SECRET_KEY, cookie: {
+        cookieName: 'token',
+        signed: false
+    } },
+
+)
 server.register(cookie)
+
+// server.addHook('preHandler', async (request, reply) => {
+//     // Ignora rota de login
+//     const publicRoutes = ['/users/login', '/users/register', '/roles', '/roles/'];
+//     if (publicRoutes.includes(request.url)) {
+//         return
+//     }
+//
+//     try {
+//         const decoded = await request.jwtVerify()
+//         request.userID = decoded.sub
+//     } catch (err) {
+//         return reply.status(401).send({ error: 'Token inválido ou expirado' })
+//     }
+// })
+
 
 // Rotas
 server.register(usersRoutes)
@@ -29,6 +53,9 @@ server.register(revenuesRoutes)
 server.register(expensesRoutes)
 server.register(membersRoutes)
 server.register(companiesRoutes)
+server.register(permissionsRoutes)
+server.register(rolesRoutes)
+server.register(sectorsRoutes)
 
 // Start
 const start = async () => {

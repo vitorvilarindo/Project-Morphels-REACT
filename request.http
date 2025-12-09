@@ -1,22 +1,21 @@
-####
-#POST http://localhost:3000/users
-#Content-Type: application/json
-#
-#{
-#  "name": "José",
-#  "email": "jose@gmail.com",
-#  "password": "jose123"
-#}
-
 ###
-POST http://localhost:3000/users/login
+POST http://localhost:3000/roles
 Content-Type: application/json
 
 {
-  "loginEmail": "jose@gmail.com",
-  "loginPassword": "jose123"
+  "name": "Pastor Presidente",
+  "description": "Pastor de todo o ministério, tem acesso equiparavel ao de adiministador"
 }
 
 
 ###
-DELETE http://localhost:3000/users/3004983e-6181-47ee-8aaf-a747e36d71f9
+DELETE http://localhost:3000/roles/40bf4deb-3435-4994-a48c-bb0a1f99b967
+
+###
+POST http://localhost:3000/permissions
+Content-Type: application/json
+
+{
+  "name": "update_sector",
+  "description": "update a sector"
+}

@@ -1,4 +1,4 @@
-import { dataBasePostgresExpenses } from "../controller/expensesController.js";
+import { dataBasePostgresExpenses } from "../controllers/expensesController.js";
 
 const database_expenses = new dataBasePostgresExpenses()
 

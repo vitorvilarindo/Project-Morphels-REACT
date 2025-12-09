@@ -110,32 +110,41 @@ import { sql } from './db.js'
 //     )
 // `;
 //
-await sql`
-    CREATE TABLE IF NOT EXISTS roles (
-        id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-        name            VARCHAR(200) NOT NULL,
-        description     VARCHAR(200) NOT NULL,
-    )
-`;
+// await sql`
+//     CREATE TABLE IF NOT EXISTS roles (
+//         id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+//         name            VARCHAR(200) NOT NULL,
+//         description     VARCHAR(200) NOT NULL
+//     )
+// `;
+//
+// await sql`
+//     CREATE TABLE IF NOT EXISTS permissions (
+//         id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+//         name            VARCHAR(200) NOT NULL,
+//         description     VARCHAR(200) NOT NULL
+//     )
+// `;
 
-await sql`
-    CREATE TABLE IF NOT EXISTS permissions (
-        id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-        name            VARCHAR(200) NOT NULL,
-        description     VARCHAR(200) NOT NULL,
-    )
-`;
+// await sql`
+//     CREATE TABLE IF NOT EXISTS permissions_roles (
+//         permission_id UUID REFERENCES permissions(id) ON DELETE CASCADE,
+//         role_id UUID REFERENCES roles(id) ON DELETE CASCADE,
+//         PRIMARY KEY (permission_id, role_id)
+//         )
+// `
 
-await sql`
-    CREATE TABLE IF NOT EXISTS permisions_roles (
-        permision_id REFERENCES permissions(id) ON DELETE CASCADE,
-        role_id REFERENCES roles(id) ON DELETE CASCADE,
-        PRIMERY KEY (permision_id, role_id) 
-    )
-`
 
 // // Alterações nas tabelas
-// await sql`ALTER TABLE members DROP COLUMN IF EXISTS user_id`;
+// await sql`
+//     ALTER TABLE users
+//     ALTER COLUMN designation TYPE UUID USING designation::uuid;
+//
+// `
+// await sql`ALTER TABLE users
+//     ADD CONSTRAINT fk_users_designation
+//     FOREIGN KEY (designation) REFERENCES roles(id);
+// `;
 // await sql`ALTER TABLE companies DROP COLUMN IF EXISTS user_id`;
 // await sql`ALTER TABLE expenses DROP COLUMN IF EXISTS user_id`;
 // await sql`ALTER TABLE revenues DROP COLUMN IF EXISTS user_id`;

@@ -1,4 +1,4 @@
-import {dataBasePostgresMembers} from "../controller/membersController.js";
+import {dataBasePostgresMembers} from "../controllers/membersController.js";
 
 const database_members = new dataBasePostgresMembers()
 
