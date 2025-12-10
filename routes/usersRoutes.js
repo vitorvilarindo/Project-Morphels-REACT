@@ -6,6 +6,7 @@ import {
     deleteUser
 } from "../controllers/usersController.js"
 
+
 export default async function usersRoutes(server) {
     server.post("/users", createUser)
     server.post("/users/login", login)

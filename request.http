@@ -1,10 +1,13 @@
 ###
-POST http://localhost:3000/roles
+POST http://localhost:3000/users
 Content-Type: application/json
 
 {
-  "name": "Pastor Presidente",
-  "description": "Pastor de todo o ministério, tem acesso equiparavel ao de adiministador"
+  "name": "Vitor Lisboa Vilarindo",
+  "email": "vitorvilarindo06@gmail.com",
+  "password": "Vlv.1234",
+  "designation": "Pastor Presidente",
+  "sector": "Setor 3"
 }
 
 

@@ -38,7 +38,7 @@ export async function login(request, reply) {
         const { loginEmail, loginPassword } = request.body
 
         // Busca usuário pelo email
-        const user = await sql`SELECT id, password FROM users WHERE email = ${loginEmail}`
+        const user = await sql`SELECT id, password, designation FROM users WHERE email = ${loginEmail}`
 
         if (user.length === 0 || !user[0].password) {
             return reply.status(400).send({ success: false, route: "/" })
