@@ -64,6 +64,8 @@ export async function login(request, reply) {
             path: "/"
         })
 
+        request.designation = user[0].designation
+
         return reply.send({
             success: true,
             route: "/main",

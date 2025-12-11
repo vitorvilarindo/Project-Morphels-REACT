@@ -1,13 +1,15 @@
 import { sql } from "../db.js"
+import {getPermissionByName} from "./permissionsController.js";
 
 // Criar receita
 export async function createRevenue(request, reply) {
     try {
-        const { member, type, value, payment, date } = request.body
-
+        const { member, type, value, payment, date, church } = request.body
+        const churchID = await sql`SELECT id FROM churchs WHERE name = ${church}`
+        console.log(church)
         const newRevenue = await sql`
-      INSERT INTO revenues (member, type, value, payment, date)
-      VALUES (${member}, ${type}, ${value}, ${payment} ${date}, ${id})
+      INSERT INTO revenues (member, type, value, payment, date, church)
+      VALUES (${member}, ${type}, ${value}, ${payment}, ${date}, ${churchID[0].id})
       RETURNING *
     `
         return reply.status(201).send(newRevenue[0])
@@ -22,14 +24,42 @@ export async function listRevenues(request, reply) {
     try {
         const { search } = request.query
         let revenues
+        let indice
+        const viewPermissions = ["general_preview", "sectorial_preview", "local_preview"];
+        for (let i = 0; i < viewPermissions.length; i++) {
+            const permissionsID = await getPermissionByName(viewPermissions[i])
+            if (request.permissions.includes(permissionsID[0].id)) {
+                 indice = viewPermissions[i].indexOf(permissionsID[0].id)
+            }
+        }
 
-        if (search) {
-            revenues = await sql`
+        switch (indice) {
+            case 0:
+                if (search) {
+                    revenues = await sql`
                 SELECT * FROM revenues WHERE member ILIKE ${"%" + search + "%"}
             `
-        } else {
-            revenues = await sql`SELECT * FROM revenues`
+                } else {
+                    revenues = await sql`SELECT * FROM revenues`
+                }
+                break
+            case 1:
+                if(search) {
+                    revenues = await sql`
+                    SELECT r.* FROM churchs c JOIN revenues r ON r.church = c.id JOIN users u ON c.sector = u.sector WHERE u.id = ${request.userID} AND r.member ILIKE ${"%" + search + "%"}
+                    `
+                }else {
+                    revenues = await sql`
+                    SELECT r.* FROM churchs c JOIN revenues r ON r.church = c.id JOIN users u ON c.sector = u.sector WHERE u.id = ${request.userID}
+                    `
+                }
+                break
+            case 2:
+                if(search) {
+                    revenues = await sql`SELECT r.* FROM churchs c JOIN revenues r ON r.church = c.id JOIN users u ON c.id = u.church WHERE u.id = ${request.userID}`
+                }
         }
+
 
         return reply.status(200).send(revenues)
     } catch (error) {

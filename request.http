@@ -1,13 +1,11 @@
 ###
-POST http://localhost:3000/users
+POST http://localhost:3000/churchs
 Content-Type: application/json
 
 {
-  "name": "Vitor Lisboa Vilarindo",
-  "email": "vitorvilarindo06@gmail.com",
-  "password": "Vlv.1234",
-  "designation": "Pastor Presidente",
-  "sector": "Setor 3"
+  "name": "Igreja Quadra 3",
+  "sector": "Setor 3",
+  "shepherd": "Pr. Almir Pessoa da Cruz"
 }
 
 

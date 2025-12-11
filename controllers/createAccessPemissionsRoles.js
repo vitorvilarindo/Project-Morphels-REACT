@@ -22,14 +22,18 @@ export async function getPermissionsRolesHandle(req, rep, userID = null) {
 
 }
 
-export async function createAccessPemissionRole(req, rep) {
+export async function createAccessPermissionRole(req, rep) {
     try{
         const {role , permissions} = req.body
         const roleID = await sql`SELECT id FROM roles WHERE name = ${role}`;
         for (let permission of permissions) {
-            sql`INSERT INTO permissions_roles (permission_id, role_id) VALUES (${permission}, ${roleID})`;
+
+            const permissionID = await sql`SELECT id FROM permissions WHERE name = ${permission}`;
+            await sql`INSERT INTO permissions_roles (permission_id, role_id) VALUES (${permissionID[0].id}, ${roleID[0].id})`;
         }
+        return rep.status(200).send({message: "Deu bom"})
     }catch(e){
         console.log(e)
+        return rep.status(500).send({message: "Deu ruim"})
     }
 }

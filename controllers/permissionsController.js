@@ -37,6 +37,11 @@ export async function listPermissions(request, reply) {
     }
 }
 
+export async function getPermissionByName(permission_name) {
+    return await sql`SELECT id
+                     FROM permissions
+                     WHERE name = ${permission_name}`
+}
 // Editar permissão
 export async function editPermission(request, reply) {
     try {

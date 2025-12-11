@@ -11,8 +11,10 @@ import companiesRoutes from "./routes/companiesRoutes.js";
 import permissionsRoutes from "./routes/permissionsRoutes.js";
 import rolesRoutes from "./routes/rolesRoutes.js";
 import sectorsRoutes from "./routes/sectorsRoutes.js";
-import {getPermissionsRolesByID} from "./controllers/createAccessPemissionsRoles.js";
 import accessPermissionsRolesRoutes from "./routes/createAccessPermissionsRolesRoutes.js";
+import {getPermissionByName} from "./controllers/permissionsController.js";
+import churchsRoutes from "./routes/churchsRoutes.js";
+import {getPermissionsRolesByID} from "./controllers/createAccessPemissionsRoles.js";
 
 const server = Fastify({ logger: true })
 
@@ -34,19 +36,38 @@ server.register(jwt, { secret: process.env.JWT_SECRET_KEY, cookie: {
 server.register(cookie)
 
 server.addHook('preHandler', async (request, reply) => {
-    // Ignora rota de login
     const publicRoutes = ['/users/login'];
     if (publicRoutes.includes(request.url)) {
         return
     }
 
     try {
+        let permissions_list = []
         const decoded = await request.jwtVerify()
         request.userID = decoded.sub
-        request.permisions = await getPermissionsRolesByID(decoded.sub)
-        console.log(request.permisions)
+        const permissions = await getPermissionsRolesByID(decoded.sub)
+        for (let i = 0; i < permissions.length; i++) {
+            permissions_list = permissions_list.concat(permissions[i].permission_id);
+        }
+
+        request.permissions = permissions_list
     } catch (err) {
         return reply.status(401).send({ error: 'Token inválido ou expirado' })
+    }
+})
+server.decorate('checkPermissions',function (required_permission) {
+    return async (request, reply) => {
+        try{
+            const permissionsID = await getPermissionByName(required_permission)
+            if (!permissionsID) {
+                return reply.status(404).send({message:'No permissions found for this user'})
+            }
+            if (!request.permissions.includes(permissionsID[0].id)) {
+                return reply.status(401).send({message:'Not authorized'})
+            }
+        }catch(e){
+            return reply.status(500).send({message:'Internal Server Error'})
+        }
     }
 })
 
@@ -61,6 +82,7 @@ server.register(permissionsRoutes)
 server.register(rolesRoutes)
 server.register(sectorsRoutes)
 server.register(accessPermissionsRolesRoutes)
+server.register(churchsRoutes)
 
 // Start
 const start = async () => {
@@ -72,4 +94,4 @@ const start = async () => {
         process.exit(1)
     }
 }
-start()
+start().then()
