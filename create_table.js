@@ -149,11 +149,11 @@ import { sql } from './db.js'
 // await sql`ALTER TABLE expenses DROP COLUMN IF EXISTS user_id`;
 // await sql`ALTER TABLE revenues DROP COLUMN IF EXISTS user_id`;
 
-await sql`
-    ALTER TABLE users
-        ADD COLUMN IF NOT EXISTS church UUID REFERENCES churchs(id)
-
-`;
+// await sql`
+//     ALTER TABLE users
+//         ADD COLUMN IF NOT EXISTS church UUID REFERENCES churchs(id)
+//
+// `;
 //
 // await sql`
 //     ALTER TABLE expenses

@@ -27,11 +27,15 @@ export async function listRevenues(request, reply) {
         let indice
         const viewPermissions = ["general_preview", "sectorial_preview", "local_preview"];
         for (let i = 0; i < viewPermissions.length; i++) {
-            const permissionsID = await getPermissionByName(viewPermissions[i])
-            if (request.permissions.includes(permissionsID[0].id)) {
-                 indice = viewPermissions[i].indexOf(permissionsID[0].id)
+            const permissions = await getPermissionByName(viewPermissions[i]);
+            console.log(permissions)
+            if (permissions.length > 0 && request.permissions.includes(permissions[0].id)) {
+                indice = i; // posição dentro de viewPermissions
+                console.log("Permissão encontrada:", permissions[0].id);
+                break
             }
         }
+
 
         switch (indice) {
             case 0:
@@ -56,6 +60,8 @@ export async function listRevenues(request, reply) {
                 break
             case 2:
                 if(search) {
+                    revenues = await sql`SELECT r.* FROM churchs c JOIN revenues r ON r.church = c.id JOIN users u ON c.id = u.church WHERE u.id = ${request.userID} AND r.member ILIKE ${"%" + search + "%"}`
+                }else{
                     revenues = await sql`SELECT r.* FROM churchs c JOIN revenues r ON r.church = c.id JOIN users u ON c.id = u.church WHERE u.id = ${request.userID}`
                 }
         }

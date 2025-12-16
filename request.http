@@ -1,11 +1,10 @@
 ###
-POST http://localhost:3000/churchs
+POST http://localhost:3000/permissions_roles
 Content-Type: application/json
 
 {
-  "name": "Igreja Quadra 3",
-  "sector": "Setor 3",
-  "shepherd": "Pr. Almir Pessoa da Cruz"
+  "role": "Pastor local",
+  "permissions": ["local_preview", "sing_up_user"]
 }
 
 

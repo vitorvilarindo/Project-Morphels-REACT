@@ -2,7 +2,6 @@ import { sql } from "../db.js"
 
 export async function getPermissionsRolesByID(id) {
     try{
-        console.log("OLHA AQUI  :" + id)
         return await sql`SELECT pr.permission_id from users u JOIN permissions_roles pr ON pr.role_id = u.designation WHERE u.id = ${id}`
 
     }catch(e){
@@ -12,7 +11,6 @@ export async function getPermissionsRolesByID(id) {
 export async function getPermissionsRolesHandle(req, rep, userID = null) {
     try{
         const id = req.body.id
-        console.log("OLHA AQUI  :" + id)
         return rep.status(200).send({permissions: await sql`SELECT pr.permission_id from users u JOIN permissions_roles pr ON pr.role_id = u.designation WHERE u.id = ${id}`})
 
     }catch(e){
