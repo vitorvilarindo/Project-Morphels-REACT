@@ -1,10 +1,10 @@
 ###
-POST http://localhost:3000/permissions_roles
+POST http://localhost:3000/permissions
 Content-Type: application/json
 
 {
-  "role": "Pastor local",
-  "permissions": ["local_preview", "sing_up_user"]
+  "name": "",
+  "description": "push the reports from the sector"
 }
 
 
