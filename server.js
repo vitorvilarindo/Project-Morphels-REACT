@@ -35,26 +35,26 @@ server.register(jwt, { secret: process.env.JWT_SECRET_KEY, cookie: {
 )
 server.register(cookie)
 
-server.addHook('preHandler', async (request, reply) => {
-    const publicRoutes = ['/users/login'];
-    if (publicRoutes.includes(request.url)) {
-        return
-    }
-
-    try {
-        let permissions_list = []
-        const decoded = await request.jwtVerify()
-        request.userID = decoded.sub
-        const permissions = await getPermissionsRolesByID(decoded.sub)
-        for (let i = 0; i < permissions.length; i++) {
-            permissions_list = permissions_list.concat(permissions[i].permission_id);
-        }
-
-        request.permissions = permissions_list
-    } catch (err) {
-        return reply.status(401).send({ error: 'Token inválido ou expirado' })
-    }
-})
+// server.addHook('preHandler', async (request, reply) => {
+//     const publicRoutes = ['/users/login'];
+//     if (publicRoutes.includes(request.url)) {
+//         return
+//     }
+//
+//     try {
+//         let permissions_list = []
+//         const decoded = await request.jwtVerify()
+//         request.userID = decoded.sub
+//         const permissions = await getPermissionsRolesByID(decoded.sub)
+//         for (let i = 0; i < permissions.length; i++) {
+//             permissions_list = permissions_list.concat(permissions[i].permission_id);
+//         }
+//
+//         request.permissions = permissions_list
+//     } catch (err) {
+//         return reply.status(401).send({ error: 'Token inválido ou expirado' })
+//     }
+// })
 server.decorate('checkPermissions',function (required_permission) {
     return async (request, reply) => {
         try{
