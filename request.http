@@ -3,8 +3,8 @@ POST http://localhost:3000/permissions_roles
 Content-Type: application/json
 
 {
-  "role": "Tesoureiro setorial",
-  "permissions": ["sing_up_user" ,"list_sectorial_churches", "create_sectorial_reports", "delete_data", "insert_data", "sectorial_preview", "edit_data"]
+  "role": "Co pastor local",
+  "permissions": ["local_preview", "create_local_reports"]
 }
 
 
@@ -12,10 +12,3 @@ Content-Type: application/json
 DELETE http://localhost:3000/roles/40bf4deb-3435-4994-a48c-bb0a1f99b967
 
 ###
-POST http://localhost:3000/permissions
-Content-Type: application/json
-
-{
-  "name": "update_sector",
-  "description": "update a sector"
-}

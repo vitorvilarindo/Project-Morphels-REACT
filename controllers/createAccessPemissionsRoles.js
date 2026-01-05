@@ -22,12 +22,25 @@ export async function getPermissionsRolesHandle(req, rep, userID = null) {
 
 export async function createAccessPermissionRole(req, rep) {
     try{
+        let permissions_list = []
         const {role , permissions} = req.body
         const roleID = await sql`SELECT id FROM roles WHERE name = ${role}`;
+        console.log(roleID[0].id)
+        const permissions_exists = await sql`SELECT pr.permission_id FROM permissions_roles pr WHERE pr.role_id = ${roleID[0].id};`;
+        for (let i = 0; i < permissions_exists.length; i++) {
+            permissions_list = permissions_list.concat(permissions_exists[i].permission_id);
+        }
+
+        console.log(permissions_list)
+
         for (let permission of permissions) {
 
             const permissionID = await sql`SELECT id FROM permissions WHERE name = ${permission}`;
-            await sql`INSERT INTO permissions_roles (permission_id, role_id) VALUES (${permissionID[0].id}, ${roleID[0].id})`;
+            console.log(permissionID[0].id)
+            if (!permissions_list.includes(permissionID[0].id)){
+                await sql`INSERT INTO permissions_roles (permission_id, role_id) VALUES (${permissionID[0].id}, ${roleID[0].id})`;
+            }
+
         }
         return rep.status(200).send({message: "Deu bom"})
     }catch(e){
