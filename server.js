@@ -13,8 +13,9 @@ import rolesRoutes from "./routes/rolesRoutes.js";
 import sectorsRoutes from "./routes/sectorsRoutes.js";
 import accessPermissionsRolesRoutes from "./routes/createAccessPermissionsRolesRoutes.js";
 import {getPermissionByName} from "./controllers/permissionsController.js";
-import churchsRoutes from "./routes/churchsRoutes.js";
+import churchesRoutes from "./routes/churchsRoutes.js";
 import {getPermissionsRolesByID} from "./controllers/createAccessPemissionsRoles.js";
+import generalRoutes from "./routes/generalRoutes.js";
 
 const server = Fastify({ logger: true })
 
@@ -35,26 +36,26 @@ server.register(jwt, { secret: process.env.JWT_SECRET_KEY, cookie: {
 )
 server.register(cookie)
 
-// server.addHook('preHandler', async (request, reply) => {
-//     const publicRoutes = ['/users/login'];
-//     if (publicRoutes.includes(request.url)) {
-//         return
-//     }
-//
-//     try {
-//         let permissions_list = []
-//         const decoded = await request.jwtVerify()
-//         request.userID = decoded.sub
-//         const permissions = await getPermissionsRolesByID(decoded.sub)
-//         for (let i = 0; i < permissions.length; i++) {
-//             permissions_list = permissions_list.concat(permissions[i].permission_id);
-//         }
-//
-//         request.permissions = permissions_list
-//     } catch (err) {
-//         return reply.status(401).send({ error: 'Token inválido ou expirado' })
-//     }
-// })
+server.addHook('preHandler', async (request, reply) => {
+    const publicRoutes = ['/users/login'];
+    if (publicRoutes.includes(request.url)) {
+        return
+    }
+
+    try {
+        let permissions_list = []
+        const decoded = await request.jwtVerify()
+        request.userID = decoded.sub
+        const permissions = await getPermissionsRolesByID(decoded.sub)
+        for (let i = 0; i < permissions.length; i++) {
+            permissions_list = permissions_list.concat(permissions[i].permission_id);
+        }
+
+        request.permissions = permissions_list
+    } catch (err) {
+        return reply.status(401).send({ error: 'Token inválido ou expirado' })
+    }
+})
 server.decorate('checkPermissions',function (required_permission) {
     return async (request, reply) => {
         try{
@@ -82,7 +83,8 @@ server.register(permissionsRoutes)
 server.register(rolesRoutes)
 server.register(sectorsRoutes)
 server.register(accessPermissionsRolesRoutes)
-server.register(churchsRoutes)
+server.register(churchesRoutes)
+server.register(generalRoutes)
 
 // Start
 const start = async () => {
