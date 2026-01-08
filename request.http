@@ -3,8 +3,8 @@ POST http://localhost:3000/permissions_roles
 Content-Type: application/json
 
 {
-  "role": "Co pastor local",
-  "permissions": ["local_preview", "create_local_reports"]
+  "role": "Pastor Presidente",
+  "permissions": ["manage_churches", "manage_data", "manage_designations", "manage_sectors"]
 }
 
 

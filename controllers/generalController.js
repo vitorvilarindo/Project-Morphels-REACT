@@ -48,3 +48,8 @@ export async function SumRevenues(request, reply){
         return reply.status(500).send({ error: "Erro ao listar receitas" })
     }
 }
+export async function getPermissions(request, reply){
+    return reply.status(200).send({
+        permissions: request.permissions
+    })
+}
