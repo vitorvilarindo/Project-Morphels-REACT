@@ -20,14 +20,18 @@ export async function SumRevenues(request, reply){
         switch (indice) {
             case 0:
                 sumrevenues = await sql`
-                SELECT SUM(value) AS revenues_values FROM revenues `
-                sumexpenses = await sql`SELECT SUM(value) AS expenses_values FROM expenses `
+                SELECT SUM(r.value) AS revenues_values FROM revenues r JOIN users u ON r.church = u.church WHERE u.id = ${request.userID}`
+                sumexpenses = await sql`SELECT SUM(c.value) AS expenses_values FROM expenses c JOIN users u ON c.church = u.church WHERE u.id = ${request.userID}`
 
                 break
             case 1:
-                sumrevenues = await sql` 
-                    SELECT SUM(r.value) AS revenues_values FROM churchs c JOIN revenues r ON r.church = c.id JOIN users u ON c.sector = u.sector WHERE u.id = ${request.userID} 
-                    `
+                sumrevenues = await sql`
+                    SELECT SUM(r.value) AS revenues_values
+                    FROM churchs c
+                             JOIN revenues r ON r.church = c.id
+                             JOIN users u ON c.sector = u.sector
+                    WHERE u.id = ${request.userID}
+                `
                 sumexpenses = await sql` 
                     SELECT SUM(e.value) AS expenses_values FROM churchs c JOIN expenses e ON e.church = c.id JOIN users u ON c.sector = u.sector WHERE u.id = ${request.userID} 
                     `
