@@ -1,9 +1,9 @@
 import { sql } from "../db.js"
 import {getPermissionByName} from "./permissionsController.js";
 
-export async function getData(request, reply)  {
+export async function localReportsData(request, reply)  {
     try {
-        let { type_revenues, type_expenses, date1: start_date, date2: end_date } = request.query
+        let { type_revenues, type_expenses, start_date, end_date } = request.body
         let revenues
         let expenses
         let sum
@@ -39,7 +39,7 @@ export async function getData(request, reply)  {
             end_date = new Date(Math.max(...timestamps))
         }
 
-        const user = await sql`SELECT * FROM users WHERE id = ${request.userID}`
+        const user = await sql`SELECT name FROM users WHERE id = ${request.userID}`
 
         switch (indice) {
             case 0:
@@ -75,76 +75,76 @@ export async function getData(request, reply)  {
                         `
 
                 break
-            case 1:
-                revenues = await sql`
-                    SELECT r.*
-                    FROM churchs c
-                             JOIN revenues r ON r.church = c.id
-                             JOIN users u ON c.sector = u.sector
-                    WHERE u.id = ${request.userID}
-                      AND r.type ILIKE '%' || ${type_revenues} || '%'
-                      AND r.date BETWEEN ${start_date}::date AND ${end_date}::date
-                `
-                expenses = await sql`
-                    SELECT e.*
-                    FROM churchs c
-                             JOIN expenses e ON e.church = c.id
-                             JOIN users u ON c.sector = u.sector
-                    WHERE u.id = ${request.userID}
-                      AND e.type ILIKE '%' || ${type_expenses} || '%'
-                      AND e.date BETWEEN ${start_date}::date AND ${end_date}::date
-                `
-                sum = await sql`
-                    SELECT
-                        (SELECT SUM(r.value)
-                         FROM churchs c 
-                         JOIN revenues r ON r.church = c.id
-                         JOIN users u ON c.sector = u.sector
-                         WHERE u.id = ${request.userID}
-                            AND r.type = ${type_revenues}
-                           AND r.date BETWEEN ${start_date}::date 
-                               AND ${end_date}::date ) AS revenues_sum,
-                        (SELECT SUM(e.value)
-                        FROM churchs c
-                        JOIN expenses e ON e.church = c.id
-                        JOIN users u ON c.sector = u.sector
-                        AND e.type = ${type_revenues}
-                           AND e.date BETWEEN ${start_date}::date 
-                               AND ${end_date}::date ) AS expenses_sum;`
-                break
-            case 2:
-                revenues = await sql`SELECT r.*
-                                     FROM churchs c
-                                              JOIN revenues r ON r.church = c.id
-                                              JOIN users u ON c.id = u.church
-                                     WHERE u.id = ${request.userID}
-                                       AND r.type ILIKE '%' || ${type_revenues} || '%'
-                                       AND r.date BETWEEN ${start_date}::date AND ${end_date}::date`
-
-                expenses = await sql`SELECT e.*
-                                     FROM churchs c
-                                              JOIN expenses e ON e.church = c.id
-                                              JOIN users u ON c.id = u.church
-                                     WHERE u.id = ${request.userID}
-                                       AND e.type ILIKE '%' || ${type_expenses} || '%'
-                                       AND e.date BETWEEN ${start_date}::date AND ${end_date}::date`
-                sum = await sql`
-                    SELECT
-                        (SELECT SUM(r.value)
-                         FROM churchs c 
-                         JOIN revenues r ON r.church = c.id
-                         JOIN users u ON c.id = u.church
-                         WHERE u.id = ${request.userID}
-                            AND r.type = ${type_revenues}
-                           AND r.date BETWEEN ${start_date}::date 
-                               AND ${end_date}::date ) AS revenues_sum,
-                        (SELECT SUM(e.value)
-                        FROM churchs c
-                        JOIN expenses e ON e.church = c.id
-                        JOIN users u ON c.id = u.church 
-                        AND e.type = ${type_revenues}
-                           AND e.date BETWEEN ${start_date}::date 
-                               AND ${end_date}::date ) AS expenses_sum;`
+            // case 1:
+            //     revenues = await sql`
+            //         SELECT r.*
+            //         FROM churchs c
+            //                  JOIN revenues r ON r.church = c.id
+            //                  JOIN users u ON c.sector = u.sector
+            //         WHERE u.id = ${request.userID}
+            //           AND r.type ILIKE '%' || ${type_revenues} || '%'
+            //           AND r.date BETWEEN ${start_date}::date AND ${end_date}::date
+            //     `
+            //     expenses = await sql`
+            //         SELECT e.*
+            //         FROM churchs c
+            //                  JOIN expenses e ON e.church = c.id
+            //                  JOIN users u ON c.sector = u.sector
+            //         WHERE u.id = ${request.userID}
+            //           AND e.type ILIKE '%' || ${type_expenses} || '%'
+            //           AND e.date BETWEEN ${start_date}::date AND ${end_date}::date
+            //     `
+            //     sum = await sql`
+            //         SELECT
+            //             (SELECT SUM(r.value)
+            //              FROM churchs c
+            //              JOIN revenues r ON r.church = c.id
+            //              JOIN users u ON c.sector = u.sector
+            //              WHERE u.id = ${request.userID}
+            //                 AND r.type = ${type_revenues}
+            //                AND r.date BETWEEN ${start_date}::date
+            //                    AND ${end_date}::date ) AS revenues_sum,
+            //             (SELECT SUM(e.value)
+            //             FROM churchs c
+            //             JOIN expenses e ON e.church = c.id
+            //             JOIN users u ON c.sector = u.sector
+            //             AND e.type = ${type_revenues}
+            //                AND e.date BETWEEN ${start_date}::date
+            //                    AND ${end_date}::date ) AS expenses_sum;`
+            //     break
+            // case 2:
+            //     revenues = await sql`SELECT r.*
+            //                          FROM churchs c
+            //                                   JOIN revenues r ON r.church = c.id
+            //                                   JOIN users u ON c.id = u.church
+            //                          WHERE u.id = ${request.userID}
+            //                            AND r.type ILIKE '%' || ${type_revenues} || '%'
+            //                            AND r.date BETWEEN ${start_date}::date AND ${end_date}::date`
+            //
+            //     expenses = await sql`SELECT e.*
+            //                          FROM churchs c
+            //                                   JOIN expenses e ON e.church = c.id
+            //                                   JOIN users u ON c.id = u.church
+            //                          WHERE u.id = ${request.userID}
+            //                            AND e.type ILIKE '%' || ${type_expenses} || '%'
+            //                            AND e.date BETWEEN ${start_date}::date AND ${end_date}::date`
+            //     sum = await sql`
+            //         SELECT
+            //             (SELECT SUM(r.value)
+            //              FROM churchs c
+            //              JOIN revenues r ON r.church = c.id
+            //              JOIN users u ON c.id = u.church
+            //              WHERE u.id = ${request.userID}
+            //                 AND r.type = ${type_revenues}
+            //                AND r.date BETWEEN ${start_date}::date
+            //                    AND ${end_date}::date ) AS revenues_sum,
+            //             (SELECT SUM(e.value)
+            //             FROM churchs c
+            //             JOIN expenses e ON e.church = c.id
+            //             JOIN users u ON c.id = u.church
+            //             AND e.type = ${type_revenues}
+            //                AND e.date BETWEEN ${start_date}::date
+            //                    AND ${end_date}::date ) AS expenses_sum;`
 
         }
         return reply.status(200).send({"revenues":revenues,

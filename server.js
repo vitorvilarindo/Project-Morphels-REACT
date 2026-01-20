@@ -16,6 +16,7 @@ import {getPermissionByName} from "./controllers/permissionsController.js";
 import churchesRoutes from "./routes/churchsRoutes.js";
 import {getPermissionsRolesByID} from "./controllers/createAccessPemissionsRoles.js";
 import generalRoutes from "./routes/generalRoutes.js";
+import repostsRotes from "./routes/repostsRoutes.js";
 
 const server = Fastify({ logger: true })
 
@@ -85,6 +86,7 @@ server.register(sectorsRoutes)
 server.register(accessPermissionsRolesRoutes)
 server.register(churchesRoutes)
 server.register(generalRoutes)
+server.register(repostsRotes)
 
 // Start
 const start = async () => {
