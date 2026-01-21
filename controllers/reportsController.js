@@ -39,7 +39,23 @@ export async function localReportsData(request, reply)  {
             end_date = new Date(Math.max(...timestamps))
         }
 
-        const user = await sql`SELECT name FROM users WHERE id = ${request.userID}`
+        const information = await sql`SELECT
+                                          u.name AS user_name,
+                                          c.name AS church_name,
+                                          s.sector AS sector_name,
+                                          p.name AS presidente_name,
+                                          coord.name AS coordenator_name,
+                                          sh.name AS sherperd_name
+                                      FROM users u
+                                               LEFT JOIN churchs c ON u.church = c.id
+                                               LEFT JOIN sectors s ON u.sector = s.id
+                                               LEFT JOIN users p ON p.designation = '93a4805a-c601-41a4-bb10-cbe13e0c459a'
+                                               LEFT JOIN users coord ON coord.designation = '22b0b929-81a4-468f-a8b3-8ac790a3ca0e'
+                                          AND coord.sector = u.sector
+                                               LEFT JOIN users sh ON sh.designation = '8bb35725-172f-48f6-a04d-2cd62a55183d'
+                                          AND sh.church = u.church
+                                      WHERE u.id = ${request.userID};
+        `
 
         switch (indice) {
             case 0:
@@ -59,19 +75,18 @@ export async function localReportsData(request, reply)  {
                     FROM users 
                     WHERE id = ${request.userID}
                     )
-                    SELECT
-                        (SELECT SUM(r.value)
-                         FROM revenues r, user_church uc 
-                         WHERE r.church = uc.church
-                            AND r.type = ${type_revenues}
-                           AND r.date BETWEEN ${start_date}::date 
-                               AND ${end_date}::date ) AS revenues_sum,
-                        (SELECT SUM(e.value)
-                        FROM expenses e, user_church uc
-                        WHERE e.church = uc.church
-                        AND e.type = ${type_revenues}
-                           AND e.date BETWEEN ${start_date}::date 
-                               AND ${end_date}::date ) AS expenses_sum;
+                    SELECT 
+                        SUM(r.value) AS revenues_sum,
+                        SUM(e.value) AS expenses_sum
+                    FROM user_church uc
+                    LEFT JOIN revenues r
+                        ON r.church = uc.church
+                        AND r.type ILIKE '%' || ${type_revenues} || '%'
+                        AND r.date BETWEEN ${start_date}::date AND ${end_date}::date
+                    LEFT JOIN expenses e 
+                        ON e.church = uc.church
+                        AND e.type ILIKE '%' || ${type_expenses} || '%'
+                        AND e.date BETWEEN ${start_date}::date AND ${end_date}::date
                         `
 
                 break
@@ -147,9 +162,11 @@ export async function localReportsData(request, reply)  {
             //                    AND ${end_date}::date ) AS expenses_sum;`
 
         }
+        console.log(sum)
         return reply.status(200).send({"revenues":revenues,
         "expenses":expenses,
-        "info_user": user})
+        "information": information,
+        "sum": sum})
     } catch (error) {
         console.error("Erro ao listar receitas:", error)
         return reply.status(500).send({ error: "Erro ao listar receitas" })
