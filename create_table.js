@@ -126,13 +126,21 @@ import { sql } from './db.js'
 //     )
 // `;
 
-// await sql`
-//     CREATE TABLE IF NOT EXISTS permissions_roles (
-//         permission_id UUID REFERENCES permissions(id) ON DELETE CASCADE,
-//         role_id UUID REFERENCES roles(id) ON DELETE CASCADE,
-//         PRIMARY KEY (permission_id, role_id)
-//         )
-// `
+await sql`
+    CREATE TABLE IF NOT EXISTS reports (
+        id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        title           VARCHAR(200) NOT NULL,
+        type            VARCHAR(200) NOT NULL,
+        date            TIMESTAMP NOT NULL,
+        start_date      DATE NOT NULL,
+        end_date        DATE NOT NULL,
+        revenues        NUMERIC(12, 2),
+        expenses        NUMERIC(12, 2),
+        by              VARCHAR(100) NOT NULL,
+        sector          UUID REFERENCES sectors(id),
+        church          UUID REFERENCES churchs(id)
+        )
+`
 
 
 // // Alterações nas tabelas
