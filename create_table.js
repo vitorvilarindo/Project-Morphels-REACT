@@ -126,21 +126,21 @@ import { sql } from './db.js'
 //     )
 // `;
 
-await sql`
-    CREATE TABLE IF NOT EXISTS reports (
-        id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-        title           VARCHAR(200) NOT NULL,
-        type            VARCHAR(200) NOT NULL,
-        date            TIMESTAMP NOT NULL,
-        start_date      DATE NOT NULL,
-        end_date        DATE NOT NULL,
-        revenues        NUMERIC(12, 2),
-        expenses        NUMERIC(12, 2),
-        by              VARCHAR(100) NOT NULL,
-        sector          UUID REFERENCES sectors(id),
-        church          UUID REFERENCES churchs(id)
-        )
-`
+// await sql`
+//     CREATE TABLE IF NOT EXISTS reports (
+//         id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+//         title           VARCHAR(200) NOT NULL,
+//         type            VARCHAR(200) NOT NULL,
+//         date            TIMESTAMP NOT NULL,
+//         start_date      DATE NOT NULL,
+//         end_date        DATE NOT NULL,
+//         revenues        NUMERIC(12, 2),
+//         expenses        NUMERIC(12, 2),
+//         by              VARCHAR(100) NOT NULL,
+//         sector          UUID REFERENCES sectors(id),
+//         church          UUID REFERENCES churchs(id)
+//         )
+// `
 
 
 // // Alterações nas tabelas
@@ -158,14 +158,15 @@ await sql`
 // await sql`ALTER TABLE revenues DROP COLUMN IF EXISTS user_id`;
 
 // await sql`
-//     ALTER TABLE users
-//         ADD COLUMN IF NOT EXISTS church UUID REFERENCES churchs(id)
+//     ALTER TABLE reports
+//         DROP COLUMN IF EXISTS revenues,
+//         DROP COLUMN IF EXISTS expenses
 //
 // `;
 //
 // await sql`
-//     ALTER TABLE expenses
-//         ADD COLUMN IF NOT EXISTS church UUID REFERENCES churchs(id)
+//     ALTER TABLE reports
+//         ADD COLUMN IF NOT EXISTS items JSONB
 // `;
 
 // await sql`

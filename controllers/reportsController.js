@@ -172,3 +172,27 @@ export async function localReportsData(request, reply)  {
         return reply.status(500).send({ error: "Erro ao listar receitas" })
     }
 }
+
+export async function setReportPreset(request, reply) {
+    try {
+        const { title, type, date, start_date, end_date, by, sector, church, items } = request.body
+        const newReportPreset = await sql`
+      INSERT INTO reports (title, type, date, start_date, end_date, by, sector, church, items)
+      VALUES (${title}, ${type}, ${date}, ${start_date}, ${date}, ${end_date}, ${by}, ${sector}, ${church}, ${items})
+      RETURNING *
+    `
+        return reply.status(201).send(newReportPreset[0])
+    } catch (error) {
+        console.error("Erro ao criar despesa:", error)
+        return reply.status(500).send({ error: "Erro ao criar despesa" })
+    }
+}
+export async function listReports(request, reply) {
+    try {
+        let reports = await sql`SELECT *
+                                FROM reports`
+        return reply.status(200).send(reports)
+    }catch(error) {
+    console.error("Erro ao listar reports:", error)
+    }
+}
