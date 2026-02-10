@@ -175,10 +175,25 @@ export async function localReportsData(request, reply)  {
 
 export async function setReportPreset(request, reply) {
     try {
-        const { title, type, date, start_date, end_date, by, sector, church, items } = request.body
+        let { title, type, start_date, end_date,church, options } = request.body
+        const by = await sql`SELECT r.name from users u join roles r on r.id = u.designation where u.id = ${request.userID}`
+        let sector
+        const date = `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}` ;
+        if (!church) {
+            const result = await sql`
+            select u.church, u.sector
+            from users u 
+            where u.id = ${request.userID}
+          `;
+            church = result[0]?.church;
+            sector = result[0]?.sector// assuming result is an array of rows
+        }else{
+            sector = await sql`SELECT c.sector from churchs c where c.name = '${church}'`
+        }
+
         const newReportPreset = await sql`
       INSERT INTO reports (title, type, date, start_date, end_date, by, sector, church, items)
-      VALUES (${title}, ${type}, ${date}, ${start_date}, ${date}, ${end_date}, ${by}, ${sector}, ${church}, ${items})
+      VALUES (${title}, ${type}, ${date}, ${start_date}, ${end_date}, ${by[0].name}, ${sector}, ${church}, ${options})
       RETURNING *
     `
         return reply.status(201).send(newReportPreset[0])
@@ -189,7 +204,8 @@ export async function setReportPreset(request, reply) {
 }
 export async function listReports(request, reply) {
     try {
-        let reports = await sql`SELECT *
+        const { search } = request.query
+        const reports = await sql`SELECT *
                                 FROM reports`
         return reply.status(200).send(reports)
     }catch(error) {
