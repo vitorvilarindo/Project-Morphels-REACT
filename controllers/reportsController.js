@@ -3,10 +3,10 @@ import {getPermissionByName} from "./permissionsController.js";
 
 export async function localReportsData(request, reply)  {
     try {
-        let { type_revenues, type_expenses, start_date, end_date } = request.body
-        let revenues
-        let expenses
-        let sum
+        let { id } = request.body
+        let revenues ={}
+        let expenses = {}
+        let sum = {}
         let indice
         const viewPermissions = ["general_preview", "sectorial_preview", "local_preview"];
         for (let i = 0; i < viewPermissions.length; i++) {
@@ -18,26 +18,10 @@ export async function localReportsData(request, reply)  {
                 break
             }
         }
+        const params = await sql`SELECT date, start_date, end_date, by, church, sector, items from reports where id = ${id}`;
 
-        if (type_revenues === "All") {
-            type_revenues = ""
-        }
-        if (type_expenses === "All") {
-            type_expenses = ""
-        }
-
-        if (start_date === "") {
-            const revenues_date = await sql`SELECT date FROM revenues`
-            const timestamps = revenues_date.map(d => new Date(d.date).getTime())
-            start_date = new Date(Math.min(...timestamps))
-
-        }
-
-        if (end_date === "") {
-            const revenues_date = await sql`SELECT date FROM revenues`
-            const timestamps = revenues_date.map(d => new Date(d.date).getTime())
-            end_date = new Date(Math.max(...timestamps))
-        }
+        const start_date = params[0].start_date
+        const end_date = params[0].end_date
 
         const information = await sql`SELECT
                                           u.name AS user_name,
@@ -59,35 +43,43 @@ export async function localReportsData(request, reply)  {
 
         switch (indice) {
             case 0:
-                revenues = await sql`SELECT r.*
+                if (params[0].items.revenues === true){
+                    revenues = await sql`SELECT r.*
                     FROM revenues r
                                      JOIN users u ON r.church = u.church
-                                     WHERE u.id = ${request.userID} AND r.type ILIKE '%' || ${type_revenues} || '%'
+                                     WHERE u.id = ${request.userID}
                                        AND r.date BETWEEN ${start_date} :: date AND ${end_date}::date`
-                expenses = await sql`SELECT e.*
+                }
+                if (params[0].items.expenses === true) {
+                    expenses = await sql`SELECT e.*
                                      FROM expenses e
                                      JOIN users u ON e.church = u.church
-                                     WHERE u.id = ${request.userID} AND e.type ILIKE '%' || ${type_expenses} || '%'
+                                     WHERE u.id = ${request.userID}
                                        AND e.date BETWEEN ${start_date}::date AND ${end_date}::date`
+                }
 
-                sum = await sql`WITH user_church AS (
-                    SELECT church
-                    FROM users 
-                    WHERE id = ${request.userID}
-                    )
-                    SELECT 
-                        SUM(r.value) AS revenues_sum,
-                        SUM(e.value) AS expenses_sum
-                    FROM user_church uc
-                    LEFT JOIN revenues r
-                        ON r.church = uc.church
-                        AND r.type ILIKE '%' || ${type_revenues} || '%'
-                        AND r.date BETWEEN ${start_date}::date AND ${end_date}::date
-                    LEFT JOIN expenses e 
-                        ON e.church = uc.church
-                        AND e.type ILIKE '%' || ${type_expenses} || '%'
-                        AND e.date BETWEEN ${start_date}::date AND ${end_date}::date
-                        `
+                if (params[0].items.resume === true) {
+                    sum = await sql`
+                        WITH user_data AS (
+                            SELECT church FROM users WHERE id = ${request.userID}
+                        ),
+                             total_revenues AS (
+                                 SELECT SUM(r.value) as total
+                                 FROM revenues r, user_data ud
+                                 WHERE r.church = ud.church
+                                   AND r.date BETWEEN ${start_date}::date AND ${end_date}::date
+                             ),
+                             total_expenses AS (
+                                 SELECT SUM(e.value) as total
+                                 FROM expenses e, user_data ud
+                                 WHERE e.church = ud.church
+                                   AND e.date BETWEEN ${start_date}::date AND ${end_date}::date
+                             )
+                        SELECT
+                            COALESCE((SELECT total FROM total_revenues), 0) AS revenues_sum,
+                            COALESCE((SELECT total FROM total_expenses), 0) AS expenses_sum
+                    `;
+                }
 
                 break
             // case 1:
@@ -163,9 +155,11 @@ export async function localReportsData(request, reply)  {
 
         }
         console.log(sum)
-        return reply.status(200).send({"revenues":revenues,
+        return reply.status(200).send({
+            "revenues":revenues,
         "expenses":expenses,
         "information": information,
+        "date": params[0].date,
         "sum": sum})
     } catch (error) {
         console.error("Erro ao listar receitas:", error)
@@ -175,31 +169,48 @@ export async function localReportsData(request, reply)  {
 
 export async function setReportPreset(request, reply) {
     try {
-        let { title, type, start_date, end_date,church, options } = request.body
-        const by = await sql`SELECT r.name from users u join roles r on r.id = u.designation where u.id = ${request.userID}`
-        let sector
-        const date = `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}` ;
+        // 'options' aqui já é o objeto { resume: bool, revenues: bool... }
+        let { title, type, start_date, end_date, church, options } = request.body;
+
+        const by = await sql`SELECT r.name from users u join roles r on r.id = u.designation where u.id = ${request.userID}`;
+
+        let sector;
+        const date = new Date(); // O driver postgres.js aceita o objeto Date diretamente
+
         if (!church) {
             const result = await sql`
-            select u.church, u.sector
-            from users u 
-            where u.id = ${request.userID}
-          `;
+                select u.church, u.sector
+                from users u
+                where u.id = ${request.userID}
+            `;
             church = result[0]?.church;
-            sector = result[0]?.sector// assuming result is an array of rows
-        }else{
-            sector = await sql`SELECT c.sector from churchs c where c.name = '${church}'`
+            sector = result[0]?.sector;
+        } else {
+            // CORREÇÃO: Remova as aspas simples e a interpolação manual para evitar SQL Injection
+            const sectorResult = await sql`SELECT c.sector from churchs c where c.name = ${church}`;
+            sector = sectorResult[0]?.sector;
         }
 
         const newReportPreset = await sql`
-      INSERT INTO reports (title, type, date, start_date, end_date, by, sector, church, items)
-      VALUES (${title}, ${type}, ${date}, ${start_date}, ${end_date}, ${by[0].name}, ${sector}, ${church}, ${options})
-      RETURNING *
-    `
-        return reply.status(201).send(newReportPreset[0])
+            INSERT INTO reports (title, type, date, start_date, end_date, by, sector, church, items)
+            VALUES (
+                       ${title},
+                       ${type},
+                       ${date},
+                       ${start_date},
+                       ${end_date},
+                       ${by[0].name},
+                       ${sector},
+                       ${church},
+                       ${options} -- O driver detecta que é um objeto e grava como JSONB
+                   )
+            RETURNING *
+        `;
+
+        return reply.status(201).send(newReportPreset[0]);
     } catch (error) {
-        console.error("Erro ao criar despesa:", error)
-        return reply.status(500).send({ error: "Erro ao criar despesa" })
+        console.error("Erro ao criar relatório:", error);
+        return reply.status(500).send({ error: "Erro ao criar relatório" });
     }
 }
 export async function listReports(request, reply) {

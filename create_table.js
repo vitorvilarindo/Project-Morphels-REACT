@@ -164,10 +164,11 @@ import { sql } from './db.js'
 //
 // `;
 //
-// await sql`
-//     ALTER TABLE reports
-//         ADD COLUMN IF NOT EXISTS items JSONB
-// `;
+await sql`
+    ALTER TABLE reports
+        ALTER COLUMN end_date TYPE TIMESTAMP
+            USING date::timestamp;
+`;
 
 // await sql`
 //     ALTER TABLE members
