@@ -165,9 +165,8 @@ import { sql } from './db.js'
 // `;
 //
 await sql`
-    ALTER TABLE reports
-        ALTER COLUMN end_date TYPE TIMESTAMP
-            USING date::timestamp;
+    ALTER TABLE users 
+        ADD COLUMN sing_up_date TIMESTAMP;
 `;
 
 // await sql`

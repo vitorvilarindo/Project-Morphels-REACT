@@ -1,31 +1,29 @@
 import bcrypt from "bcrypt"
 import { sql } from "../db.js"
+import { getRole } from './rolesController.js'
 
 // Criar usuário
 export async function createUser(request, reply) {
     try {
-        const user = request.body
+        const {name, email, password, designation, sector, church, sing_up_date} = request.body
 
         // Buscar IDs de role e sector
-        const designationRow = await sql`SELECT id FROM roles WHERE name = ${user.designation}`
-        const sectorRow = await sql`SELECT id FROM sectors WHERE sector = ${user.sector}`
-
-        const designationID = designationRow[0]?.id
-        const sectorID = sectorRow[0]?.id
+        const designationID = await sql`SELECT id FROM roles WHERE name = ${designation}`
+        const sectorID = await sql`SELECT id FROM sectors WHERE sector = ${sector}`
+        const churchID = await sql`SELECT id FROM churchs WHERE name = ${church}`
 
         if (!designationID || !sectorID) {
-            return reply.status(400).send({ error: "Role ou setor inválido" })
+            return reply.status(400).send({ error: "Role or sector invalid" })
         }
 
         // Criptografar senha
-        const encryptedPassword = await bcrypt.hash(user.password, 10)
+        const encryptedPassword = await bcrypt.hash(password, 10)
 
         const newUser = await sql`
-      INSERT INTO users (name, email, password, designation, sector)
-      VALUES (${user.name}, ${user.email}, ${encryptedPassword}, ${designationID}, ${sectorID})
-      RETURNING *
+      INSERT INTO users (name, email, password, designation, sector, church, last_access, sing_up_date)
+      VALUES (${name}, ${email}, ${encryptedPassword}, ${designationID[0]?.id}, ${sectorID[0]?.id}, ${churchID[0]?.id}, ${sing_up_date})
     `
-        return reply.status(201).send(newUser[0])
+        return reply.status(201).send()
     } catch (err) {
         console.error(err)
         return reply.status(500).send({ error: "Erro ao criar usuário" })
@@ -33,6 +31,22 @@ export async function createUser(request, reply) {
 }
 
 // Login
+export async function listUsers(request, reply) {
+    try{
+        const { search } = request.query
+        const users = await sql`SELECT name, email, designation, last_access, sing_up_date FROM users`
+        let users_formated = []
+        for (const user of users) {
+            const designation_name = await getRole(user.designation)
+            users_formated = [...users_formated, {name: user.name, email: user.email, designation: designation_name, last_access: user.last_access, sing_up_date: user.sing_up_date }]
+        }
+
+        return reply.status(200).send(users)
+    }catch(err){
+        console.error(err)
+        return reply.status(500).send({error: err.message})
+    }
+}
 export async function login(request, reply) {
     try {
         const { loginEmail, loginPassword } = request.body

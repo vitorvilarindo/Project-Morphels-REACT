@@ -37,6 +37,12 @@ export async function listRoles(request, reply) {
     }
 }
 
+export async function getRole(role_id) {
+    return await sql`SELECT name
+                     FROM roles
+                     WHERE id = ${role_id}`
+}
+
 // Editar role
 export async function editRole(request, reply) {
     try {
