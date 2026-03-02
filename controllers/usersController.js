@@ -38,10 +38,11 @@ export async function listUsers(request, reply) {
         let users_formated = []
         for (const user of users) {
             const designation_name = await getRole(user.designation)
-            users_formated = [...users_formated, {name: user.name, email: user.email, designation: designation_name, last_access: user.last_access, sing_up_date: user.sing_up_date }]
+            users_formated = [...users_formated, {name: user.name, email: user.email, designation: designation_name[0]?.name, last_access: user.last_access, sing_up_date: user.sing_up_date }]
         }
+        console.log(users_formated)
 
-        return reply.status(200).send(users)
+        return reply.status(200).send(users_formated)
     }catch(err){
         console.error(err)
         return reply.status(500).send({error: err.message})
