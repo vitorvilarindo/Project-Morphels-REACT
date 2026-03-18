@@ -166,7 +166,7 @@ import { sql } from './db.js'
 //
 await sql`
     ALTER TABLE users 
-        ADD COLUMN sing_up_date TIMESTAMP;
+        ADD COLUMN phone_number TIMESTAMP;
 `;
 
 // await sql`

@@ -5,7 +5,7 @@ import { getRole } from './rolesController.js'
 // Criar usuário
 export async function createUser(request, reply) {
     try {
-        const {name, email, password, designation, sector, church, sing_up_date} = request.body
+        const {name, email, password, phone_number, designation, sector, church, sing_up_date} = request.body
 
         // Buscar IDs de role e sector
         const designationID = await sql`SELECT id FROM roles WHERE name = ${designation}`
