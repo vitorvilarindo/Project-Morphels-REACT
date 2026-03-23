@@ -24,7 +24,7 @@ export async function listRoles(request, reply) {
 
         if (search) {
             roles = await sql`
-        SELECT * FROM roles WHERE name ILIKE ${"%" + search + "%"}
+        SELECT id, name FROM roles WHERE name ILIKE ${"%" + search + "%"}
       `
         } else {
             roles = await sql`SELECT * FROM roles`

@@ -20,8 +20,8 @@ export async function createUser(request, reply) {
         const encryptedPassword = await bcrypt.hash(password, 10)
 
         const newUser = await sql`
-      INSERT INTO users (name, email, password, designation, sector, church, last_access, sing_up_date)
-      VALUES (${name}, ${email}, ${encryptedPassword}, ${designationID[0]?.id}, ${sectorID[0]?.id}, ${churchID[0]?.id}, ${sing_up_date})
+      INSERT INTO users (name, email, password, phone_number, designation, sector, church, last_access, sing_up_date)
+      VALUES (${name}, ${email}, ${encryptedPassword}, ${phone_number}, ${designationID[0]?.id}, ${sectorID[0]?.id}, ${churchID[0]?.id}, ${last_access}, ${sing_up_date})
     `
         return reply.status(201).send()
     } catch (err) {
@@ -30,7 +30,7 @@ export async function createUser(request, reply) {
     }
 }
 
-// Login
+// List users
 export async function listUsers(request, reply) {
     try{
         const { search } = request.query
@@ -48,6 +48,7 @@ export async function listUsers(request, reply) {
         return reply.status(500).send({error: err.message})
     }
 }
+// Login
 export async function login(request, reply) {
     try {
         const { loginEmail, loginPassword } = request.body
