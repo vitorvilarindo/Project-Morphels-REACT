@@ -127,18 +127,13 @@ import { sql } from './db.js'
 // `;
 
 // await sql`
-//     CREATE TABLE IF NOT EXISTS reports (
-//         id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-//         title           VARCHAR(200) NOT NULL,
-//         type            VARCHAR(200) NOT NULL,
-//         date            TIMESTAMP NOT NULL,
-//         start_date      DATE NOT NULL,
-//         end_date        DATE NOT NULL,
-//         revenues        NUMERIC(12, 2),
-//         expenses        NUMERIC(12, 2),
-//         by              VARCHAR(100) NOT NULL,
-//         sector          UUID REFERENCES sectors(id),
-//         church          UUID REFERENCES churchs(id)
+//     CREATE TABLE IF NOT EXISTS cards (
+//         id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+//         code       VARCHAR(200) NOT NULL,
+//         member     UUID REFERENCES members(id),
+//         issue_date TIMESTAMP    NOT NULL,
+//         due_date   DATE         NOT NULL,
+//         status     DATE         NOT NULL
 //         )
 // `
 
@@ -164,10 +159,10 @@ import { sql } from './db.js'
 //
 // `;
 //
-await sql`
-    ALTER TABLE users 
-        ADD COLUMN phone_number TIMESTAMP;
-`;
+// await sql`
+//     ALTER TABLE users
+//         ADD COLUMN phone_number TIMESTAMP;
+// `;
 
 // await sql`
 //     ALTER TABLE members
