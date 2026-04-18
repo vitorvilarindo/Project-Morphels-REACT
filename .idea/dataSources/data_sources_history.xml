@@ -1,0 +1,16 @@
+<DataSourcesHistory>
+  <DataSourceFromHistory isRemovedFromProject="true">
+    <data-source source="LOCAL" name="neondb@ep-floral-frost-acq239jd-pooler.sa-east-1.aws.neon.tech" uuid="a44f022f-2453-40ea-a22a-bae5391927b4">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="POSTGRES" />
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://ep-floral-frost-acq239jd-pooler.sa-east-1.aws.neon.tech:5432/neondb</jdbc-url>
+      <schema-mapping />
+      <working-dir>$ProjectFileDir$</working-dir>
+      <driver-properties>
+        <property name="sslmode" value="require" />
+      </driver-properties>
+    </data-source>
+  </DataSourceFromHistory>
+</DataSourcesHistory>
