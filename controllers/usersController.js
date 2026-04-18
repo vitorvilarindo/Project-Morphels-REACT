@@ -55,6 +55,7 @@ export async function login(request, reply) {
 
         // Busca usuário pelo email
         const user = await sql`SELECT id, password, designation FROM users WHERE email = ${loginEmail}`
+        await sql`UPDATE user SET last_access = ${new Date()} WHERE email = ${loginEmail}`
 
         if (user.length === 0 || !user[0].password) {
             return reply.status(400).send({ success: false, route: "/" })
