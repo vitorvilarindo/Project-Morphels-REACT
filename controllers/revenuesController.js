@@ -24,8 +24,19 @@ export async function listRevenues(request, reply) {
     try {
         const { search } = request.query
         let revenues
+        let indice
+        const viewPermissions = ["general_preview", "sectorial_preview", "local_preview"];
+        for (let i = 0; i < viewPermissions.length; i++) {
+            const permissions = await getPermissionByName(viewPermissions[i]);
+            console.log(permissions)
+            if (permissions.length > 0 && request.permissions.includes(permissions[0].id)) {
+                indice = i; // posição dentro de viewPermissions
+                console.log("Permissão encontrada:", permissions[0].id);
+                break
+            }
+        }
 
-        switch (request.indices) {
+        switch (indice) {
             case 0:
                 if (search) {
                     revenues = await sql`

@@ -5,7 +5,7 @@ import { getRole } from './rolesController.js'
 // Criar usuário
 export async function createUser(request, reply) {
     try {
-        const {name, email, password, phone_number, designation, sector, church, sing_up_date} = request.body
+        const {name, email, password, phone_number, designation, sector, church} = request.body
 
         // Buscar IDs de role e sector
         const designationID = await sql`SELECT id FROM roles WHERE name = ${designation}`
@@ -21,7 +21,7 @@ export async function createUser(request, reply) {
 
         const newUser = await sql`
       INSERT INTO users (name, email, password, phone_number, designation, sector, church, last_access, sing_up_date)
-      VALUES (${name}, ${email}, ${encryptedPassword}, ${phone_number}, ${designationID[0]?.id}, ${sectorID[0]?.id}, ${churchID[0]?.id}, ${last_access}, ${sing_up_date})
+      VALUES (${name}, ${email}, ${encryptedPassword}, ${phone_number}, ${designationID[0]?.id}, ${sectorID[0]?.id}, ${churchID[0]?.id}, ${""}, ${new Date()})
     `
         return reply.status(201).send()
     } catch (err) {
@@ -55,7 +55,7 @@ export async function login(request, reply) {
 
         // Busca usuário pelo email
         const user = await sql`SELECT id, password, designation FROM users WHERE email = ${loginEmail}`
-        await sql`UPDATE user SET last_access = ${new Date()} WHERE email = ${loginEmail}`
+        const accessUpdate = await sql`UPDATE users SET last_access = ${new Date()} WHERE email = ${loginEmail}`
 
         if (user.length === 0 || !user[0].password) {
             return reply.status(400).send({ success: false, route: "/" })
@@ -86,6 +86,7 @@ export async function login(request, reply) {
         return reply.send({
             success: true,
             route: "/main",
+            access: accessUpdate,
         })
     } catch (err) {
         console.error(err)

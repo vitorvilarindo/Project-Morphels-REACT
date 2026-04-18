@@ -73,27 +73,6 @@ server.decorate('checkPermissions',function (required_permission) {
         }
     }
 })
-server.decorate("checkAccessLevel", function () {
-    return async (request, reply) => {
-        try{
-            let indice
-            const viewPermissions = ["general_preview", "sectorial_preview", "local_preview"];
-            for (let i = 0; i < viewPermissions.length; i++) {
-                const permissions = await getPermissionByName(viewPermissions[i]);
-                console.log(permissions)
-                if (permissions.length > 0 && request.permissions.includes(permissions[0].id)) {
-                    indice = i; // posição dentro de viewPermissions
-                    console.log("Permissão encontrada:", permissions[0].id);
-                    break
-                }
-            }
-            request.indices = indice
-            return reply.status(200).send({})
-        }catch (e) {
-            console.log(e)
-        }
-    }
-})
 
 
 // Rotas
