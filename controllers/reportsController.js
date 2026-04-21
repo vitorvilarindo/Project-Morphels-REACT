@@ -1,5 +1,4 @@
 import { sql } from "../db.js"
-import {getPermissionByName} from "./permissionsController.js";
 
 export async function localReportsData(request, reply)  {
     try {

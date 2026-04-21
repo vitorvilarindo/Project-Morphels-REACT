@@ -1,5 +1,5 @@
 ### GET request to example server
-GET http://localhost:3000/revenues/filter?type=Oferta&date1=2024-11-04&date2=2025-12-04
+GET http://localhost:3000/revenues/
 
 
 ###

@@ -12,8 +12,8 @@ export async function createUser(request, reply) {
         const sectorID = await sql`SELECT id FROM sectors WHERE sector = ${sector}`
         const churchID = await sql`SELECT id FROM churchs WHERE name = ${church}`
 
-        if (!designationID || !sectorID) {
-            return reply.status(400).send({ error: "Role or sector invalid" })
+        if (!designationID || !sectorID || !churchID) {
+            return reply.status(400).send({ error: "Role, sector or church invalid" })
         }
 
         // Criptografar senha
@@ -21,9 +21,9 @@ export async function createUser(request, reply) {
 
         const newUser = await sql`
       INSERT INTO users (name, email, password, phone_number, designation, sector, church, last_access, sing_up_date)
-      VALUES (${name}, ${email}, ${encryptedPassword}, ${phone_number}, ${designationID[0]?.id}, ${sectorID[0]?.id}, ${churchID[0]?.id}, ${""}, ${new Date()})
+      VALUES (${name}, ${email}, ${encryptedPassword}, ${phone_number}, ${designationID[0]?.id}, ${sectorID[0]?.id}, ${churchID[0]?.id}, ${new Date()}, ${new Date()})
     `
-        return reply.status(201).send()
+        return reply.status(201).send({success: "user sing-up"})
     } catch (err) {
         console.error(err)
         return reply.status(500).send({ error: "Erro ao criar usuário" })

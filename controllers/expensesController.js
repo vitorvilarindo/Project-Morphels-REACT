@@ -1,5 +1,4 @@
 import { sql } from "../db.js"
-import {getPermissionByName} from "./permissionsController.js";
 
 // Criar despesa
 export async function createExpense(request, reply) {

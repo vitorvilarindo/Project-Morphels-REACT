@@ -6,8 +6,8 @@ import {
 } from "../controllers/churchsController.js"
 
 export default async function churchsRoutes(server) {
-    server.post("/churchs", createChurch)
-    server.get("/churchs", listChurchs)
-    server.put("/churchs/:id", editChurch)
-    server.delete("/churchs/:id", deleteChurch)
+    server.post("/churchs", {preHandler: server.checkPermissions("can_add"),handler: createChurch})
+    server.get("/churchs", {preHandler: server.checkPermissions("can_view"),handler: listChurchs})
+    server.put("/churchs/:id", {preHandler: server.checkPermissions("can_edit"),handler: editChurch})
+    server.delete("/churchs/:id", {preHandler: server.checkPermissions("can_delete"),handler: deleteChurch})
 }

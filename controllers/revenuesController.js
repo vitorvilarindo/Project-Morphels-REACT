@@ -1,5 +1,4 @@
 import { sql } from "../db.js"
-import {getPermissionByName} from "./permissionsController.js";
 
 // Criar receita
 export async function createRevenue(request, reply) {

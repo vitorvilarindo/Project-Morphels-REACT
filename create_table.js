@@ -14,11 +14,9 @@ import { sql } from './db.js'
 // })
 
 // sql`
-// CREATE TABLE IF NOT EXISTS users (
+// CREATE TABLE IF NOT EXISTS resourses (
 //   id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-//   name        VARCHAR(200) NOT NULL,
-//   email       VARCHAR(100) NOT NULL UNIQUE,
-//   password    VARCHAR(50) NOT NULL
+//   name        VARCHAR(200) NOT NULL
 //   );
 // `.then(() => {
 //   console.log('tabela criada com sucesso  ')
@@ -126,23 +124,22 @@ import { sql } from './db.js'
 //     )
 // `;
 
-// await sql`
-//     CREATE TABLE IF NOT EXISTS cards (
-//         id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-//         code       VARCHAR(200) NOT NULL,
-//         member     UUID REFERENCES members(id),
-//         issue_date TIMESTAMP    NOT NULL,
-//         due_date   DATE         NOT NULL,
-//         status     DATE         NOT NULL
-//         )
-// `
+// await sql `
+// CREATE TABLE permissions (
+//     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+//     role_id UUID REFERENCES roles(id) ON DELETE CASCADE,
+//     page_id UUID REFERENCES pages(id) ON DELETE CASCADE,
+//     can_view BOOLEAN DEFAULT false,
+//     can_add BOOLEAN DEFAULT false,
+//     can_edit BOOLEAN DEFAULT false,
+//     can_delete BOOLEAN DEFAULT false,
+//     UNIQUE(role_id, page_id) -- Garante que não haja duplicatas
+// )`;
 
 
 // // Alterações nas tabelas
 // await sql`
-//     ALTER TABLE users
-//     ALTER COLUMN designation TYPE UUID USING designation::uuid;
-//
+//     ALTER TABLE resourses RENAME TO pages
 // `
 // await sql`ALTER TABLE users
 //     ADD CONSTRAINT fk_users_designation
@@ -150,19 +147,20 @@ import { sql } from './db.js'
 // `;
 // await sql`ALTER TABLE companies DROP COLUMN IF EXISTS user_id`;
 // await sql`ALTER TABLE expenses DROP COLUMN IF EXISTS user_id`;
-// await sql`ALTER TABLE revenues DROP COLUMN IF EXISTS user_id`;
+// await sql`CREATE type scope_level AS ENUM ('global', 'sector', 'local')`;
+//
+await sql`
+    ALTER TABLE users
+    ALTER COLUMN phone_number TYPE VARCHAR(50)
+
+`;
+//
 
 // await sql`
-//     ALTER TABLE reports
-//         DROP COLUMN IF EXISTS revenues,
-//         DROP COLUMN IF EXISTS expenses
-//
-// `;
-//
-// await sql`
-//     ALTER TABLE users
-//         ADD COLUMN phone_number TIMESTAMP;
-// `;
+//   DROP TABLE IF EXISTS permissions;
+// `.then(() => {
+//   console.log("tabela deletada")
+// })
 
 // await sql`
 //     ALTER TABLE members

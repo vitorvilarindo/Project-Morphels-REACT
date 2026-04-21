@@ -1,14 +1,19 @@
 ###
-POST http://localhost:3000/permissions_roles
+POST http://localhost:3000/users
 Content-Type: application/json
 
 {
-  "role": "Pastor Presidente",
-  "permissions": ["manage_churches", "manage_data", "manage_designations", "manage_sectors"]
+  "name": "ADMIN",
+  "email": "admin@gmail.com",
+  "password": "admin",
+  "phone_number": "(61) 91234-5678",
+  "designation": "Administrador",
+  "sector": "Setor 3",
+  "Church": "Igreja Quadra 3"
 }
 
 
 ###
-DELETE http://localhost:3000/roles/40bf4deb-3435-4994-a48c-bb0a1f99b967
+DELETE http://localhost:3000/users/b612d20b-4806-488a-9c19-6fcd2ac778d4
 
 ###

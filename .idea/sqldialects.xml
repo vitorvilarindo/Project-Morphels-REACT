@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/controllers/cardsController.js" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/controllers/churchsController.js" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/controllers/pagesController.js" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/controllers/revenuesController.js" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/controllers/rolesController.js" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/controllers/usersController.js" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/create_table.js" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/db.js" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/server.js" dialect="GenericSQL" />
   </component>
   <component name="SqlResolveMappings">
     <file url="file://$PROJECT_DIR$/database_postgres.js" scope="{&quot;node&quot;:{  &quot;@negative&quot;:&quot;1&quot;,  &quot;group&quot;:{   &quot;@kind&quot;:&quot;root&quot;,   &quot;node&quot;:{    &quot;@negative&quot;:&quot;1&quot;   }  } }}" />
