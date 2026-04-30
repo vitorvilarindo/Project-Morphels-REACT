@@ -1,4 +1,6 @@
 import { sql } from "../db.js"
+import {Listing} from "../Classes/List.js";
+import * as sea from "node:sea";
 
 // Criar receita
 export async function createRevenue(request, reply) {
@@ -22,50 +24,9 @@ export async function createRevenue(request, reply) {
 export async function listRevenues(request, reply) {
     try {
         const { search } = request.query
-        let revenues
-        let indice
-        const viewPermissions = ["general_preview", "sectorial_preview", "local_preview"];
-        for (let i = 0; i < viewPermissions.length; i++) {
-            const permissions = await getPermissionByName(viewPermissions[i]);
-            console.log(permissions)
-            if (permissions.length > 0 && request.permissions.includes(permissions[0].id)) {
-                indice = i; // posição dentro de viewPermissions
-                console.log("Permissão encontrada:", permissions[0].id);
-                break
-            }
-        }
+        const listing = await new Listing(request.userID, "revenues", search, request.access_scope).OnGetAndList()
 
-        switch (indice) {
-            case 0:
-                if (search) {
-                    revenues = await sql`
-                SELECT * FROM revenues WHERE member ILIKE ${"%" + search + "%"}
-            `
-                } else {
-                    revenues = await sql`SELECT * FROM revenues`
-                }
-                break
-            case 1:
-                if(search) {
-                    revenues = await sql`
-                    SELECT r.* FROM churchs c JOIN revenues r ON r.church = c.id JOIN users u ON c.sector = u.sector WHERE u.id = ${request.userID} AND r.member ILIKE ${"%" + search + "%"}
-                    `
-                }else {
-                    revenues = await sql`
-                    SELECT r.* FROM churchs c JOIN revenues r ON r.church = c.id JOIN users u ON c.sector = u.sector WHERE u.id = ${request.userID}
-                    `
-                }
-                break
-            case 2:
-                if(search) {
-                    revenues = await sql`SELECT r.* FROM churchs c JOIN revenues r ON r.church = c.id JOIN users u ON c.id = u.church WHERE u.id = ${request.userID} AND r.member ILIKE ${"%" + search + "%"}`
-                }else{
-                    revenues = await sql`SELECT r.* FROM churchs c JOIN revenues r ON r.church = c.id JOIN users u ON c.id = u.church WHERE u.id = ${request.userID}`
-                }
-        }
-
-
-        return reply.status(200).send(revenues)
+        return reply.status(200).send(listing)
     } catch (error) {
         console.error("Erro ao listar receitas:", error)
         return reply.status(500).send({ error: "Erro ao listar receitas" })

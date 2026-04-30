@@ -49,30 +49,57 @@ server.addHook('preHandler', async (request, reply) => {
         return reply.status(401).send({ error: 'Token inválido ou expirado' })
     }
 })
-server.decorate('checkPermissions',function (action) {
+server.decorate('checkPermissions', function (action) {
     return async (request, reply) => {
         try {
-            const {userID} = request.userID;
-            const { page } = request.params;
+            const userID = request.userID;
 
-            const [permission] = await sql`
-                SELECT p.${sql(action)}
-                from permissions p
-                         JOIN users u ON p.role_id = u.designation
-                         JOIN pages pg ON pg.id = p.page_id
+            // Proteção: se routerPath falhar, usamos a URL limpa
+            const rawPath = request.routerPath || request.url.split('?')[0];
+            console.log(rawPath)
+            const pageName = rawPath.split('/')[1];
+            console.log(pageName)
+
+            // LOG DE DEBUG - Verifique seu terminal após o erro 500
+            console.log(`DEBUG: User: ${userID}, Page: ${pageName}, Action: ${action}`);
+
+            const permission = await sql`
+                SELECT ${action} as has_permission
+                FROM permissions p
+                JOIN users u ON p.role_id = u.designation
+                JOIN pages pg ON pg.id = p.page_id
                 WHERE u.id = ${userID}
-                  AND p.name = ${page}
+                  AND pg.name = ${pageName}
+                LIMIT 1
+            `;
+            const access_scope = await sql`
+                SELECT access_scope as has_permission
+                FROM permissions p 
+                JOIN users u ON p.role_id = u.designation
+                JOIN pages pg ON pg.id = p.page_id
+                WHERE u.id = ${userID}
+                AND pg.name = ${pageName}
             `
-            if (permission[0] === false) {
-                return reply.reply(403, {message: "You do not have permission to execute this action."})
+
+            request.access_scope = access_scope[0]
+
+            if (permission.length === 0 || !permission[0].has_permission) {
+                return reply.status(403).send({
+                    message: "You do not have permission to execute this action."
+                });
             }
 
         } catch (e) {
-            return reply.status(500).send({message: 'Internal Server Error'})
+            // ESSA LINHA É A MAIS IMPORTANTE AGORA:
+            console.error("ERRO NO SQL OU MIDDLEWARE:", e);
+
+            return reply.status(500).send({
+                message: 'Internal Server Error',
+                debug: e.message // Remova o 'debug' após consertar
+            });
         }
     }
 })
-
 
 
 

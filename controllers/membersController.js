@@ -1,4 +1,5 @@
 import { sql } from "../db.js";
+import {Listing} from "../Classes/List.js";
 
 // Criar Membro
 export async function createMember(request, reply) {
@@ -23,45 +24,9 @@ export async function createMember(request, reply) {
 export async function listMembers(request, reply) {
     try {
         const { search } = request.query;
-        let members;
-        let indice;
+        const listing = await new Listing(request.userID, "members", search, request.access_scope).OnGetAndList()
 
-        const viewPermissions = ["general_preview", "sectorial_preview", "local_preview"];
-
-        // Lógica de verificação de permissão
-        for (let i = 0; i < viewPermissions.length; i++) {
-            const permissions = await getPermissionByName(viewPermissions[i]);
-            if (permissions.length > 0 && request.permissions.includes(permissions[0].id)) {
-                indice = i;
-                break;
-            }
-        }
-
-        switch (indice) {
-            case 0: // Geral: Vê tudo
-                if (search) {
-                    members = await sql`SELECT * FROM members WHERE name ILIKE ${"%" + search + "%"}`;
-                } else {
-                    members = await sql`SELECT * FROM members`;
-                }
-                break;
-            case 1: // Setorial: Vê membros das igrejas do mesmo setor
-                const querySector = search ?
-                    sql`SELECT m.* FROM churchs c JOIN members m ON m.church = c.id JOIN users u ON c.sector = u.sector WHERE u.id = ${request.userID} AND m.name ILIKE ${"%" + search + "%"}` :
-                    sql`SELECT m.* FROM churchs c JOIN members m ON m.church = c.id JOIN users u ON c.sector = u.sector WHERE u.id = ${request.userID}`;
-                members = await querySector;
-                break;
-            case 2: // Local: Vê membros apenas da sua própria igreja
-                const queryLocal = search ?
-                    sql`SELECT m.* FROM churchs c JOIN members m ON m.church = c.id JOIN users u ON c.id = u.church WHERE u.id = ${request.userID} AND m.name ILIKE ${"%" + search + "%"}` :
-                    sql`SELECT m.* FROM churchs c JOIN members m ON m.church = c.id JOIN users u ON c.id = u.church WHERE u.id = ${request.userID}`;
-                members = await queryLocal;
-                break;
-            default:
-                members = [];
-        }
-
-        return reply.status(200).send(members);
+        return reply.status(200).send(listing);
     } catch (error) {
         console.error("Erro ao listar membros:", error);
         return reply.status(500).send({ error: "Erro ao listar membros" });
