@@ -38,8 +38,15 @@ export class Listing {
                                 ? sql`AND r.member ILIKE ${searchTerm}`
                                 : sql``}
                 `;
-            }
-            console.log(response);
+            }else if (this.access_scope.has_permission === "local"){
+                response = await sql`SELECT r.*
+                                     FROM ${table} r
+                                              JOIN churchs c ON r.church = c.id
+                                              JOIN users u ON c.id = u.church
+                                     WHERE u.id = ${this.userID} ${searchTerm 
+                                             ? sql`AND r.member ILIKE ${"%" + searchTerm + "%"}` 
+                                             : sql``}`
+            }            console.log(response);
             return response;
 
         } catch (e) {
