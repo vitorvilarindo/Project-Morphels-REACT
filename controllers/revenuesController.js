@@ -1,5 +1,5 @@
 import { sql } from "../db.js"
-import {Listing} from "../Classes/List.js";
+import {Listing, Filter} from "../Classes/List.js";
 import * as sea from "node:sea";
 
 // Criar receita
@@ -24,9 +24,9 @@ export async function createRevenue(request, reply) {
 export async function listRevenues(request, reply) {
     try {
         const { search } = request.query
-        const listing = await new Listing(request.userID, "revenues", search, request.access_scope).OnGetAndList()
+        const revenues = await new Listing(request.userID, "revenues", search, request.access_scope).OnGetAndList()
 
-        return reply.status(200).send(listing)
+        return reply.status(200).send(revenues)
     } catch (error) {
         console.error("Erro ao listar receitas:", error)
         return reply.status(500).send({ error: "Erro ao listar receitas" })
@@ -36,30 +36,11 @@ export async function listRevenues(request, reply) {
 // Filtrar receitas por tipo e intervalo de datas
 export async function filterRevenues(request, reply) {
     try {
-        let { type, date1: start_date, date2: end_date } = request.query
+        const { type, start_date, end_date } = request.body
 
-        if (type === "All") {
-            type = ""
-        }
+        const search = ""
+        const revenues = await new Filter(request.userID, "revenues", search, request.access_scope, type, start_date, end_date).OnFilterItems()
 
-        if (start_date === "") {
-            const revenues_date = await sql`SELECT date FROM revenues`
-            const timestamps = revenues_date.map(d => new Date(d.date).getTime())
-            start_date = new Date(Math.min(...timestamps))
-        }
-
-        if (end_date === "") {
-            const revenues_date = await sql`SELECT date FROM revenues`
-            const timestamps = revenues_date.map(d => new Date(d.date).getTime())
-            end_date = new Date(Math.max(...timestamps))
-        }
-
-        const revenues = await sql`
-            SELECT *
-            FROM revenues
-            WHERE type ILIKE '%' || ${type} || '%'
-              AND date BETWEEN ${start_date}::date AND ${end_date}::date
-        `
         return reply.status(200).send(revenues)
     } catch (error) {
         console.error("Erro ao filtrar receitas:", error)

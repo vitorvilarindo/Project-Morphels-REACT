@@ -24,9 +24,9 @@ export async function createMember(request, reply) {
 export async function listMembers(request, reply) {
     try {
         const { search } = request.query;
-        const listing = await new Listing(request.userID, "members", search, request.access_scope).OnGetAndList()
+        const members = await new Listing(request.userID, "members", search, request.access_scope).OnGetAndList()
 
-        return reply.status(200).send(listing);
+        return reply.status(200).send(members);
     } catch (error) {
         console.error("Erro ao listar membros:", error);
         return reply.status(500).send({ error: "Erro ao listar membros" });
