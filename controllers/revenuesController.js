@@ -1,5 +1,5 @@
 import { sql } from "../db.js"
-import {Listing, Filter} from "../Classes/List.js";
+import {Listing, Filter} from "../Classes/crudClasses.js";
 import * as sea from "node:sea";
 
 // Criar receita

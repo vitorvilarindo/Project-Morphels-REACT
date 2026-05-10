@@ -54,7 +54,7 @@ export async function login(request, reply) {
         const { loginEmail, loginPassword } = request.body
 
         // Busca usuário pelo email
-        const user = await sql`SELECT id, password, designation FROM users WHERE email = ${loginEmail}`
+        const user = await sql`SELECT * FROM users WHERE email = ${loginEmail}`
         const accessUpdate = await sql`UPDATE users SET last_access = ${new Date()} WHERE email = ${loginEmail}`
 
         if (user.length === 0 || !user[0].password) {

@@ -19,6 +19,8 @@ import {sql} from "./db.js";
 
 const server = Fastify({ logger: true })
 
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
 // CORS primeiro
 server.register(cors, {
     origin: 'http://localhost:5173',

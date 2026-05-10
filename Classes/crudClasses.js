@@ -10,11 +10,8 @@ export class Listing {
 
     async OnGetAndList() {
         try {
-            // 1. Preparamos o termo de busca fora da query
             const searchTerm = this.search ? `%${this.search}%` : null;
 
-            // 2. O nome da tabela precisa ser tratado como um identificador
-            // Usamos sql.unsafe para garantir que a string do path vire parte do SQL
             const table = sql.unsafe(this.path);
 
             let response;
@@ -60,11 +57,11 @@ export class Listing {
 
 export class Filter extends Listing {
 
-    constructor(userID, path, search, access_scope, type = "", start_date = new Date(), end_date = new Date()) {
+    constructor(userID, path, search, access_scope, type, start_date, end_date) {
         super(userID, path, search, access_scope);
-        this.type = type;
-        this.start_date = start_date;
-        this.end_date = end_date;
+        this.type = type ? type : "";
+        this.start_date = start_date ? start_date : new Date();
+        this.end_date = end_date ? end_date : new Date();
     }
 
     async OnFilterItems (){
@@ -79,7 +76,6 @@ export class Filter extends Listing {
             }
 
             return items.filter((item) => {
-                // Lembrete: converta as datas para garantir a comparação
                 const itemDate = new Date(item.date).getTime();
                 const start = new Date(this.start_date).getTime();
                 const end = new Date(this.end_date).getTime();
@@ -95,4 +91,25 @@ export class Filter extends Listing {
         }
 
 }
+}
+
+export class DeleteItem {
+    constructor(itemID, userID, path, access_scope) {
+        this.itemID = itemID;
+        this.userID = userID;
+        this.path = path;
+        this.access_scope = access_scope;
+    }
+
+    async OnDeleteItem () {
+        try {
+            const table = sql.unsafe(this.path);
+
+            return await sql`DELETE FROM ${table} WHERE id = ${this.itemID} RETURNING *`
+        } catch (error) {
+            console.error("Erro ao remover card:", error)
+        }
+
+
+    }
 }
