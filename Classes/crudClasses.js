@@ -93,7 +93,7 @@ export class Filter extends Listing {
 }
 }
 
-export class DeleteItem {
+export class Delete {
     constructor(itemID, userID, path, access_scope) {
         this.itemID = itemID;
         this.userID = userID;
@@ -104,8 +104,32 @@ export class DeleteItem {
     async OnDeleteItem () {
         try {
             const table = sql.unsafe(this.path);
+            let response;
 
-            return await sql`DELETE FROM ${table} WHERE id = ${this.itemID} RETURNING *`
+            if (this.access_scope.has_permission === "global") {
+                response = await sql`DELETE
+                                     FROM ${table}
+                                     WHERE id = ${this.itemID} 
+                                     RETURNING *`;
+
+            } else if (this.access_scope.has_permission === "sector") {
+                response = await sql`
+                    DELETE r.*
+                    FROM ${table} r
+                             JOIN churchs c ON r.church = c.id
+                             JOIN users u ON c.sector = u.sector
+                    WHERE u.id = ${this.userID}
+                    RETURNING *
+                `;
+            }else if (this.access_scope.has_permission === "local") {
+                response = await sql`DELETE r.*
+                                     FROM ${table} r
+                                              JOIN churchs c ON r.church = c.id
+                                              JOIN users u ON c.id = u.church
+                                     WHERE u.id = ${this.userID} RETURNING *`
+            }
+            return response;
+
         } catch (error) {
             console.error("Erro ao remover card:", error)
         }
