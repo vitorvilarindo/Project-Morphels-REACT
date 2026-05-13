@@ -1,5 +1,5 @@
 import { sql } from "../db.js"
-import {Listing, Filter} from "../Classes/crudClasses.js";
+import {Listing, Filter, Delete} from "../Classes/crudClasses.js";
 import * as sea from "node:sea";
 
 // Criar receita
@@ -36,10 +36,8 @@ export async function listRevenues(request, reply) {
 // Filtrar receitas por tipo e intervalo de datas
 export async function filterRevenues(request, reply) {
     try {
-        const { type, start_date, end_date } = request.body
-
-        const search = ""
-        const revenues = await new Filter(request.userID, "revenues", search, request.access_scope, type, start_date, end_date).OnFilterItems()
+        const {type, start_date, end_date} = request.body
+        const revenues = await new Filter(request.userID, "revenues", "", request.access_scope, type, start_date, end_date).OnFilterItems()
 
         return reply.status(200).send(revenues)
     } catch (error) {
@@ -73,8 +71,8 @@ export async function editRevenue(request, reply) {
 // Deletar receita
 export async function deleteRevenue(request, reply) {
     try {
-        const { id } = request.params
-        const deleted = await sql`DELETE FROM revenues WHERE id = ${id} RETURNING *`
+
+        const deleted = await new Delete(request.params.id, request.userID, "revenues", request.access_scope).OnDeleteItem()
 
         if (deleted.length === 0) {
             return reply.status(404).send({ error: "Receita não encontrada" })
