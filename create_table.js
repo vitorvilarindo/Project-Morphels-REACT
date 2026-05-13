@@ -125,16 +125,14 @@ import { sql } from './db.js'
 // `;
 
 // await sql `
-// CREATE TABLE permissions (
-//     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-//     role_id UUID REFERENCES roles(id) ON DELETE CASCADE,
-//     page_id UUID REFERENCES pages(id) ON DELETE CASCADE,
-//     can_view BOOLEAN DEFAULT false,
-//     can_add BOOLEAN DEFAULT false,
-//     can_edit BOOLEAN DEFAULT false,
-//     can_delete BOOLEAN DEFAULT false,
-//     UNIQUE(role_id, page_id) -- Garante que não haja duplicatas
-// )`;
+//         CREATE TABLE IF NOT EXISTS institutions (
+//             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+//             name VARCHAR(300) NOT NULL,
+//             cnpj VARCHAR(50) NOT NULL,
+//             email VARCHAR(100) NOT NULL,
+//             phone VARCHAR(100) NOT NULL,
+//             inscription_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+// )`.then(() => console.log("tabela criada"));
 
 
 // // Alterações nas tabelas
@@ -148,13 +146,13 @@ import { sql } from './db.js'
 // await sql`ALTER TABLE companies DROP COLUMN IF EXISTS user_id`;
 // await sql`ALTER TABLE expenses DROP COLUMN IF EXISTS user_id`;
 // await sql`CREATE type scope_level AS ENUM ('global', 'sector', 'local')`;
-//
-await sql`
-    ALTER TABLE users
-    ALTER COLUMN phone_number TYPE VARCHAR(50)
 
-`;
+// await sql`
+//     ALTER TABLE users
+//     ALTER COLUMN phone_number TYPE VARCHAR(50)
 //
+// `;
+
 
 // await sql`
 //   DROP TABLE IF EXISTS permissions;
@@ -167,7 +165,7 @@ await sql`
 //         DROP COLUMN IF EXISTS sector,
 //         DROP COLUMN IF EXISTS church_id
 // `;
-//
+
 // await sql`
 //     ALTER TABLE churchs
 //         DROP COLUMN IF EXISTS members_number

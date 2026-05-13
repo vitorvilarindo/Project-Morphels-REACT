@@ -1,4 +1,5 @@
 import { sql } from "../db.js"
+import { Listing, Filter, DeleteItem } from "../Classes/crudClasses.js"
 
 // Criar card
 export async function createCard(request, reply) {
@@ -19,7 +20,7 @@ export async function createCard(request, reply) {
 // Listar cards
 export async function listCards(request, reply) {
     try {
-        const { search } = request.query
+        const {search} = request.query
         let cards
 
         if (search) {
