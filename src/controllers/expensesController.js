@@ -1,4 +1,4 @@
-import { sql } from "../db.js"
+import { sql } from "../../db.js"
 
 // Criar despesa
 export async function createExpense(request, reply) {

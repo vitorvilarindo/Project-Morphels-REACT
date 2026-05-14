@@ -1,4 +1,4 @@
-import { sql } from '../db.js' // sua conexão com o banco
+import { sql } from '../../db.js' // sua conexão com o banco
 
 export const listSectors = async (request, reply) => {
     try {

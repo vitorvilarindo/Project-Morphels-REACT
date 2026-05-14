@@ -1,5 +1,5 @@
-import { sql } from "../db.js"
-import {Listing, Filter, Delete} from "../Classes/crudClasses.js";
+import { sql } from "../../db.js"
+import {Listing, Filter, Delete} from "../../Classes/crudClasses.js";
 import * as sea from "node:sea";
 
 // Criar receita
@@ -23,8 +23,7 @@ export async function createRevenue(request, reply) {
 // Listar receitas (com busca opcional)
 export async function listRevenues(request, reply) {
     try {
-        const { search } = request.query
-        const revenues = await new Listing(request.userID, "revenues", search, request.access_scope).OnGetAndList()
+        const revenues = await new Listing(request.userID, "revenues", request.query.search, request.access_scope).OnGetAndList()
 
         return reply.status(200).send(revenues)
     } catch (error) {

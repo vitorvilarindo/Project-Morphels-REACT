@@ -3,7 +3,7 @@ import {
     listChurchs,
     editChurch,
     deleteChurch
-} from "../controllers/churchsController.js"
+} from "../controllers/churchesController.js"
 
 export default async function churchsRoutes(server) {
     server.post("/churchs", {preHandler: server.checkPermissions("can_add"),handler: createChurch})

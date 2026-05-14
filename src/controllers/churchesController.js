@@ -1,4 +1,4 @@
-import { sql } from "../db.js"
+import { sql } from "../../db.js"
 
 // Criar church
 export async function createChurch(request, reply) {

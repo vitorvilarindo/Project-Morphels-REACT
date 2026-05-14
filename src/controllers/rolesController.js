@@ -1,4 +1,4 @@
-import { sql } from "../db.js"
+import { sql } from "../../db.js"
 
 // Criar role
 export async function createRole(request, reply) {

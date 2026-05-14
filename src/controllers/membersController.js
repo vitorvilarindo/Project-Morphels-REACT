@@ -1,5 +1,5 @@
-import { sql } from "../db.js";
-import {Listing} from "../Classes/crudClasses.js";
+import { sql } from "../../db.js";
+import {Listing} from "../../Classes/crudClasses.js";
 
 // Criar Membro
 export async function createMember(request, reply) {

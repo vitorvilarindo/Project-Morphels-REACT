@@ -21,7 +21,7 @@ export class Listing {
                     SELECT *
                     FROM ${table}
                              ${searchTerm
-                                     ? sql`WHERE member ILIKE ${searchTerm}`
+                                     ? sql`WHERE name ILIKE ${searchTerm}`
                                      : sql``}
                 `;
             } else if (this.access_scope.has_permission === "sector") {
@@ -32,7 +32,7 @@ export class Listing {
                              JOIN users u ON c.sector = u.sector
                     WHERE u.id = ${this.userID}
                         ${searchTerm
-                                ? sql`AND r.member ILIKE ${searchTerm}`
+                                ? sql`AND r.name ILIKE ${searchTerm}`
                                 : sql``}
                 `;
             }else if (this.access_scope.has_permission === "local") {
@@ -41,7 +41,7 @@ export class Listing {
                                               JOIN churchs c ON r.church = c.id
                                               JOIN users u ON c.id = u.church
                                      WHERE u.id = ${this.userID} ${searchTerm
-                                             ? sql`AND r.member ILIKE
+                                             ? sql`AND r.name ILIKE
                                              ${searchTerm}`
                                              : sql``}`
             }
@@ -92,6 +92,7 @@ export class Filter extends Listing {
 
 }
 }
+
 
 export class Delete {
     constructor(itemID, userID, path, access_scope) {

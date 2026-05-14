@@ -1,4 +1,4 @@
-import { sql } from "../db.js"
+import { sql } from "../../db.js"
 
 // Criar recurso (página)
 export async function createPage(request, reply) {

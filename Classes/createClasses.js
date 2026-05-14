@@ -4,4 +4,5 @@ class AbstractCreateClass {
             throw new TypeError("Is Impossible instance this abstract class")
         }
     }
+
 }
