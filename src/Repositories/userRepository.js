@@ -9,18 +9,18 @@ export class UserRepository {
     }
 
     async createUser(userData) {
-        return await sql`INSERT INTO users (name, email, password, sing_up_date designation, sector, branch,
+        return await sql`INSERT INTO users (name, email, password, phone_number, designation, sector, branch,
                                             last_access, sing_up_date)
-        SELECT 
+        VALUES (
             ${userData.name}, 
             ${userData.email}, 
             ${userData.password}, 
             ${userData.phone_number},
             (SELECT id FROM roles WHERE name = ${userData.designation}),
-            (SELECT id FROM sectors WHERE sector = ${userData.sector}),
-            (SELECT id FROM churchs WHERE name = ${userData.church}),
+            (SELECT id FROM sectors WHERE name = ${userData.sector}),
+            (SELECT id FROM branches WHERE name = ${userData.branch}),
             NOW(), 
-            NOW()
+            NOW())
         RETURNING id;
         `;
     }
@@ -32,9 +32,24 @@ export class UserRepository {
         `;
     }
 
-    async updateLastAccess(id) {
+    async updateLastAccess(email) {
         await sql`UPDATE users
                   SET last_access = ${new Date()}
-                  WHERE id = ${id};`
+                  WHERE email = ${email};`
+    }
+
+    async updateUser(data) {
+        return await sql`UPDATE users
+                         SET name         = ${data.name},
+                             email        = ${data.email},
+                             password     = ${data.password},
+                             phone_number = ${data.phone_number},
+                             branch       = ${data.branch},
+                             sector       = ${data.sector};
+                        RETURNING id;`
+    }
+
+    async deleteUser(id) {
+        return await sql`DELETE FROM users`
     }
 }

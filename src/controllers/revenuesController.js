@@ -23,9 +23,11 @@ export async function createRevenue(request, reply) {
 // Listar receitas (com busca opcional)
 export async function listRevenues(request, reply) {
     try {
-        const revenues = await new Listing(request.userID, "revenues", request.query.search, request.access_scope).OnGetAndList()
+        console.log("Trigre triste")
 
-        return reply.status(200).send(revenues)
+        // const revenues = await new Listing(request.userID, "revenues", request.query.search, request.access_scope).OnGetAndList()
+        //
+        // return reply.status(200).send(revenues)
     } catch (error) {
         console.error("Erro ao listar receitas:", error)
         return reply.status(500).send({ error: "Erro ao listar receitas" })
@@ -35,10 +37,12 @@ export async function listRevenues(request, reply) {
 // Filtrar receitas por tipo e intervalo de datas
 export async function filterRevenues(request, reply) {
     try {
-        const {type, start_date, end_date} = request.body
-        const revenues = await new Filter(request.userID, "revenues", "", request.access_scope, type, start_date, end_date).OnFilterItems()
+        console.log("Pinguin molhado")
 
-        return reply.status(200).send(revenues)
+        // const {type, start_date, end_date} = request.body
+        // const revenues = await new Filter(request.userID, "revenues", "", request.access_scope, type, start_date, end_date).OnFilterItems()
+        //
+        // return reply.status(200).send(revenues)
     } catch (error) {
         console.error("Erro ao filtrar receitas:", error)
         return reply.status(500).send({ error: "Erro ao filtrar receitas" })

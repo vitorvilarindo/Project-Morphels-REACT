@@ -155,7 +155,21 @@ import { sql } from './db.js'
 //     ADD CONSTRAINT fk_users_designation
 //     FOREIGN KEY (designation) REFERENCES roles(id);
 // `;
-// await sql`ALTER TABLE companies DROP COLUMN IF EXISTS user_id`;
+// await sql`ALTER TABLE sectors
+//     RENAME COLUMN sector TO name`;
+//
+// await sql`ALTER TABLE revenues
+//     RENAME COLUMN church TO branch`;
+//
+// await sql`ALTER TABLE members
+//     RENAME COLUMN church TO branch`;
+//
+// await sql`ALTER TABLE reports
+//     RENAME COLUMN church TO branch`;
+//
+// await sql`ALTER TABLE users
+//     RENAME COLUMN church TO branch`;
+
 // await sql`ALTER TABLE expenses DROP COLUMN IF EXISTS user_id`;
 // await sql`CREATE type scope_level AS ENUM ('global', 'sector', 'local')`;
 

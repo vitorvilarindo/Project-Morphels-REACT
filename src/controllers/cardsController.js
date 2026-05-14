@@ -1,5 +1,4 @@
 import { sql } from "../../db.js"
-import { Listing, Filter, DeleteItem } from "../../Classes/crudClasses.js"
 
 // Criar card
 export async function createCard(request, reply) {
@@ -20,9 +19,10 @@ export async function createCard(request, reply) {
 // Listar cards
 export async function listCards(request, reply) {
     try {
-        const cards = await new Listing(request.userID, request.query.search, request.access_scope).OnGetAndList()
-
-        return reply.send(cards)
+        console.log("Pão de ló")
+        // const cards = await new Listing(request.userID, request.query.search, request.access_scope).OnGetAndList()
+        //
+        // return reply.send(cards)
     } catch (error) {
         console.error("Erro ao listar cards:", error)
         return reply.status(500).send({ error: "Erro ao listar cards" })
@@ -31,10 +31,12 @@ export async function listCards(request, reply) {
 
 export async function filterCards(request, reply) {
     try {
-        const {type, start_date, end_date} = request.body
-        const revenues = await new Filter(request.userID, "cards", "", request.access_scope, type, start_date, end_date).OnFilterItems()
+        console.log("Pão de manteiga")
 
-        return reply.status(200).send(revenues)
+        // const {type, start_date, end_date} = request.body
+        // const revenues = await new Filter(request.userID, "cards", "", request.access_scope, type, start_date, end_date).OnFilterItems()
+        //
+        // return reply.status(200).send(revenues)
     } catch (error) {
         console.error("Erro ao filtrar receitas:", error)
         return reply.status(500).send({ error: "Erro ao filtrar receitas" })
@@ -77,12 +79,14 @@ export async function editCard(request, reply) {
 // Deletar card
 export async function deleteCard(request, reply) {
     try {
-        const deleted = await new DeleteItem(request.query.id, request.userID, "cards", request.access_scope)
+        console.log("Pinguin seco")
 
-        if (deleted.length === 0) {
-            return reply.status(404).send({ error: "Card não encontrado" })
-        }
-        return reply.send({ message: "Card removido com sucesso" })
+        // const deleted = await new DeleteItem(request.query.id, request.userID, "cards", request.access_scope)
+        //
+        // if (deleted.length === 0) {
+        //     return reply.status(404).send({ error: "Card não encontrado" })
+        // }
+        // return reply.send({ message: "Card removido com sucesso" })
     } catch (error) {
         console.error("Erro ao remover card:", error)
         return reply.status(500).send({ error: "Erro ao remover card" })

@@ -7,8 +7,11 @@ export class AuthService {
 
     async login(email, password) {
         const user = await this.userRepository.findUserByEmail(email);
+        console.log(user.password)
+        const isValidPassword = await bcrypt.compare(password, user.password);
+        console.log(isValidPassword);
 
-        if (!user || await bcrypt.compare(password, user.password)) {
+        if (!user || !isValidPassword) {
             throw new Error("Invalid email or password");
         }
 
@@ -23,5 +26,13 @@ export class AuthService {
             ...data, password: encryptedPassword, last_access: new Date(), sing_up_date: new Date(),
 
         });
+    }
+
+    async editUser(data) {
+        const encryptedPassword = data.password? await bcrypt.hash(data.password, 10) : null
+
+        return await this.userRepository.updateUser({
+            ...data, password: encryptedPassword
+        })
     }
 }

@@ -1,7 +1,6 @@
 import bcrypt from "bcrypt"
 import { sql } from "../../db.js"
 import { getRole } from './rolesController.js'
-import jwt from "@fastify/jwt";
 
 export class UserController {
     constructor(authService, userRepository) {
@@ -11,31 +10,38 @@ export class UserController {
     }
 
     create = async (request, reply) => {
-        try{
-            const createdUser = await this.userRepository.register(request.body);
+        try {
+            const createdUser = await this.authService.register(request.body);
             if (!createdUser) {
                 return reply.status(400).send({message: "User can't be created"});
             }
 
-            return reply.status(201).send({message: "User already exists"});
-        }catch(err){
+            return reply.status(201).send({message: "User ready to use"});
+        } catch (err) {
             console.log(err)
             return reply.status(500).send({message: "Error trying to create a user"})
         }
 
     }
 
+    list = async (request, reply) => {
+        const user = await this.userRepository().listAllWithRoles();
+        if (!user) {
+            return reply.status(401).send({message: 'No one user found.'});
+        }
+        return user;
+    }
+
     login = async (request, reply) => {
-        try{
-            const { loginEmail, loginPassword } = request.body;
+        try {
+            const {loginEmail, loginPassword} = request.body;
             const user = await this.authService.login(loginEmail, loginPassword);
 
             if (!user) {
                 return reply.status(401).send({message: 'Invalid login credentials'});
             }
 
-
-            const token = reply.server.jwt.sign({sub:user.id, user:user.email}, {expiresIn: "1h"});
+            const token = reply.server.jwt.sign({sub: user.id, user: user.email}, {expiresIn: "1h"});
 
             reply.setCookie("token", token, {
                 httpOnly: true,
@@ -44,19 +50,51 @@ export class UserController {
                 path: "/"
             });
 
-        }catch(err){
+            return reply.send({
+                success: true,
+                route: "/main",
+                token: token
+            })
+
+        } catch (err) {
             console.log(err);
             reply.status(503).send({message: "Error logging in"});
         }
 
     }
 
-    list = async (request, reply) => {
-        const user = await this.userRepository.listAllWithRoles();
-        if (!user) {
-            return reply.status(401).send({message: 'No one user found.' });
+    edit = async (request, reply) => {
+        try{
+            const { id } = request.params;
+            const { name, email, password, phone_number, branch, sector } = request.body;
+
+            const updatedUser = await this.authService.editUser({id, name, email, password, phone_number, branch, sector})
+
+            if (!updatedUser) {
+                return reply.status(401).send({message: 'Invalid login credentials'});
+            }
+
+            return reply.status(201).send({message: "User edited"});
+        }catch(err){
+            console.log(err);
         }
-        return user;
+
+
+    }
+
+    delete = async (request, reply) => {
+        try {
+            const { id } = request.params;
+            const deletedUser = this.UserRepository.delete({id});
+            if (!deletedUser) {
+                return reply.status(401).send({message: 'No user found.'});
+            }
+
+            return reply.status(201).send({message: "User deleted"});
+        }catch(err){
+            console.log(err);
+            return reply.status(500).send({message: "Error deleting user"});
+        }
     }
 }
 
