@@ -45,11 +45,13 @@ export class UserRepository {
                              password     = ${data.password},
                              phone_number = ${data.phone_number},
                              branch       = ${data.branch},
-                             sector       = ${data.sector};
-                        RETURNING id;`
+                             sector       = ${data.sector}
+                         WHERE id = ${data.id} 
+                         RETURNING id
+                             `
     }
 
     async deleteUser(id) {
-        return await sql`DELETE FROM users`
+        return await sql`DELETE FROM users WHERE id = ${id} RETURNING id`;
     }
 }

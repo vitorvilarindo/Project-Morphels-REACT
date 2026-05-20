@@ -2,6 +2,10 @@ import { sql } from "../../db.js"
 import {Listing, Filter, Delete} from "../../Classes/crudClasses.js";
 import * as sea from "node:sea";
 
+export class RevenuesController {
+    constructor() {}
+}
+
 // Criar receita
 export async function createRevenue(request, reply) {
     try {

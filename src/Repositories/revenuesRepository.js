@@ -1,29 +1,68 @@
 import {sql} from "../../db.js";
 
 export class RevenuesRepository {
-    async createRevenue (userData) {
-        return await sql`INSERT INTO revenues (member, type, value, payment, date, branch, )
+    async createRevenue (revenuesData) {
+        return await sql`INSERT INTO revenues (member, type, value, payment, date, branch)
         VALUES(
-               ${userData.member},
-               ${userData.type},
-               ${userData.value},
-               ${userData.payment},
-               NOW(),
-                (SELECT id FROM branches WHERE name = ${userData.branch})
+               ${revenuesData.member},
+               ${revenuesData.type},
+               ${revenuesData.value},
+               ${revenuesData.payment},
+               ${revenuesData.date},
+                (SELECT id FROM branches WHERE name = ${revenuesData.branch})
               )
         RETURNING id`
     }
 
-    async listAllWithPermission (userId, accessScope, searchTerm) {
+    async listAllWithLocalPermission (userId, searchTerm){
+        return await sql`SELECT r.*
+                         FROM revenues r
+                                  JOIN branches b ON r.branch = b.id
+                                  JOIN users u ON b.id = u.church
+                         WHERE u.id = ${userId} 
+                         AND b.institution = u.institution 
+                         ${searchTerm ? sql`AND r.name ILIKE ${searchTerm}`
+                        : sql``}`
+    }
+
+    async listAllWithSectorPermission (userId, searchTerm){
+        return await sql`
+                    SELECT r.*
+                    FROM revenues r
+                             JOIN branches b ON r.branch= b.id
+                             JOIN users u ON c.sector = u.sector
+                    WHERE u.id = ${userId}
+                    AND b.institution = u.institution
+                        ${searchTerm
+            ? sql`AND r.name ILIKE ${searchTerm}`
+            : sql``}
+                `;
+    }
+
+    async listAllWithGlobalPermissions (userId, searchTerm){
         return await sql`SELECT r.*
                          FROM revenue r
-                                  JOIN branches b ON r.branch = b.id
-                             ${accessScope === "sector"? sql`JOIN users u ON r.sector = u.sector`: sql``}
-                            ${accessScope === "local" ? sql`JOIN users u ON b.id = u.branch`: sql``}}
-                         WHERE u.id = ${userId}
-                           AND b.institution = u.institution
+                         JOIN branches b ON r.branch = b.id
+                           WHERE b.institution = (
+                           SELECT institution from users WHERE id = ${userId}
+                        )
                              ${searchTerm
-                                     ? sql`AND r.name ILIKE ${searchTerm}`
-                                     : sql``}`;
+            ? sql`AND r.name ILIKE ${searchTerm}`
+            : sql``}`;
+    }
+
+    async updateRevenue(data){
+        return await sql`UPDATE revenues 
+                        SET member      = ${data.member},
+                            type        = ${data.type},
+                            value       = ${data.value},
+                            payment     = ${data.payment},
+                            date        = ${data.date},
+                            branch      = (SELECT id FROM branches WHERE name = ${data.branch})
+                        WHERE id = ${data.id}
+                        RETURNING id`
+    }
+    async deleteRevenue (id) {
+        return await sql`DELETE FROM revenues WHERE id = ${id}`
     }
 }
