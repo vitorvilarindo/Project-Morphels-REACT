@@ -1,16 +1,18 @@
+import { ValidationService } from "../Services/validationService.js";
+import { FilterService } from "../Services/filterService.js";
 import { RevenuesRepository } from "../Repositories/revenuesRepository.js";
-import { AuthService } from "../Services/revenuesService.js";
 import { RevenuesController } from "../Controllers/revenuesController.js";
 
 export default async function revenuesRoutes(server) {
     const revenuesRepository = new RevenuesRepository();
-    const authService = new AuthService(revenuesRepository);
-    const revenuesController = new RevenuesController(authService, revenuesRepository);
+    const validationService = new ValidationService(revenuesRepository);
+    const filterService = new FilterService(validationService);
+    const revenuesController = new RevenuesController(authService, filterService, validationService, revenuesRepository);
 
 
     server.post("/revenues", {preHandler: server.checkPermissions("can_add"),handler: revenuesController.create})
     server.get("/revenues", {preHandler: server.checkPermissions("can_view"),handler: revenuesController.list})
-    server.post("/revenues/filter", {preHandler: server.checkPermissions("can_view"),handler: filterRevenues})
+    server.post("/revenues/filter", {preHandler: server.checkPermissions("can_view"),handler: revenuesController.filter})
     server.put("/revenues/:id", {preHandler: server.checkPermissions("can_edit"),handler: revenuesController.update})
     server.delete("/revenues/:id", {preHandler: server.checkPermissions("can_delete"),handler: revenuesController.delete})
 }

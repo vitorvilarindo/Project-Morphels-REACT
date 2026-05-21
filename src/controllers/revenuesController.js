@@ -1,11 +1,8 @@
-import { sql } from "../../db.js"
-import {Listing, Filter, Delete} from "../../Classes/crudClasses.js";
-import * as sea from "node:sea";
-import * as wasi from "node:wasi";
-
 export class RevenuesController {
-    constructor(authService, revenuesRepository) {
+    constructor(authService, filterService, validationService, revenuesRepository) {
         this._authService = authService;
+        this._filterService = filterService;
+        this._validationService = validationService;
         this._revenuesRepository = revenuesRepository;
     }
 
@@ -26,7 +23,7 @@ export class RevenuesController {
     }
     list = async (request, reply) => {
         try{
-            const revenues = await this._authService.validateAccessScope(request.access_scope, request.userID, request.query.search)
+            const revenues = await this._authService._validationService(request.access_scope, request.userID, request.query.search)
 
             if (!revenues) {
                 return reply.status(200).send({message: 'Revenue does not exist'});
@@ -40,7 +37,14 @@ export class RevenuesController {
     }
     filter = async (request, reply) => {
         try {
+            const {type, start_date, end_date} = request.body;
 
+            const revenues = await this._filterService.filter(request.accessScope, request.userID, request.query.search, type, start_date, end_date);
+
+            return reply.status(200).send(revenues)
+        }catch(err){
+            console.error(err);
+            return reply.status(500).send({message: 'There is no revenue'});
         }
     }
     update = async (request, reply) => {
