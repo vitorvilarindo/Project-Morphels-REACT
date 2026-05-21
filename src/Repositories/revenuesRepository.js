@@ -62,7 +62,10 @@ export class RevenuesRepository {
                         WHERE id = ${data.id}
                         RETURNING id`
     }
-    async deleteRevenue (id) {
-        return await sql`DELETE FROM revenues WHERE id = ${id}`
+    async deleteRevenue (revenueId, userId) {
+        return await sql`DELETE FROM revenues r
+                        JOIN branches b on r.branch = b.id
+                        WHERE b.intitution = (SELECT intitution from users WHERE id = ${userId}  ) 
+                        AND r.id = ${revenueId}`
     }
 }

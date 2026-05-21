@@ -29,7 +29,7 @@ export class UserController {
         if (!user) {
             return reply.status(401).send({message: 'No one user found.'});
         }
-        return user;
+        return reply.status(200).send(user);
     }
 
     login = async (request, reply) => {
