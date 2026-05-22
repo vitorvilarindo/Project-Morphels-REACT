@@ -1,4 +1,4 @@
-export class ValidationService {
+export class ScopeValidationService {
     constructor(repository) {
         this._repository = repository;
 

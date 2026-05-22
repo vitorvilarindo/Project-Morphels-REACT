@@ -38,6 +38,21 @@ server.register(jwt, { secret: process.env.JWT_SECRET_KEY, cookie: {
 )
 server.register(cookie)
 
+// Rotas
+server.register(usersRoutes)
+server.register(revenuesRoutes)
+server.register(expensesRoutes)
+server.register(membersRoutes)
+server.register(companiesRoutes)
+server.register(rolesRoutes)
+server.register(sectorsRoutes)
+server.register(churchesRoutes)
+server.register(generalRoutes)
+server.register(repostsRotes)
+server.register(cardsRoutes)
+server.register(pagesRoutes)
+
+//Middlewares
 server.addHook('preHandler', async (request, reply) => {
     const publicRoutes = ['/users/login'];
     if (publicRoutes.includes(request.url)) {
@@ -58,14 +73,9 @@ server.decorate('checkPermissions', function (action) {
 
             const userID = request.userID;
 
-            // Proteção: se routerPath falhar, usamos a URL limpa
             const rawPath = request.routerPath || request.url.split('?')[0];
-            console.log(rawPath)
-            const pageName = rawPath.split('/')[1];
-            console.log(pageName)
 
-            // LOG DE DEBUG - Verifique seu terminal após o erro 500
-            console.log(`DEBUG: User: ${userID}, Page: ${pageName}, Action: ${action}`);
+            const pageName = rawPath.split('/')[1];
 
             const permission = await sql`
                 SELECT ${action} as has_permission
@@ -77,7 +87,7 @@ server.decorate('checkPermissions', function (action) {
                 LIMIT 1
             `;
             const access_scope = await sql`
-                SELECT access_scope as has_permission
+                SELECT access_scope as scope
                 FROM permissions p
                 JOIN users u ON p.role_id = u.designation
                 JOIN pages pg ON pg.id = p.page_id
@@ -85,7 +95,7 @@ server.decorate('checkPermissions', function (action) {
                 AND pg.name = ${pageName}
             `
 
-            request.access_scope = access_scope[0]
+            request.access_scope = access_scope[0].scope
 
             if (permission.length === 0 || !permission[0].has_permission) {
                 return reply.status(403).send({
@@ -94,32 +104,14 @@ server.decorate('checkPermissions', function (action) {
             }
 
         } catch (e) {
-            // ESSA LINHA É A MAIS IMPORTANTE AGORA:
             console.error("ERRO NO SQL OU MIDDLEWARE:", e);
 
             return reply.status(500).send({
-                message: 'Internal Server Error',
-                debug: e.message // Remova o 'debug' após consertar
+                message: 'Internal Server Error' + e
             });
         }
     }
 })
-
-
-
-// Rotas
-server.register(usersRoutes)
-server.register(revenuesRoutes)
-server.register(expensesRoutes)
-server.register(membersRoutes)
-server.register(companiesRoutes)
-server.register(rolesRoutes)
-server.register(sectorsRoutes)
-server.register(churchesRoutes)
-server.register(generalRoutes)
-server.register(repostsRotes)
-server.register(cardsRoutes)
-server.register(pagesRoutes)
 
 // Start
 const start = async () => {

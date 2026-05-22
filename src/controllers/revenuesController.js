@@ -1,6 +1,5 @@
 export class RevenuesController {
-    constructor(authService, filterService, validationService, revenuesRepository) {
-        this._authService = authService;
+    constructor(filterService, validationService, revenuesRepository) {
         this._filterService = filterService;
         this._validationService = validationService;
         this._revenuesRepository = revenuesRepository;
@@ -23,7 +22,7 @@ export class RevenuesController {
     }
     list = async (request, reply) => {
         try{
-            const revenues = await this._authService._validationService(request.access_scope, request.userID, request.query.search)
+            const revenues = await this._validationService.validateAccessScope(request.access_scope, request.userID, request.query.search)
 
             if (!revenues) {
                 return reply.status(200).send({message: 'Revenue does not exist'});

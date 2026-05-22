@@ -7,7 +7,7 @@ export default async function revenuesRoutes(server) {
     const revenuesRepository = new RevenuesRepository();
     const validationService = new ValidationService(revenuesRepository);
     const filterService = new FilterService(validationService);
-    const revenuesController = new RevenuesController(authService, filterService, validationService, revenuesRepository);
+    const revenuesController = new RevenuesController(filterService, validationService, revenuesRepository);
 
 
     server.post("/revenues", {preHandler: server.checkPermissions("can_add"),handler: revenuesController.create})
