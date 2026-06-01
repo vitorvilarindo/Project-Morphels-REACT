@@ -148,7 +148,7 @@ server.get('/members', async (request, reply) => {
   if (search) {
     const members = await database_members.list_members(search)
   } else {
-    const members = await database_members.list_members()
+    await database_members.list_members();
   }
   return reply.status(200).send(members)
 })
