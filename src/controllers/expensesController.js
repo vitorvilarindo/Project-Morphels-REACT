@@ -6,7 +6,7 @@ export class ExpensesController {
     }
     create = async (request, reply) => {
         try {
-            const createdExpense = await this._expensesRepository.create(request.body);
+            const createdExpense = await this._expensesRepository.createExpenses(request.body);
 
             if (!createdExpense){
                 return reply.status(300).send({message: 'There can not create any expense'});
@@ -44,7 +44,7 @@ export class ExpensesController {
     }
     update = async (request, reply) => {
         try{
-            const updateExpense = await this._expensesRepository.update(request.body);
+            const updateExpense = await this._expensesRepository.updateExpenses(request.body);
             if (!updateExpense){
                 return reply.status(400).send({message: 'Expenses not found'});
             }
@@ -56,7 +56,7 @@ export class ExpensesController {
     }
     delete = async (request, reply) => {
         try{
-            const deleteExpense = await this._expensesRepository.delete(request.query.id, request.userID);
+            const deleteExpense = await this._expensesRepository.deleteExpenses(request.query.id, request.userID);
             if (!deleteExpense){
                 return reply.status(400).send({message: 'Expenses not found'});
             }

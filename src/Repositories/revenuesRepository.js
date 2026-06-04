@@ -18,37 +18,38 @@ export class RevenuesRepository {
         return await sql`SELECT r.*
                          FROM revenues r
                                   JOIN branches b ON r.branch = b.id
-                                  JOIN users u ON b.id = u.church
+                                  JOIN users u ON u.branch = b.id
                          WHERE u.id = ${userId} 
-                         AND b.institution = u.institution 
                          ${searchTerm ? sql`AND r.name ILIKE ${searchTerm}`
                         : sql``}`
     }
 
     async listAllWithSectorPermission (userId, searchTerm){
         return await sql`
-                    SELECT r.*
-                    FROM revenues r
-                             JOIN branches b ON r.branch= b.id
-                             JOIN users u ON c.sector = u.sector
-                    WHERE u.id = ${userId}
-                    AND b.institution = u.institution
-                        ${searchTerm
-            ? sql`AND r.name ILIKE ${searchTerm}`
-            : sql``}
-                `;
+            SELECT r.*
+            FROM revenues r
+                     JOIN branches b ON r.branch = b.id
+                     JOIN branches ub ON b.sector = ub.sector
+                     JOIN users u ON u.branch = ub.id
+            WHERE u.id = ${userId} ${searchTerm
+                    ? sql`AND r.name ILIKE
+                    ${searchTerm}`
+                    : sql``}
+        `;
     }
 
     async listAllWithGlobalPermissions (userId, searchTerm){
         return await sql`SELECT r.*
                          FROM revenue r
-                         JOIN branches b ON r.branch = b.id
-                           WHERE b.institution = (
-                           SELECT institution from users WHERE id = ${userId}
-                        )
+                                  JOIN branches b ON r.branch = b.id
+                                  JOIN sectors s on s.id = b.sector
+                                  JOIN sectors us ON s.institution = us.institution
+                                  JOIN branches ub ON us.id = ub.sector
+                                  JOIN users u ON u.branch = ub.id
                              ${searchTerm
-            ? sql`AND r.name ILIKE ${searchTerm}`
-            : sql``}`;
+                                     ? sql`AND r.name ILIKE
+                                     ${searchTerm}`
+                                     : sql``}`;
     }
 
     async updateRevenue(data){

@@ -173,11 +173,11 @@ import { sql } from './db.js'
 // await sql`ALTER TABLE expenses DROP COLUMN IF EXISTS user_id`;
 // await sql`CREATE type scope_level AS ENUM ('global', 'sector', 'local')`;
 
-// await sql`
-//     ALTER TABLE users
-//     ALTER COLUMN phone_number TYPE VARCHAR(50)
-//
-// `;
+await sql`
+    ALTER TABLE roles 
+        DROP COLUMN IF EXISTS sector
+
+`.then(() => {console.log("DEu bom")})
 
 
 // await sql`
