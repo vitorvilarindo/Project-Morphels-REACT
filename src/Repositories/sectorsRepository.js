@@ -21,16 +21,14 @@ export class SectorsRepository{
 
 
     async updateSector(data){
-        return await sql`UPDATE expenses 
+        return await sql`UPDATE sectors 
                         SET name                        = ${data.name},
                             sectorial_cordenator        = ${data.sectorial_cordenator},
                             vice_sectorial_cordenator   = ${data.vice_sectorial_cordenator}
                         RETURNING id`
     }
-    async deleteSector (expenseId, userId) {
-        return await sql`DELETE FROM expenses e
-                        JOIN branches b on e.branch = b.id
-                        WHERE b.intitution = (SELECT intitution from users WHERE id = ${userId}  ) 
-                        AND e.id = ${expenseId}`
+    async deleteSector (expenseId) {
+        return await sql`DELETE FROM sectors e
+                        WHERE id = ${expenseId}`
     }
 }

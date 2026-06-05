@@ -2,7 +2,7 @@ import {sql} from "../../db.js";
 
 export class RolesRepository {
     async createRole (roleData, userId) {
-        return await sql`INSERT INTO expenses (name, description, institution)
+        return await sql`INSERT INTO roles (name, description, institution)
         VALUES(
                ${roleData.name},
                ${roleData.description},
@@ -27,13 +27,13 @@ export class RolesRepository {
 
 
     async updateRole(data){
-        return await sql`UPDATE expenses
+        return await sql`UPDATE roles
                          SET name        = ${data.name},
                              description = ${data.description},
                         RETURNING id`
     }
-    async deleteRoles (expenseId, userId) {
+    async deleteRoles (roleId) {
         return await sql`DELETE FROM expenses 
-                        WHERE id = ${expenseId}`
+                        WHERE id = ${roleId}`
     }
 }

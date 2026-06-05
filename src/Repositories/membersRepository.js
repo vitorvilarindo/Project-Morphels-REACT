@@ -1,25 +1,24 @@
 import {sql} from "../../db.js";
 
-export class ReportsRepository {
-    async createReports (reportsData) {
-        return await sql`INSERT INTO reports (title, type, data, start_date, end_date, by, sector, branch, items)
+export class MembersRepository {
+    async createMember (membersData) {
+        return await sql`INSERT INTO members (name, cellphone, date_birth, pixkey, pixtype, sector, branch)
         VALUES(
-               ${reportsData.title},
-               ${reportsData.type},
-               ${reportsData.data},
-               ${reportsData.star_date},
-               ${reportsData.end_date},
-               ${reportsData.by},
-               (SELECT s.id FROM sectors s JOIN branches b ON b.sector = s.id WHERE b.name = ${reportsData.branch})
-                (SELECT id FROM branches WHERE name = ${reportsData.branch})
+               ${membersData.name},
+               ${membersData.cellphone},
+               ${membersData.date_birth},
+               ${membersData.pixkey},
+               ${membersData.pixtype},
+               (SELECT s.id FROM sectors s JOIN branches b ON b.sector = s.id WHERE b.name = ${membersData.branch})
+                (SELECT id FROM branches WHERE name = ${membersData.branch})
               )
         RETURNING id`
     }
 
     async listAllWithLocalPermission (userId, searchTerm){
-        return await sql`SELECT r.*
-                         FROM reports r
-                                  JOIN branches b ON r.branch = b.id
+        return await sql`SELECT m.*
+                         FROM members m
+                                  JOIN branches b ON m.branch = b.id
                                   JOIN users u ON u.branch = b.id
                          WHERE u.id = ${userId} 
                          ${searchTerm ? sql`AND e.name ILIKE ${searchTerm}`
@@ -28,9 +27,9 @@ export class ReportsRepository {
 
     async listAllWithSectorPermission (userId, searchTerm){
         return await sql`
-            SELECT r.*
-            FROM reports r
-                     JOIN branches b ON r.branch = b.id
+            SELECT m.*
+            FROM members m
+                     JOIN branches b ON m.branch = b.id
                      JOIN branches ub ON b.sector = ub.sector
                      JOIN users u ON u.branch = ub.id
             WHERE u.id = ${userId};
@@ -41,9 +40,9 @@ export class ReportsRepository {
     }
 
     async listAllWithGlobalPermissions (userId, searchTerm){
-        return await sql`SELECT r.*
-                         FROM reports r
-                                  JOIN branches b ON e.branch = b.id
+        return await sql`SELECT m.*
+                         FROM members m
+                                  JOIN branches b ON m.branch = b.id
                                   JOIN sectors s ON s.id = b.sector
                                   JOIN sectors us ON s.institution = ub.sector
                                   JOIN branches ub ON us.is = ub.sector
@@ -54,8 +53,8 @@ export class ReportsRepository {
             : sql``}`;
     }
 
-    async updateReport(data){
-        return await sql`UPDATE reports 
+    async updateMember(data){
+        return await sql`UPDATE members 
                         SET member      = ${data.member},
                             type        = ${data.type},
                             value       = ${data.value},
@@ -65,8 +64,8 @@ export class ReportsRepository {
                         WHERE id = ${data.id}
                         RETURNING id`
     }
-    async deleteReports (expenseId) {
-        return await sql`DELETE FROM reports 
+    async deleteMember (expenseId) {
+        return await sql`DELETE FROM members
                         WHERE id = ${expenseId}`
     }
 }
