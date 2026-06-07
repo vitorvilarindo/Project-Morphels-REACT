@@ -1,12 +1,17 @@
 import {sql} from "../../db.js";
 export class SectorsRepository{
-    async createSector (sectorData) {
+    async createSector (sectorData, userId) {
         return await sql`INSERT INTO expenses (name, sectorial_cordenator, vice_sectorial_cordenator, institution)
         VALUES(
                ${sectorData.name},
                ${sectorData.sectorial_cordenator},
                ${sectorData.vice_sectorial_cordenator},
-                (SELECT id FROM institution WHERE name = ${sectorData.institution})
+               (SELECT s.institution
+                FROM users u
+                         JOIN branches b ON u.branch = b.id
+                         JOIN sectors s ON b.sector = s.id
+                WHERE u.id = ${userId}
+               )
               )
         RETURNING id`
     }
@@ -20,11 +25,12 @@ export class SectorsRepository{
     }
 
 
-    async updateSector(data){
+    async updateSector(data, sectorId){
         return await sql`UPDATE sectors 
                         SET name                        = ${data.name},
                             sectorial_cordenator        = ${data.sectorial_cordenator},
                             vice_sectorial_cordenator   = ${data.vice_sectorial_cordenator}
+                        where id = ${data.id}
                         RETURNING id`
     }
     async deleteSector (expenseId) {

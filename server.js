@@ -10,7 +10,7 @@ import membersRoutes from "./src/Routes/membersRoutes.js";
 import companiesRoutes from "./src/Routes/companiesRoutes.js";
 import rolesRoutes from "./src/Routes/rolesRoutes.js";
 import sectorsRoutes from "./src/Routes/sectorsRoutes.js";
-import churchesRoutes from "./src/Routes/churchsRoutes.js";
+import churchesRoutes from "./src/Routes/branchesRoutes.js";
 import generalRoutes from "./src/Routes/generalRoutes.js";
 import repostsRotes from "./src/Routes/repostsRoutes.js";
 import cardsRoutes from "./src/Routes/cardsRoutes.js";

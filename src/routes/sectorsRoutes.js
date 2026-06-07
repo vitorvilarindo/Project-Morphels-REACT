@@ -1,13 +1,12 @@
-import {
-    listSectors,
-    createSector,
-    updateSector,
-    deleteSector
-} from '../controllers/sectorsController.js'
+import {SectorsRepository} from '../Repositories/sectorsRepository.js'
+import {SectorsController} from '../Controllers/sectorsController.js'
 
 export default async function sectorsRoutes(server) {
-    server.post('/sectors', {preHandler: server.checkPermissions("can_add"),handler: createSector})
-    server.get('/sectors', {preHandler: server.checkPermissions("can_view"),handler: listSectors})
-    server.put('/sectors/:id', {preHandler: server.checkPermissions("can_edit"),handler: updateSector})
-    server.delete('/sectors/:id', {preHandler: server.checkPermissions("can_delte"),handler: deleteSector})
+    const sectorRepository = new SectorsRepository()
+    const sectorController = new SectorsController(sectorRepository)
+
+    server.post('/sectors', {preHandler: server.checkPermissions("can_add"),handler: sectorController.create})
+    server.get('/sectors', {preHandler: server.checkPermissions("can_view"),handler: sectorController.list})
+    server.put('/sectors/:id', {preHandler: server.checkPermissions("can_edit"),handler: sectorController.update})
+    server.delete('/sectors/:id', {preHandler: server.checkPermissions("can_delete"),handler: sectorController.delete})
 }

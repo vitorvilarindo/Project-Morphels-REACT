@@ -174,8 +174,8 @@ import { sql } from './db.js'
 // await sql`CREATE type scope_level AS ENUM ('global', 'sector', 'local')`;
 
 await sql`
-    ALTER TABLE roles 
-        DROP COLUMN IF EXISTS sector
+    ALTER TABLE companies 
+        ADD COLUMN IF NOT EXISTS intitution UUID REFERENCES institutions(id)
 
 `.then(() => {console.log("DEu bom")})
 

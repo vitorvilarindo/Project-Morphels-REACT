@@ -1,65 +1,51 @@
-import { sql } from '../../db.js' // sua conexão com o banco
-
-export const listSectors = async (request, reply) => {
-    try {
-        let sectors
-        const { search } = request.params
-        if (!search){
-            sectors = await sql`SELECT * FROM sectors`
-        }else{
-            sectors = await sql`SELECT * FROM sectors WHERE sector = ${search}`
-        }
-        return reply.send(sectors)
-    } catch (err) {
-        return reply.status(500).send({ error: 'Erro ao listar setores' })
+export class SectorsController {
+    constructor(sectorRepository) {
+        this.repository = sectorRepository
     }
-}
 
-
-export const createSector = async (request, reply) => {
-    try {
-        const { sector, sectorial_cordenator, vice_sectorial_cordenator } = request.body
-        const newSector = await sql`
-      INSERT INTO sectors (sector, sectorial_cordenator, vice_sectorial_cordenator)
-      VALUES (${sector}, ${sectorial_cordenator}, ${vice_sectorial_cordenator})
-      RETURNING *
-    `
-        return reply.status(201).send(newSector[0])
-    } catch (err) {
-        return reply.status(500).send({ error: 'Erro ao criar setor' })
-    }
-}
-
-export const updateSector = async (request, reply) => {
-    try {
-        const { id } = request.params
-        const { sector, sectorial_cordenator, vice_sectorial_cordenator } = request.body
-        const updated = await sql`
-      UPDATE sectors
-      SET sector = ${sector},
-          sectorial_cordenator = ${sectorial_cordenator},
-          vice_sectorial_cordenator = ${vice_sectorial_cordenator}
-      WHERE id = ${id}
-      RETURNING *
-    `
-        if (updated.length === 0) {
-            return reply.status(404).send({ error: 'Setor não encontrado' })
+    create = async (request, reply) => {
+        try{
+            const createSector = await this.repository.createSector(request.body, request.userID)
+            if (!createSector) {
+                return reply.status(303).send({error: "Sector could not be created"})
+            }
+            return reply.status(201).send({message: 'Sector created successfully'})
+        }catch(err){
+            console.error(err)
+            return reply.status(500).send({error: err})
         }
-        return reply.send(updated[0])
-    } catch (err) {
-        return reply.status(500).send({ error: 'Erro ao atualizar setor' })
     }
-}
-
-export const deleteSector = async (request, reply) => {
-    try {
-        const { id } = request.params
-        const deleted = await sql`DELETE FROM sectors WHERE id = ${id} RETURNING *`
-        if (deleted.length === 0) {
-            return reply.status(404).send({ error: 'Setor não encontrado' })
+    list = async (request, reply) => {
+        try{
+            const sectors = await this.repository.listSectors(request.userID)
+            return reply.status(200).send(sectors)
+        }catch(err){
+            console.error(err)
+            return reply.status(500).send({error: err})
         }
-        return reply.send({ message: 'Setor removido com sucesso' })
-    } catch (err) {
-        return reply.status(500).send({ error: 'Erro ao remover setor' })
+    }
+    update = async (request, reply) => {
+        try{
+            const updateSector = await this.repository.updateSector(request.body, request.params.id)
+            if (!updateSector) {
+                return reply.status(303).send({error: "Sector could not be updated"})
+            }
+            return reply.status(200).send({message: 'Sector updated successfully'})
+        }catch(err){
+            console.error(err)
+            return reply.status(500).send({error: err})
+        }
+    }
+    delete = async (request, reply) => {
+        try{
+            const deleteSector = await this.repository.deleteSector(request.params.id)
+            if (!deleteSector) {
+                return reply.status(303).send({error: "Sector could not be deleted"})
+            }
+            return reply.status(200).send({message: 'Sector deleted successfully'})
+        }catch(err){
+            console.error(err)
+            return reply.status(500).send({error: err})
+        }
     }
 }

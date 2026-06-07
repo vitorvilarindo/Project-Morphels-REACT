@@ -5,7 +5,7 @@ import {
     deleteChurch
 } from "../controllers/churchesController.js"
 
-export default async function churchsRoutes(server) {
+export default async function branchesRoutes(server) {
     server.post("/churchs", {preHandler: server.checkPermissions("can_add"),handler: createChurch})
     server.get("/churchs", {preHandler: server.checkPermissions("can_view"),handler: listChurchs})
     server.put("/churchs/:id", {preHandler: server.checkPermissions("can_edit"),handler: editChurch})

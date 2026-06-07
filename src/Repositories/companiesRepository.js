@@ -1,11 +1,11 @@
 import {sql} from "../../db.js";
 
 export class CompaniesRepository {
-    async createCompany (companyData) {
+    async createCompany (companyData, userId) {
         return await sql`INSERT INTO companies (cnpj, company_name, fantasy_name, estate_registration,
                                               munincipal_registration, open_date, situation, cep, street, number,
                                               complement, neighborhood, city, uf, cellphone, email, cnae,
-                                              activity_description, pixkey, pixtype)
+                                              activity_description, pixkey, pixtype, institution)
                          VALUES (${companyData.cnpj},
                                  ${companyData.company_name},
                                  ${companyData.fantasy_name},
@@ -25,7 +25,13 @@ export class CompaniesRepository {
                                  ${companyData.cnae},
                                  ${companyData.activity_description},
                                  ${companyData.pixkey},
-                                 ${companyData.pixtype})
+                                 ${companyData.pixtype}),
+                                (SELECT s.institution
+                                    FROM users u
+                                    JOIN branches b ON u.branch = b.id
+                                    JOIN sectors s ON b.sector = s.id
+                                    WHERE u.id = ${userId}
+                                )
         RETURNING id`
     }
 

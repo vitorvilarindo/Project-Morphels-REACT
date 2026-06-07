@@ -1,11 +1,11 @@
-import { ValidationService } from "../Services/validationService.js";
+import { ScopeValidationService } from "../Services/scopeValidationService.js";
 import { FilterService } from "../Services/filterService.js";
 import { RevenuesRepository } from "../Repositories/revenuesRepository.js";
 import { RevenuesController } from "../Controllers/revenuesController.js";
 
 export default async function revenuesRoutes(server) {
     const revenuesRepository = new RevenuesRepository();
-    const validationService = new ValidationService(revenuesRepository);
+    const validationService = new ScopeValidationService(revenuesRepository);
     const filterService = new FilterService(validationService);
     const revenuesController = new RevenuesController(filterService, validationService, revenuesRepository);
 
