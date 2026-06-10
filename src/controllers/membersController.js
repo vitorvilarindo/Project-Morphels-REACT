@@ -29,7 +29,7 @@ export class MembersController {
     }
     update = async (request, reply) => {
         try{
-            const memberUpdated = await this.repository.update(request.params.id);
+            const memberUpdated = await this.repository.update(request.body, request.params.id);
             if (!memberUpdated) {
                 return reply.status(400).send({error: "Failed to update report"})
             }

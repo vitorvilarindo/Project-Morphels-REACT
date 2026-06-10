@@ -48,7 +48,7 @@ export class RevenuesController {
     }
     update = async (request, reply) => {
         try{
-            const updateRevenue = await this._revenuesRepository.update(request.body);
+            const updateRevenue = await this._revenuesRepository.update(request.body, request.params.id);
             if (!updateRevenue) {
                 return reply.status(400).send({message: 'Revenue does not exist'});
             }

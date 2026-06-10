@@ -26,11 +26,12 @@ export class RolesRepository {
     }
 
 
-    async updateRole(data){
+    async updateRole(data, id){
         return await sql`UPDATE roles
                          SET name        = ${data.name},
                              description = ${data.description},
-                        RETURNING id`
+                             WHERE id = ${id}
+                             RETURNING id`
     }
     async deleteRoles (roleId) {
         return await sql`DELETE FROM expenses 

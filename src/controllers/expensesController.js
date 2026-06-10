@@ -44,7 +44,7 @@ export class ExpensesController {
     }
     update = async (request, reply) => {
         try{
-            const updateExpense = await this._expensesRepository.updateExpenses(request.body);
+            const updateExpense = await this._expensesRepository.updateExpenses(request.body, request.params.id);
             if (!updateExpense){
                 return reply.status(400).send({message: 'Expenses not found'});
             }

@@ -25,12 +25,12 @@ export class SectorsRepository{
     }
 
 
-    async updateSector(data, sectorId){
+    async updateSector(data, id){
         return await sql`UPDATE sectors 
                         SET name                        = ${data.name},
                             sectorial_cordenator        = ${data.sectorial_cordenator},
                             vice_sectorial_cordenator   = ${data.vice_sectorial_cordenator}
-                        where id = ${data.id}
+                        where id = ${id}
                         RETURNING id`
     }
     async deleteSector (expenseId) {

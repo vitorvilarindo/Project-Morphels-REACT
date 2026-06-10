@@ -35,11 +35,16 @@ export class CompaniesRepository {
         RETURNING id`
     }
 
-    async listCompanies (){
-        return await sql`SELECT * FROM companies `
+    async listCompanies (userId){
+        return await sql`SELECT * FROM companies c
+                                JOIN institutions i ON i.id = c.institution
+                                JOIN sectors s ON s.institution = i.id
+                                JOIN branches b ON b.sector = s.id
+                                JOIN users u ON u.branchs = b.id
+                                WHERE u.id = ${userId}`
     }
 
-    async updateCompany(data){
+    async updateCompany(data, id){
         return await sql`UPDATE companies 
                         SET cnpj                    = ${data.member},
                             company_name            = ${data.type},
@@ -60,7 +65,7 @@ export class CompaniesRepository {
                             activity_description = ${data.activity_description}
                             pixkey = ${data.pixkey}
                             pixtype = {data.pixtype}
-                        WHERE id = ${data.id}
+                        WHERE id = ${id}
                         RETURNING id`
     }
     async deleteCompany (companyId) {

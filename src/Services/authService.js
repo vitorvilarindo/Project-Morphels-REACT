@@ -28,11 +28,11 @@ export class AuthService {
         });
     }
 
-    async editUser(data) {
+    async editUser(data, id) {
         const encryptedPassword = data.password? await bcrypt.hash(data.password, 10) : null
 
         return await this.userRepository.updateUser({
             ...data, password: encryptedPassword
-        })
+        }, id)
     }
 }

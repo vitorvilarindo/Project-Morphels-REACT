@@ -52,7 +52,7 @@ export class RevenuesRepository {
                                      : sql``}`;
     }
 
-    async updateRevenue(data){
+    async updateRevenue(data, id){
         return await sql`UPDATE revenues 
                         SET member      = ${data.member},
                             type        = ${data.type},
@@ -60,7 +60,7 @@ export class RevenuesRepository {
                             payment     = ${data.payment},
                             date        = ${data.date},
                             branch      = (SELECT id FROM branches WHERE name = ${data.branch})
-                        WHERE id = ${data.id}
+                        WHERE id = ${id}
                         RETURNING id`
     }
     async deleteRevenue (revenueId, userId) {

@@ -64,10 +64,7 @@ export class UserController {
 
     edit = async (request, reply) => {
         try{
-            const { id } = request.params;
-            const { name, email, password, phone_number, branch, sector } = request.body;
-
-            const updatedUser = await this.authService.editUser({id, name, email, password, phone_number, branch, sector})
+            const updatedUser = await this.authService.editUser(request.body, request.params.id)
 
             if (!updatedUser) {
                 return reply.status(401).send({message: 'Invalid login credentials'});

@@ -38,7 +38,7 @@ export class UserRepository {
                   WHERE email = ${email};`
     }
 
-    async updateUser(data) {
+    async updateUser(data, id) {
         return await sql`UPDATE users
                          SET name         = ${data.name},
                              email        = ${data.email},
@@ -46,7 +46,7 @@ export class UserRepository {
                              phone_number = ${data.phone_number},
                              branch       = ${data.branch},
                              sector       = ${data.sector}
-                         WHERE id = ${data.id} 
+                         WHERE id = ${id} 
                          RETURNING id
                              `
     }

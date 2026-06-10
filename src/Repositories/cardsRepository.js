@@ -54,7 +54,7 @@ export class CardsRepository {
             : sql``}`;
     }
 
-    async updateCard(data){
+    async updateCard(data, id){
         return await sql`UPDATE members 
                         SET code      = ${data.member},
                             member        = ${data.type},
@@ -62,7 +62,7 @@ export class CardsRepository {
                             payment     = ${data.payment},
                             date        = ${data.date},
                             branch      = (SELECT id FROM branches WHERE name = ${data.branch})
-                        WHERE id = ${data.id}
+                        WHERE id = ${id}
                         RETURNING id`
     }
     async deleteCard (cardId) {
