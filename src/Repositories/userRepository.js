@@ -4,7 +4,14 @@ export class UserRepository {
     async findUserByEmail(email) {
         const [user] = await sql`SELECT *
                                  FROM users
-                                 WHERE email = ${email}`;
+                                 WHERE id = ${email}`;
+        return user;
+    }
+
+    async findUserById(userId) {
+        const [user] = await sql`SELECT * 
+                                FROM users
+                                WHERE id = ${userId}`;
         return user;
     }
 

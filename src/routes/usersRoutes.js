@@ -1,5 +1,5 @@
 import { UserRepository } from '../Repositories/userRepository.js'
-import { AuthService } from '../Services/userSevices.js'
+import { AuthService } from '../Services/authService.js'
 import { UserController } from '../Controllers/usersController.js'
 
 export default async function usersRoutes(server) {

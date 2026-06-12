@@ -16,6 +16,12 @@ export class BranchesRepository {
         RETURNING id`
     }
 
+    async findBranchById(branchId) {
+        const [branch] = await sql`SELECT *
+                                   FROM branches
+                                   WHERE id = ${branchId}`
+    }
+
     async listBranches(userId) {
         return await sql`SELECT bb.*
                          FROM branches bb
