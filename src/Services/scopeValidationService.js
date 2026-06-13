@@ -1,16 +1,12 @@
 export class ScopeValidationService {
-    constructor(repository) {
-        this._repository = repository;
+    async validateAccessScope(repository, scope, userId, searchTerm) {
 
-        this._scopes = {
-            local: this._repository.listAllWithLocalPermission.bind(this._repository),
-            sector: this._repository.listAllWithSectorPermission.bind(this._repository),
-            global: this._repository.listAllWithGlobalPermissions.bind(this._repository)
+        const scopes = {
+            local: repository.listAllWithLocalPermission,
+            sector: repository.listAllWithSectorPermission,
+            global: repository.listAllWithGlobalPermissions
         };
-    }
-
-    async validateAccessScope(scope, userId, searchTerm) {
-        const executeQuery = this._scopes[scope];
+        const executeQuery = scopes[scope];
 
         if (!executeQuery) {
             throw new Error(`Escopo de acesso inválido ou não autorizado: ${scope}`);

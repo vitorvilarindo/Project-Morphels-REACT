@@ -15,6 +15,7 @@ import generalRoutes from "./src/Routes/generalRoutes.js";
 import repostsRotes from "./src/Routes/repostsRoutes.js";
 import cardsRoutes from "./src/Routes/cardsRoutes.js";
 import pagesRoutes from "./src/Routes/pagesRoutes.js";
+import containerPlugin from "./src/Services/containerPlugin.js";
 import {sql} from "./db.js";
 
 const server = Fastify({ logger: true })
@@ -37,6 +38,7 @@ server.register(jwt, { secret: process.env.JWT_SECRET_KEY, cookie: {
 
 )
 server.register(cookie)
+await server.register(containerPlugin)
 
 // Rotas
 server.register(usersRoutes)

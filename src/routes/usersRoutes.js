@@ -1,16 +1,18 @@
 import { UserRepository } from '../Repositories/userRepository.js'
 import { AuthService } from '../Services/authService.js'
+import { GetUserInfos } from '../Services/getUserInfos.js'
 import { UserController } from '../Controllers/usersController.js'
 
 export default async function usersRoutes(server) {
     const userRepo = new UserRepository();
     const authService = new AuthService(userRepo);
-    const userController = new UserController(authService, userRepo);
+    const getUserInfos = new GetUserInfos(userRepo, server.repository.branchesRepository, server.repository.sectorsRepository);
+    const userController = new UserController(authService, userRepo, getUserInfos);
 
     server.post("/users", {preHandler: server.checkPermissions("can_add"),handler: userController.create})
     server.get('/users', {preHandler: server.checkPermissions("can_view"),handler: userController.list})
+    server.get('/users/infos/:id', {preHandler: server.checkPermissions("can_view"),handler: userController.getUserInfos})
     server.post("/users/login", userController.login)
-    // server.post("/users/profile", profile)
     server.put("/users/:id", {preHandler: server.checkPermissions("can_edit"),handler: userController.edit})
     server.delete("/users/:id", {preHandler: server.checkPermissions("can_delete"),handler: userController.delete})
 }

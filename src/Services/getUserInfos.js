@@ -1,4 +1,4 @@
-export class ReportsInfos {
+export class GetUserInfos {
     constructor(userRepository, branchesRepository, sectorsRepository) {
         this.userRepository = userRepository
         this.branchesRepository = branchesRepository

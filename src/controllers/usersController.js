@@ -1,12 +1,8 @@
-import bcrypt from "bcrypt"
-import { sql } from "../../db.js"
-import { getRole } from './rolesController.js'
-
 export class UserController {
-    constructor(authService, userRepository) {
+    constructor(authService, userRepository, getUserInfos) {
         this.authService = authService;
         this.userRepository = userRepository;
-
+        this.getUserInfos = getUserInfos;
     }
 
     create = async (request, reply) => {
@@ -30,6 +26,19 @@ export class UserController {
             return reply.status(401).send({message: 'No one user found.'});
         }
         return reply.status(200).send(user);
+    }
+
+    getUserInfos = async (request, reply) => {
+        try{
+            const userData = await this.getUserInfos(request.userID);
+            if (!userData) {
+                return reply.status(401).send({message: 'No user found.'});
+            }
+            return reply.status(200).send(userData);
+        }catch(err){
+            console.log(err)
+            return reply.status(500).send({message: "Error trying to get user info"})
+        }
     }
 
     login = async (request, reply) => {

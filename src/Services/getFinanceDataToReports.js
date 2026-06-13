@@ -1,7 +1,8 @@
-class ReportsData {
-    constructor(revenuesValidationService, expensesValidationService) {
+export class GetFinanceDataToReports {
+    constructor(revenuesValidationService, expensesValidationService, reportsRepository) {
         this.revenuesValidationService = revenuesValidationService
         this.expensesValidationService = expensesValidationService
+        this.reportsRepository = reportsRepository
 
     }
     async getData(access_scope, userId, search) {
@@ -14,12 +15,12 @@ class ReportsData {
         }
     }
 
-    async filter(scope, userId, searchTerm, start_date, end_date) {
+    async filter(scope, userId, searchTerm, reportId) {
         const {revenues, expenses} = await this.getData(scope, userId, searchTerm);
+        const { start_date, end_date } = await this.reportsRepository.getReportsDataById(reportId)
 
         if (!revenues || !Array.isArray(revenues)) {
             console.warn("Nenhum item encontrado ou erro na permissão.");
-            return [];
         }
 
         const filterRevenues = revenues.filter((revenues) => {

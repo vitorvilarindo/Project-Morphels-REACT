@@ -16,14 +16,18 @@ export class ReportsRepository {
         RETURNING id`
     }
 
-    async listAllWithLocalPermission (userId, searchTerm){
+    async getReportsDataById (id) {
+        return await sql`SELECT * FROM reports WHERE id = ${id}`
+    }
+
+    async listAllWithLocalPermission (userId, searchTerm) {
         return await sql`SELECT r.*
                          FROM reports r
                                   JOIN branches b ON r.branch = b.id
                                   JOIN users u ON u.branch = b.id
-                         WHERE u.id = ${userId} 
-                         ${searchTerm ? sql`AND e.name ILIKE ${searchTerm}`
-            : sql``}`
+                         WHERE u.id = ${userId} ${searchTerm ? sql`AND e.name ILIKE
+                                 ${searchTerm}`
+                                 : sql``}`
     }
 
     async listAllWithSectorPermission (userId, searchTerm){

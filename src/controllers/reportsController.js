@@ -1,7 +1,8 @@
 export class ReportsController {
-    constructor(repostsRepository, scopeValidationService) {
+    constructor(repostsRepository, scopeValidationService, getFinanceReportsData) {
         this.repository = repostsRepository
         this.validationService = scopeValidationService
+        this.getFinanceData = getFinanceReportsData
     }
     create = async (request, reply) => {
         try{
@@ -24,6 +25,19 @@ export class ReportsController {
             return reply.status(500).send({error: "Failed to list"})
         }
     }
+    getReportById = async (request, reply) => {
+        try{
+            const reportData = await this.repository.getReportsDataById(request.params.id)
+            if (!reportData){
+                return reply.status(400).send({error: "Report not found"})
+            }
+            return reply.status(200).send(reportData)
+        }catch(err){
+            console.log(err)
+            return reply.status(500).send({error: "Failed to get report"})
+        }
+    }
+
     update = async (request, reply) => {
         try{
             const updateReport = await this.repository.updateReport(request.body, request.params.id)
@@ -46,6 +60,19 @@ export class ReportsController {
         }catch(err){
             console.log(err)
             return reply.status(500).send({error: "Failed to delete report"})
+        }
+    }
+
+    getFinanceReportsData = async (request, reply) => {
+        try{
+            const data = await this.getFinanceData.filter(request.access_scope, request.userID, request.query.search, request.params.id)
+            if (!data){
+                return reply.status(404).send({error: "Failed to get finance report"})
+            }
+            return reply.status(200).send(data)
+        } catch(err){
+            console.log(err)
+            return reply.status(500).send({error: "Failed to get finance report"})
         }
     }
 }
