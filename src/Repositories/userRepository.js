@@ -4,7 +4,7 @@ export class UserRepository {
     async findUserByEmail(email) {
         const [user] = await sql`SELECT *
                                  FROM users
-                                 WHERE id = ${email}`;
+                                 WHERE email = ${email}`;
         return user;
     }
 

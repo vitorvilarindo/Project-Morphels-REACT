@@ -1,13 +1,14 @@
 export class GetFinanceDataToReports {
-    constructor(revenuesValidationService, expensesValidationService, reportsRepository) {
-        this.revenuesValidationService = revenuesValidationService
-        this.expensesValidationService = expensesValidationService
+    constructor(revenuesRepository, expensesRepository, validationService, reportsRepository) {
+        this.revenuesRepository = revenuesRepository
+        this.expensesRepository = expensesRepository
+        this.validationService = validationService
         this.reportsRepository = reportsRepository
 
     }
     async getData(access_scope, userId, search) {
-        const revenues = await this.revenuesValidationService.validateAccessScope(access_scope, userId, search)
-        const expenses = await this.expensesValidationService.validateAccessScope(access_scope, userId, search)
+        const revenues = await this.validationService.validateAccessScope(this.revenuesRepository, access_scope, userId, search)
+        const expenses = await this.validationService.validateAccessScope(this.expensesRepository, access_scope, userId, search)
 
         return {
             revenues,

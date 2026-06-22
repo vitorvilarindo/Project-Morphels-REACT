@@ -11,11 +11,11 @@ export class GetUserInfos {
         const sector = await this.sectorsRepository.findSectorById(user.sector)
 
         return{
-            username: user.name,
+            user_name: user.name,
             branch: branch.name,
             branch_owner: branch.branch_owner,
-            sector: sector.name,
-            sector_coordinator: sector.sectorial_cordenator
+            sector_name: sector.name,
+            sectorial_coordinator: sector.sectorial_cordenator
         }
 
     }

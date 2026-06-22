@@ -1,12 +1,12 @@
 import {sql} from "../../db.js";
 
 export class BranchesRepository {
-    async createBranch (branchdata, userId) {
+    async createBranch (branch_data, userId) {
         return await sql`INSERT INTO branches (name, sector, owner, insitution)
         VALUES(
-               ${branchdata.name},
-               (SELECT id FROM sectors WHERE name = ${branchdata.sector}),
-               ${branchdata.owner}
+               ${branch_data.name},
+               (SELECT id FROM sectors WHERE name = ${branch_data.sector}),
+               ${branch_data.owner}
                 (SELECT s.institution
                  FROM users u
                           JOIN branches b ON u.branch = b.id
@@ -20,6 +20,7 @@ export class BranchesRepository {
         const [branch] = await sql`SELECT *
                                    FROM branches
                                    WHERE id = ${branchId}`
+        return branch
     }
 
     async listBranches(userId) {

@@ -28,9 +28,9 @@ export class UserController {
         return reply.status(200).send(user);
     }
 
-    getUserInfos = async (request, reply) => {
+    getInfos = async (request, reply) => {
         try{
-            const userData = await this.getUserInfos(request.userID);
+            const userData = await this.getUserInfos.getData(request.userID);
             if (!userData) {
                 return reply.status(401).send({message: 'No user found.'});
             }

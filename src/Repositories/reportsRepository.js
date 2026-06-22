@@ -47,10 +47,10 @@ export class ReportsRepository {
     async listAllWithGlobalPermissions (userId, searchTerm){
         return await sql`SELECT r.*
                          FROM reports r
-                                  JOIN branches b ON e.branch = b.id
+                                  JOIN branches b ON r.branch = b.id
                                   JOIN sectors s ON s.id = b.sector
-                                  JOIN sectors us ON s.institution = ub.sector
-                                  JOIN branches ub ON us.is = ub.sector
+                                  JOIN sectors us ON s.institution = us.institution
+                                  JOIN branches ub ON us.id = ub.sector
                                   JOIN users u ON u.branch = ub.id
                          WHERE u.id = ${userId} ${searchTerm
             ? sql`AND e.name ILIKE

@@ -137,8 +137,8 @@ import { sql } from './db.js'
 
 // // Alterações nas tabelas
 // await sql`
-//     ALTER TABLE branches
-//         ADD COLUMN IF NOT EXISTS institution UUID REFERENCES institutions(id)
+//     ALTER TABLE revenues
+//         DROP COLUMN IF EXISTS institution
 // `
 // await sql`
 //     ALTER TABLE sectors
@@ -170,14 +170,14 @@ import { sql } from './db.js'
 // await sql`ALTER TABLE users
 //     RENAME COLUMN church TO branch`;
 
-// await sql`ALTER TABLE expenses DROP COLUMN IF EXISTS user_id`;
+await sql`ALTER TABLE expenses DROP COLUMN IF EXISTS institution`;
 // await sql`CREATE type scope_level AS ENUM ('global', 'sector', 'local')`;
 
-await sql`
-    ALTER TABLE companies 
-        ADD COLUMN IF NOT EXISTS intitution UUID REFERENCES institutions(id)
-
-`.then(() => {console.log("DEu bom")})
+// await sql`
+//     ALTER TABLE companies
+//         ADD COLUMN IF NOT EXISTS intitution UUID REFERENCES institutions(id)
+//
+// `.then(() => {console.log("DEu bom")})
 
 
 // await sql`

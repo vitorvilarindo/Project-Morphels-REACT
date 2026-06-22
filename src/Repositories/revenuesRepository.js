@@ -15,7 +15,7 @@ export class RevenuesRepository {
     }
 
     async listAllWithLocalPermission (userId, searchTerm){
-        return await sql`SELECT r.*
+        return await sql`SELECT r.*, SUM(r.value) OVER() as revenues_sum
                          FROM revenues r
                                   JOIN branches b ON r.branch = b.id
                                   JOIN users u ON u.branch = b.id
@@ -26,7 +26,7 @@ export class RevenuesRepository {
 
     async listAllWithSectorPermission (userId, searchTerm){
         return await sql`
-            SELECT r.*
+            SELECT r.*, SUM(r.value) OVER() as revenues_sum
             FROM revenues r
                      JOIN branches b ON r.branch = b.id
                      JOIN branches ub ON b.sector = ub.sector
@@ -39,13 +39,14 @@ export class RevenuesRepository {
     }
 
     async listAllWithGlobalPermissions (userId, searchTerm){
-        return await sql`SELECT r.*
-                         FROM revenue r
+        return await sql`SELECT r.*, SUM(r.value) OVER() as revenues_sum
+                         FROM revenues r
                                   JOIN branches b ON r.branch = b.id
                                   JOIN sectors s on s.id = b.sector
                                   JOIN sectors us ON s.institution = us.institution
                                   JOIN branches ub ON us.id = ub.sector
                                   JOIN users u ON u.branch = ub.id
+                             WHERE u.id = ${userId}
                              ${searchTerm
                                      ? sql`AND r.name ILIKE
                                      ${searchTerm}`

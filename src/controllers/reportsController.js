@@ -18,7 +18,7 @@ export class ReportsController {
     }
     list = async (request, reply) => {
         try{
-            const reposts = await this.validationService.validateAccessScope(request.access_scope, request.userID, request.query.search)
+            const reposts = await this.validationService.validateAccessScope(this.repository, request.access_scope, request.userID, request.query.search)
             return reply.status(200).send(reposts)
         }catch(err){
             console.log(err)
@@ -35,6 +35,19 @@ export class ReportsController {
         }catch(err){
             console.log(err)
             return reply.status(500).send({error: "Failed to get report"})
+        }
+    }
+
+    getFinanceReportsData = async (request, reply) => {
+        try{
+            const data = await this.getFinanceData.filter(request.access_scope, request.userID, request.query.search, request.params.id)
+            if (!data){
+                return reply.status(404).send({error: "Failed to get finance report"})
+            }
+            return reply.status(200).send(data)
+        } catch(err){
+            console.log(err)
+            return reply.status(500).send({error: "Failed to get finance report"})
         }
     }
 
@@ -63,16 +76,5 @@ export class ReportsController {
         }
     }
 
-    getFinanceReportsData = async (request, reply) => {
-        try{
-            const data = await this.getFinanceData.filter(request.access_scope, request.userID, request.query.search, request.params.id)
-            if (!data){
-                return reply.status(404).send({error: "Failed to get finance report"})
-            }
-            return reply.status(200).send(data)
-        } catch(err){
-            console.log(err)
-            return reply.status(500).send({error: "Failed to get finance report"})
-        }
-    }
+
 }

@@ -5,9 +5,8 @@ import { RevenuesController } from "../Controllers/revenuesController.js";
 
 export default async function revenuesRoutes(server) {
     const revenuesRepository = new RevenuesRepository();
-    const validationService = new ScopeValidationService(revenuesRepository);
-    const filterService = new FilterService(validationService);
-    const revenuesController = new RevenuesController(filterService, validationService, revenuesRepository);
+    const filterService = new FilterService(server.services.validationService);
+    const revenuesController = new RevenuesController(filterService, server.services.validationService, revenuesRepository);
 
 
     server.post("/revenues", {preHandler: server.checkPermissions("can_add"),handler: revenuesController.create})

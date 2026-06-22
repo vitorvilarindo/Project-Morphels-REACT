@@ -7,7 +7,7 @@ export class RevenuesController {
 
     create = async (request, reply) => {
         try{
-            const createdRevenue = await this._revenuesRepository.create(request.body);
+            const createdRevenue = await this._revenuesRepository.createRevenue(request.body);
             if (!createdRevenue) {
                 return reply.status(300).send({message: 'Revenue can not be crated'});
             }
@@ -22,7 +22,7 @@ export class RevenuesController {
     }
     list = async (request, reply) => {
         try{
-            const revenues = await this._validationService.validateAccessScope(request.access_scope, request.userID, request.query.search)
+            const revenues = await this._validationService.validateAccessScope(this._revenuesRepository, request.access_scope, request.userID, request.query.search)
 
             if (!revenues) {
                 return reply.status(200).send({message: 'Revenue does not exist'});
@@ -48,7 +48,7 @@ export class RevenuesController {
     }
     update = async (request, reply) => {
         try{
-            const updateRevenue = await this._revenuesRepository.update(request.body, request.params.id);
+            const updateRevenue = await this._revenuesRepository.updateRevenue(request.body, request.params.id);
             if (!updateRevenue) {
                 return reply.status(400).send({message: 'Revenue does not exist'});
             }
@@ -60,7 +60,7 @@ export class RevenuesController {
     }
     delete = async (request, reply) => {
         try {
-            const deleteRevenue = await this._revenuesRepository.delete(request.params.id, request.userID);
+            const deleteRevenue = await this._revenuesRepository.deleteRevenue(request.params.id, request.userID);
             if (!deleteRevenue) {
                 return reply.status(400).send({message: 'Revenue does not exist'});
             }

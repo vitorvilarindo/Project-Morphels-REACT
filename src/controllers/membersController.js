@@ -1,11 +1,11 @@
 export class MembersController {
     constructor(membersRepository, scopeValidationService) {
-        this.repository = new MembersRepository();
+        this.repository = membersRepository
         this.validationService = scopeValidationService;
     }
     create = async (request, reply) => {
         try{
-            const memberCreated = await this.repository.create(request.body);
+            const memberCreated = await this.repository.createMember(request.body);
             if (!memberCreated) {
                 return reply.status(400).send({error: "Failed to create report"})
             }
@@ -17,7 +17,7 @@ export class MembersController {
     }
     list = async (request, reply) => {
         try{
-            const members = await this.validationService.validateAccessScope(request.access_scope, request.userID, request.query.search)
+            const members = await this.validationService.validateAccessScope(this.repository, request.access_scope, request.userID, request.query.search)
             if (!members) {
                 return reply.status(400).send({error: "Failed to list of members"})
             }
@@ -29,7 +29,7 @@ export class MembersController {
     }
     update = async (request, reply) => {
         try{
-            const memberUpdated = await this.repository.update(request.body, request.params.id);
+            const memberUpdated = await this.repository.updateMember(request.body, request.params.id);
             if (!memberUpdated) {
                 return reply.status(400).send({error: "Failed to update report"})
             }
@@ -41,7 +41,7 @@ export class MembersController {
     }
     delete = async (request, reply) => {
         try{
-            const memberDeleted = await this.repository.delete(request.params.id);
+            const memberDeleted = await this.repository.deleteMember(request.params.id);
             if (!memberDeleted) {
                 return reply.status(400).send({error: "Failed to delete report"})
             }

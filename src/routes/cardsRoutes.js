@@ -4,8 +4,7 @@ import { CardsController } from "../Controllers/cardsController.js"
 
 export default async function cardsRoutes(server) {
     const cardsRepository = new CardsRepository()
-    const scopeValidationService = new ScopeValidationService(cardsRepository)
-    const cardsController = new CardsController(cardsRepository, scopeValidationService)
+    const cardsController = new CardsController(cardsRepository, server.services.validationService)
 
 
     server.post("/cards", {preHandler: server.checkPermissions("can_add"), handler: cardsController.create})

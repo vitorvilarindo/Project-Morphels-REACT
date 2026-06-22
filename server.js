@@ -11,10 +11,8 @@ import companiesRoutes from "./src/Routes/companiesRoutes.js";
 import rolesRoutes from "./src/Routes/rolesRoutes.js";
 import sectorsRoutes from "./src/Routes/sectorsRoutes.js";
 import churchesRoutes from "./src/Routes/branchesRoutes.js";
-import generalRoutes from "./src/Routes/generalRoutes.js";
 import repostsRotes from "./src/Routes/repostsRoutes.js";
 import cardsRoutes from "./src/Routes/cardsRoutes.js";
-import pagesRoutes from "./src/Routes/pagesRoutes.js";
 import containerPlugin from "./src/Services/containerPlugin.js";
 import {sql} from "./db.js";
 
@@ -49,10 +47,8 @@ server.register(companiesRoutes)
 server.register(rolesRoutes)
 server.register(sectorsRoutes)
 server.register(churchesRoutes)
-server.register(generalRoutes)
 server.register(repostsRotes)
 server.register(cardsRoutes)
-server.register(pagesRoutes)
 
 //Middlewares
 server.addHook('preHandler', async (request, reply) => {
