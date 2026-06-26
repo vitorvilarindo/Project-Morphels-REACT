@@ -1,171 +1,124 @@
-import { fastify } from 'fastify'
-import {  dataBasePostgresUsers, dataBasePostgresRevenues, dataBasePostgresExpenses, dataBasePostgresMembers } from './database_postgres.js'
+import Fastify from 'fastify'
+import cookie from '@fastify/cookie'
+import jwt from '@fastify/jwt'
+import cors from '@fastify/cors'
 
-const server = fastify()
+import usersRoutes from "./src/Routes/usersRoutes.js";
+import revenuesRoutes from "./src/Routes/revenuesRoutes.js";
+import expensesRoutes from "./src/Routes/expensesRoutes.js";
+import membersRoutes from "./src/Routes/membersRoutes.js";
+import companiesRoutes from "./src/Routes/companiesRoutes.js";
+import rolesRoutes from "./src/Routes/rolesRoutes.js";
+import sectorsRoutes from "./src/Routes/sectorsRoutes.js";
+import churchesRoutes from "./src/Routes/branchesRoutes.js";
+import repostsRotes from "./src/Routes/repostsRoutes.js";
+import cardsRoutes from "./src/Routes/cardsRoutes.js";
+import containerPlugin from "./src/Services/containerPlugin.js";
+import {sql} from "./db.js";
 
-const database_users = new dataBasePostgresUsers()
-const database_revenues = new dataBasePostgresRevenues()
-const database_expenses = new dataBasePostgresExpenses()
-const database_members = new dataBasePostgresMembers()
+const server = Fastify({ logger: true })
 
-//USERS
-server.post('/users', async (request, reply) => {
-  const { name, email, password } = request.body
-  await database_users.create_user({ 
-    name,
-    email,
-    password
-   })
-  reply.status(201).send()
-  console.log("Deu bom")
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
+// CORS primeiro
+server.register(cors, {
+    origin: 'http://localhost:5173',
+    methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
+    credentials: true
 })
 
-server.get('/users', async (request, reply) => {
-  const search = request.query.search
+// JWT e cookies
+server.register(jwt, { secret: process.env.JWT_SECRET_KEY, cookie: {
+        cookieName: 'token',
+        signed: false
+    } },
 
-
-  const videos = await database_users.list_user(search)
-  return reply.status(200).send(videos)
-})
-
-server.put('/users/:id', async (request, reply) => {
-  const userID = request.params.id
-  const { name, email, password } = request.body
-
-  await database_users.edit_user(userID, { 
-    name,
-    email,
-    password
-  })
-
-  return reply.status(204).send()
-})
-
-server.delete('/users/:id', async (request, reply) => {
-  const userID = request.params.id
-
-  await database_users.delete_user(userID)
-
-  return reply.status(204).send()
-})
-
-//REVENUES
-server.post('/revenues', async (request, reply) => {
-  const { member, type, payment, reference_mounth, date, user_id } = request.body
-  await database_revenues.create_revenue({
-    member,
-    type,
-    payment,
-    reference_mounth,
-    date: new Date(date),
-    user_id
-   })
-  reply.status(201).send()
-  console.log("Deu bom")
-})
-server.get('/revenues', async (request, reply) => {
-  const search = request.query.search
-  const revenues = await database_revenues.list_revenues(search)
-  return reply.status(200).send(revenues)
-})
-
-server.put('/revenues/:id', async (request, reply) => {
-  const revenuesID = request.params.id
-  const { member, type, payment, reference_mounth, date, user_id} = request.body
-  await database_revenues.edit_revenues(revenuesID, {
-    member,
-    type,
-    payment,
-    reference_mounth,
-    date,
-    user_id
-
-  })
-  return reply.status(204).send()
-})
-server.delete('/revenues/:id', async (request, reply) => {
-  const revenuesID = request.params.id
-  await database_revenues.delete_revenues(revenuesID)
-  return reply.status(204).send()
-})
-
-//EXPENSES
-server.post('/expenses', async (request, reply) => {
-  const { title, category, payment, reference_mounth, date, beneficiary, user_id } = request.body
-  await database_expenses.create_expense({
-    title,
-    category,
-    payment,
-    reference_mounth,
-    date: new Date(date),
-    beneficiary,
-    user_id
-  })
-  reply.status(201).send()
-  console.log("Deu bom")
-})
-server.get('/expenses', async (request, reply) => {
-  const search = request.query.search
-  if (search) {
-    const expenses = await database_expenses.list_expenses(search)
-  } else {
-    const expenses = await database_expenses.list_expenses()
-  }
-  return reply.status(200).send(expenses)
-})
-server.put('/expenses/:id',async (request,reply) => {
-  const expenseID = request.params.id
-  const {title, category, payment, reference_mounth, date, beneficiary, user_id} = request.body
-await database_expenses.edit_expenses(expenseID, {
-  title,
-  category,
-  payment,
-  reference_mounth,
-  date,
-  beneficiary,
-  user_id
-})
-return reply.status(204).send()
-})
-server.delete('/expenses/:id', async (request, reply) => {
-  const expenseID = request.params.id
-  await database_expenses.delete_expenses(expenseID )
-  return reply.status(204).send()
-})
-
-//MEMBERS
-server.post('/members', async (request, reply) => {
-  const { name, user_id } = request.body
-  await database_members.create_member({
-    name,
-    user_id
-  })
-  reply.status(201).send()
-  console.log("Deu bom")
-})
-server.get('/members', async (request, reply) => {
-  const search = request.query.search
-  if (search) {
-    const members = await database_members.list_members(search)
-  } else {
-    await database_members.list_members();
-  }
-  return reply.status(200).send(members)
-})
-server.put('/members/:id', async (request, reply) => {
-  const memberID = request.params.id
-  const { name, user_id } = request.body
-  await database_members.edit_members(memberID, {
-    name,
-    user_id
-  })
-  return reply.status(204).send()
-})
-server.delete('/members/:id', async (request, reply) => {
-  const memberID = request.params.id
-  await database_members.delete_members(memberID)
-  return reply.status(204).send()
-})
-server.listen(
-  { port: 3000}
 )
+server.register(cookie)
+await server.register(containerPlugin)
+
+// Rotas
+server.register(usersRoutes)
+server.register(revenuesRoutes)
+server.register(expensesRoutes)
+server.register(membersRoutes)
+server.register(companiesRoutes)
+server.register(rolesRoutes)
+server.register(sectorsRoutes)
+server.register(churchesRoutes)
+server.register(repostsRotes)
+server.register(cardsRoutes)
+
+//Middlewares
+server.addHook('preHandler', async (request, reply) => {
+    const publicRoutes = ['/users/login'];
+    if (publicRoutes.includes(request.url)) {
+        return
+    }
+
+    try {
+        const decoded = await request.jwtVerify()
+        request.userID = decoded.sub
+    } catch (err) {
+        return reply.status(401).send({ error: 'Invalid or expired token.' })
+    }
+})
+server.decorate('checkPermissions', function (action) {
+    return async (request, reply) => {
+        try {
+            console.log("Bom dia")
+
+            const userID = request.userID;
+
+            const rawPath = request.routerPath || request.url.split('?')[0];
+
+            const pageName = rawPath.split('/')[1];
+
+            const permission = await sql`
+                SELECT ${action} as has_permission
+                FROM permissions p
+                JOIN users u ON p.role_id = u.designation
+                JOIN pages pg ON pg.id = p.page_id
+                WHERE u.id = ${userID}
+                  AND pg.name = ${pageName}
+                LIMIT 1
+            `;
+            const access_scope = await sql`
+                SELECT access_scope as scope
+                FROM permissions p
+                JOIN users u ON p.role_id = u.designation
+                JOIN pages pg ON pg.id = p.page_id
+                WHERE u.id = ${userID}
+                AND pg.name = ${pageName}
+            `
+
+            request.access_scope = access_scope[0].scope
+
+            if (permission.length === 0 || !permission[0].has_permission) {
+                return reply.status(403).send({
+                    message: "You do not have permission to execute this action."
+                });
+            }
+
+        } catch (e) {
+            console.error("ERRO NO SQL OU MIDDLEWARE:", e);
+
+            return reply.status(500).send({
+                message: 'Internal Server Error' + e
+            });
+        }
+    }
+})
+
+// Start
+const start = async () => {
+    try {
+        await server.listen({ port: 3000 })
+        console.log('🚀 Servidor rodando em http://localhost:3000')
+    } catch (err) {
+        server.log.error(err)
+        process.exit(1)
+    }
+}
+start().then()
