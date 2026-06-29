@@ -114,7 +114,7 @@ server.decorate('checkPermissions', function (action) {
 // Start
 const start = async () => {
     try {
-        await server.listen({ port: 3000 })
+        await server.listen({ port: process.env.PORT })
         console.log('🚀 Servidor rodando em http://localhost:3000')
     } catch (err) {
         server.log.error(err)
