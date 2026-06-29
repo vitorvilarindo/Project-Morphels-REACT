@@ -18,25 +18,39 @@ import {sql} from "./db.js";
 
 const server = Fastify({ logger: true })
 
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-
 // CORS primeiro
-server.register(cors, {
-    origin: 'http://localhost:5173',
+await server.register(cors, {
+    origin: true,
     methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
     credentials: true
 })
 
 // JWT e cookies
-server.register(jwt, { secret: process.env.JWT_SECRET_KEY, cookie: {
+await server.register(jwt, {
+    secret: process.env.JWT_SECRET_KEY,
+    cookie: {
         cookieName: 'token',
         signed: false
-    } },
+    } })
 
-)
-server.register(cookie)
+await server.register(cookie)
 await server.register(containerPlugin)
+
+// Capturador global de erros para expor o culpado no console
+server.setErrorHandler((error, request, reply) => {
+    console.error("❌ ERRO CAPTURADO NO FLUXO:", error);
+
+    // Garante que mesmo dando erro interno, o CORS seja injetado na resposta
+    reply.header("Access-Control-Allow-Origin", "http://localhost:5173");
+    reply.header("Access-Control-Allow-Credentials", "true");
+
+    reply.status(error.statusCode || 500).send({
+        error: error.name,
+        message: error.message
+    });
+});
+
 
 // Rotas
 server.register(usersRoutes)
@@ -50,20 +64,28 @@ server.register(churchesRoutes)
 server.register(repostsRotes)
 server.register(cardsRoutes)
 
-//Middlewares
+
+// Middlewares
 server.addHook('preHandler', async (request, reply) => {
-    const publicRoutes = ['/users/login'];
-    if (publicRoutes.includes(request.url)) {
-        return
+    // 1. SE FOR REQUEST DE CORS (OPTIONS), RESPONDE 204/200 IMEDIATAMENTE E TRAVA O HOOK
+    if (request.method === 'OPTIONS') {
+        return reply.status(204).send();
     }
 
-    try {
-        const decoded = await request.jwtVerify()
-        request.userID = decoded.sub
-    } catch (err) {
-        return reply.status(401).send({ error: 'Invalid or expired token.' })
+    // 2. SE FOR ROTA PÚBLICA, DEIXA CONTINUAR
+    const publicRoutes = ['/users/login'];
+    if (publicRoutes.includes(request.url)) {
+        return;
     }
-})
+
+    // 3. CASO CONTRÁRIO, VALIDA O JWT
+    try {
+        const decoded = await request.jwtVerify();
+        request.userID = decoded.sub;
+    } catch (err) {
+        return reply.status(401).send({ error: 'Invalid or expired token.' });
+    }
+});
 server.decorate('checkPermissions', function (action) {
     return async (request, reply) => {
         try {
@@ -110,6 +132,8 @@ server.decorate('checkPermissions', function (action) {
         }
     }
 })
+
+
 
 // Start
 const start = async () => {
