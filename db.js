@@ -11,7 +11,7 @@ const requestHandler = async (req, res) => {
   res.end(version);
 };
 
-createServer(requestHandler).listen(3000, () => {
+createServer(requestHandler).listen(process.env.PORT, () => {
   console.log("Server running at http://localhost:3000");
 });
 

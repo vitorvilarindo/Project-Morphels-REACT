@@ -3,16 +3,16 @@ import cookie from '@fastify/cookie'
 import jwt from '@fastify/jwt'
 import cors from '@fastify/cors'
 
-import usersRoutes from "./src/Routes/usersRoutes.js";
-import revenuesRoutes from "./src/Routes/revenuesRoutes.js";
-import expensesRoutes from "./src/Routes/expensesRoutes.js";
-import membersRoutes from "./src/Routes/membersRoutes.js";
-import companiesRoutes from "./src/Routes/companiesRoutes.js";
-import rolesRoutes from "./src/Routes/rolesRoutes.js";
-import sectorsRoutes from "./src/Routes/sectorsRoutes.js";
-import churchesRoutes from "./src/Routes/branchesRoutes.js";
-import repostsRotes from "./src/Routes/repostsRoutes.js";
-import cardsRoutes from "./src/Routes/cardsRoutes.js";
+import usersRoutes from "./src/routes/usersRoutes.js";
+import revenuesRoutes from "./src/routes/revenuesRoutes.js";
+import expensesRoutes from "./src/routes/expensesRoutes.js";
+import membersRoutes from "./src/routes/membersRoutes.js";
+import companiesRoutes from "./src/routes/companiesRoutes.js";
+import rolesRoutes from "./src/routes/rolesRoutes.js";
+import sectorsRoutes from "./src/routes/sectorsRoutes.js";
+import churchesRoutes from "./src/routes/branchesRoutes.js";
+import repostsRotes from "./src/routes/repostsRoutes.js";
+import cardsRoutes from "./src/routes/cardsRoutes.js";
 import containerPlugin from "./src/Services/containerPlugin.js";
 import {sql} from "./db.js";
 
