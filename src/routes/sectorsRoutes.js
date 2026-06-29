@@ -1,5 +1,5 @@
 import {SectorsRepository} from '../Repositories/sectorsRepository.js'
-import {SectorsController} from '../Controllers/sectorsController.js'
+import {SectorsController} from '../controllers/sectorsController.js'
 
 export default async function sectorsRoutes(server) {
     const sectorRepository = new SectorsRepository()

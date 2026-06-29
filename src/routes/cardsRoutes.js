@@ -1,6 +1,5 @@
 import { CardsRepository } from "../Repositories/cardsRepository.js"
-import { ScopeValidationService } from "../Services/scopeValidationService.js"
-import { CardsController } from "../Controllers/cardsController.js"
+import { CardsController } from "../controllers/cardsController.js"
 
 export default async function cardsRoutes(server) {
     const cardsRepository = new CardsRepository()

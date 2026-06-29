@@ -1,6 +1,5 @@
 import {MembersRepository} from '../Repositories/membersRepository.js'
-import {ScopeValidationService} from '../Services/scopeValidationService.js'
-import {MembersController} from '../Controllers/membersController.js'
+import {MembersController} from '../controllers/membersController.js'
 
 export default async function revenuesRoutes(server) {
     const membersRepository = new MembersRepository()

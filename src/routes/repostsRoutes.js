@@ -1,6 +1,6 @@
 import {ReportsRepository} from '../Repositories/reportsRepository.js'
 import {GetFinanceDataToReports} from '../Services/getFinanceDataToReports.js'
-import {ReportsController} from '../Controllers/reportsController.js'
+import {ReportsController} from '../controllers/reportsController.js'
 
 export default async function repostsRotes(server) {
     const reportsRepository = new ReportsRepository()

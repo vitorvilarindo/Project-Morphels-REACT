@@ -1,6 +1,6 @@
 import { ExpensesRepository } from "../Repositories/expensesRepository.js";
 import { FilterService } from "../Services/filterService.js";
-import { ExpensesController } from "../Controllers/expensesController.js";
+import { ExpensesController } from "../controllers/expensesController.js";
 
 export default async function expensesRoutes(server) {
     const expensesRepository = new ExpensesRepository();

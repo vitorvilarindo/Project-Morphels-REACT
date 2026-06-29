@@ -1,7 +1,7 @@
 import { UserRepository } from '../Repositories/userRepository.js'
 import { AuthService } from '../Services/authService.js'
 import { GetUserInfos } from '../Services/getUserInfos.js'
-import { UserController } from '../Controllers/usersController.js'
+import { UserController } from '../controllers/usersController.js'
 
 export default async function usersRoutes(server) {
     const userRepo = new UserRepository();

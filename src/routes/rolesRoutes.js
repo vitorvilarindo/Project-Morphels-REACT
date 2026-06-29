@@ -1,5 +1,5 @@
-import {RolesController} from '../Controllers/rolesController.js'
 import {RolesRepository} from '../Repositories/rolesRepository.js'
+import {RolesController} from '../controllers/rolesController.js'
 
 export default async function rolesRoutes(server) {
     const rolesRepository = new RolesRepository()

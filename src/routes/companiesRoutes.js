@@ -1,5 +1,5 @@
 import { CompaniesRepository } from "../Repositories/companiesRepository.js"
-import { CompaniesController } from "../Controllers/companiesController.js"
+import { CompaniesController } from "../controllers/companiesController.js"
 
 export default async function companiesRoutes(server) {
     const companiesRepository = new CompaniesRepository()

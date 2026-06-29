@@ -1,5 +1,5 @@
 import { BranchesRepository } from "../Repositories/branchesRepository.js"
-import { BranchesController } from "../Controllers/branchesController.js"
+import { BranchesController } from "../controllers/branchesController.js"
 
 export default async function branchesRoutes(server) {
     const branchesRepository = new BranchesRepository()

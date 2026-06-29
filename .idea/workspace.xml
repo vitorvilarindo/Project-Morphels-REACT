@@ -5,14 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4253a2e1-3079-47e3-8a9b-af28fa2349ea" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Project-Morphels-REACT.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Project-Morphels-REACT.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/data_sources_history.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/data_sources_history.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_01_06_2026_11_18_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_01_06_2026_11_18__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.js" beforeDir="false" afterPath="$PROJECT_DIR$/db.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Routes/branchesRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Routes/branchesRoutes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Routes/cardsRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Routes/cardsRoutes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Routes/companiesRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Routes/companiesRoutes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Routes/expensesRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Routes/expensesRoutes.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +87,7 @@
       <workItem from="1780317095860" duration="233000" />
       <workItem from="1780319604053" duration="550000" />
       <workItem from="1780323381583" duration="313000" />
-      <workItem from="1782733013591" duration="4088000" />
+      <workItem from="1782733013591" duration="4417000" />
     </task>
     <servers />
   </component>
