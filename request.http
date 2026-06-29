@@ -1,0 +1,14 @@
+###
+POST http://localhost:3000/users/login
+Content-Type: application/json
+
+{
+  "loginEmail": "pinguin@gmail.com",
+  "loginPassword": "1234"
+}
+
+
+###
+DELETE http://localhost:3000/users/b612d20b-4806-488a-9c19-6fcd2ac778d4
+
+###
