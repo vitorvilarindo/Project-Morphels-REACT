@@ -1,0 +1,1252 @@
+POST http://localhost:3000/users/login
+Content-Type: application/json
+Content-Length: 66
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "loginEmail": "pinguin@gmail.com",
+  "loginPassword": "1234"
+}
+
+<> 2026-05-14T120429.200.json
+
+###
+
+POST http://localhost:3000/users/login
+Content-Type: application/json
+Content-Length: 66
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "loginEmail": "pinguin@gmail.com",
+  "loginPassword": "1234"
+}
+
+<> 2026-05-14T120319.503.json
+
+###
+
+POST http://localhost:3000/users/login
+Content-Type: application/json
+Content-Length: 66
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "loginEmail": "pinguin@gmail.com",
+  "loginPassword": "1234"
+}
+
+<> 2026-05-14T120154.503.json
+
+###
+
+POST http://localhost:3000/users/login
+Content-Type: application/json
+Content-Length: 66
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "loginEmail": "pinguin@gmail.com",
+  "loginPassword": "1234"
+}
+
+<> 2026-05-14T120053.503.json
+
+###
+
+POST http://localhost:3000/users/login
+Content-Type: application/json
+Content-Length: 66
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "loginEmail": "pinguin@gmail.com",
+  "loginPassword": "1234"
+}
+
+<> 2026-05-14T120008.503.json
+
+###
+
+POST http://localhost:3000/users/login
+Content-Type: application/json
+Content-Length: 66
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "loginEmail": "pinguin@gmail.com",
+  "loginPassword": "1234"
+}
+
+<> 2026-05-14T115926.503.json
+
+###
+
+POST http://localhost:3000/users/login
+Content-Type: application/json
+Content-Length: 66
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "loginEmail": "pinguin@gmail.com",
+  "loginPassword": "1234"
+}
+
+<> 2026-05-14T115844.503.json
+
+###
+
+POST http://localhost:3000/users/login
+Content-Type: application/json
+Content-Length: 66
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "loginEmail": "pinguin@gmail.com",
+  "loginPassword": "1234"
+}
+
+<> 2026-05-14T115705.503.json
+
+###
+
+POST http://localhost:3000/users/login
+Content-Type: application/json
+Content-Length: 66
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "loginEmail": "pinguin@gmail.com",
+  "LoginPassword": "1234"
+}
+
+<> 2026-05-14T115626.503.json
+
+###
+
+POST http://localhost:3000/users/login
+Content-Type: application/json
+Content-Length: 56
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "email": "pinguin@gmail.com",
+  "password": "1234"
+}
+
+<> 2026-05-14T115601.503.json
+
+###
+
+POST http://localhost:3000/users
+Content-Type: application/json
+Content-Length: 216
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "Pinguin da Monhangaba",
+  "email": "pinguin@gmail.com",
+  "password": "1234",
+  "phone_number": "(61) 91234-5678",
+  "designation": "Administrador",
+  "Branch": "Igreja Quadra 3",
+  "sector": "Setor 3"
+}
+
+<> 2026-05-14T115026.201.json
+
+###
+
+POST http://localhost:3000/users
+Content-Type: application/json
+Content-Length: 216
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "Pinguin da Monhangaba",
+  "email": "pinguin@gmail.com",
+  "password": "1234",
+  "phone_number": "(61) 91234-5678",
+  "designation": "Administrador",
+  "Branch": "Igreja Quadra 3",
+  "sector": "Setor 3"
+}
+
+<> 2026-05-14T114926.500.json
+
+###
+
+POST http://localhost:3000/users
+Content-Type: application/json
+Content-Length: 216
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "Pinguin da Monhangaba",
+  "email": "pinguin@gmail.com",
+  "password": "1234",
+  "phone_number": "(61) 91234-5678",
+  "designation": "Administrador",
+  "Branch": "Igreja Quadra 3",
+  "sector": "Setor 3"
+}
+
+<> 2026-05-14T114835.500.json
+
+###
+
+POST http://localhost:3000/users
+Content-Type: application/json
+Content-Length: 216
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "Pinguin da Monhangaba",
+  "email": "pinguin@gmail.com",
+  "password": "1234",
+  "phone_number": "(61) 91234-5678",
+  "designation": "Administrador",
+  "Branch": "Igreja Quadra 3",
+  "sector": "Setor 3"
+}
+
+<> 2026-05-14T114628.500.json
+
+###
+
+POST http://localhost:3000/users
+Content-Type: application/json
+Content-Length: 216
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "Pinguin da Monhangaba",
+  "email": "pinguin@gmail.com",
+  "password": "1234",
+  "phone_number": "(61) 91234-5678",
+  "designation": "Administrador",
+  "Branch": "Igreja Quadra 3",
+  "sector": "Setor 3"
+}
+
+<> 2026-05-14T114508.500.json
+
+###
+
+POST http://localhost:3000/users
+Content-Type: application/json
+Content-Length: 199
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "ADMIN",
+  "email": "admin@gmail.com",
+  "password": "admin",
+  "phone_number": "(61) 91234-5678",
+  "designation": "Administrador",
+  "sector": "Setor 3",
+  "Church": "Igreja Quadra 3"
+}
+
+<> 2026-04-30T100621.401.json
+
+###
+
+POST http://localhost:3000/users
+Content-Type: application/json
+Content-Length: 199
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "ADMIN",
+  "email": "admin@gmail.com",
+  "password": "admin",
+  "phone_number": "(61) 91234-5678",
+  "designation": "Administrador",
+  "sector": "Setor 3",
+  "Church": "Igreja Quadra 3"
+}
+
+<> 2026-04-21T151053.201.json
+
+###
+
+POST http://localhost:3000/users
+Content-Type: application/json
+Content-Length: 199
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "ADMIN",
+  "email": "admin@gmail.com",
+  "password": "admin",
+  "phone_number": "(61) 91234-5678",
+  "designation": "Administrador",
+  "sector": "Setor 3",
+  "Church": "Igreja Quadra 3"
+}
+
+<> 2026-04-21T151011.500.json
+
+###
+
+POST http://localhost:3000/users
+Content-Type: application/json
+Content-Length: 199
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "ADMIN",
+  "email": "admin@gmail.com",
+  "password": "admin",
+  "phone_number": "(61) 91234-5678",
+  "designation": "Administrador",
+  "sector": "Setor 3",
+  "Church": "Igreja Quadra 3"
+}
+
+<> 2026-04-21T150711.500.json
+
+###
+
+POST http://localhost:3000/users
+Content-Type: application/json
+Content-Length: 199
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "ADMIN",
+  "email": "admin@gmail.com",
+  "phone_number": "(61) 91234-5678",
+  "password": "admin",
+  "designation": "Administrador",
+  "sector": "Setor 3",
+  "Church": "Igreja Quadra 3"
+}
+
+<> 2026-04-21T150512.500.json
+
+###
+
+POST http://localhost:3000/roles
+Content-Type: application/json
+Content-Length: 1998
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "Administrador",
+  "description": "administrate the organization",
+  "permissions": [
+    {
+      "page": "Dashboard",
+      "can_view": true
+    },
+    {
+      "page": "Revenues",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Expenses",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Members",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Companies",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Cards",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Reports",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Settings",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Users",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Churches",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Designations",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Sectors",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    }
+  ]
+}
+
+<> 2026-04-21T145325.201.json
+
+###
+
+POST http://localhost:3000/roles
+Content-Type: application/json
+Content-Length: 2165
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "Administrador",
+  "description": "administrate the organization",
+  "permissions": [
+    {
+      "page": "Dashboard",
+      "can_view": true
+    },
+    {
+      "page": "Revenues",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Expenses",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Revenues",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Members",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Companies",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Cards",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Reports",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Settings",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Users",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Churches",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Designations",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Sectors",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    }
+  ]
+}
+
+<> 2026-04-21T145219.500.json
+
+###
+
+POST http://localhost:3000/roles
+Content-Type: application/json
+Content-Length: 2165
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "Administrador",
+  "description": "administrate the organization",
+  "permissions": [
+    {
+      "page": "Dashboard",
+      "can_view": true
+    },
+    {
+      "page": "Revenues",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Expenses",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Revenues",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Members",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Companies",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Cards",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Reports",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Settings",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Users",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Churches",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Designations",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Sectors",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    }
+  ]
+}
+
+<> 2026-04-21T144825.500.json
+
+###
+
+POST http://localhost:3000/roles
+Content-Type: application/json
+Content-Length: 2165
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "Administrador",
+  "description": "administrate the organization",
+  "permissions": [
+    {
+      "page": "Dashboard",
+      "can_view": true
+    },
+    {
+      "page": "Revenues",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Expenses",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Revenues",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Members",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Companies",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Cards",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Reports",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Settings",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Users",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Churches",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Designations",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Sectors",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    }
+  ]
+}
+
+<> 2026-04-21T144716.500.json
+
+###
+
+POST http://localhost:3000/roles
+Content-Type: application/json
+Content-Length: 2165
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "Administrador",
+  "description": "administrate the organization",
+  "permissions": [
+    {
+      "page": "Dashboard",
+      "can_view": true
+    },
+    {
+      "page": "Revenues",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Expenses",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Revenues",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Members",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Companies",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Cards",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Reports",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Settings",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Users",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Churches",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Designations",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    },
+    {
+      "page": "Sectors",
+      "can_view": true,
+      "can_add": true,
+      "can_edit": true,
+      "can_delete": true,
+      "access_scope": "global"
+    }
+  ]
+}
+
+<> 2026-04-21T144449.500.json
+
+###
+
+DELETE http://localhost:3000/users/b612d20b-4806-488a-9c19-6fcd2ac778d4
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2026-04-21T141735.200.json
+
+###
+
+DELETE http://localhost:3000/users/422a0acd-0210-4723-9622-c2b554ee8d60
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2026-04-21T141728.200.json
+
+###
+
+DELETE http://localhost:3000/users/1b0d5812-a0be-4df0-9e60-5cc9c52ea2fa
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2026-04-21T141721.200.json
+
+###
+
+DELETE http://localhost:3000/users/10003f8c-4dd0-43d8-ae14-d4fc2e48becf
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2026-04-21T141713.200.json
+
+###
+
+DELETE http://localhost:3000/roles/fdcbb346-ab85-48b8-8bd4-e758197a50b5
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2026-04-21T141624.200.json
+
+###
+
+DELETE http://localhost:3000/roles/cf3fabb8-4526-4675-a873-25597aadb15e
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2026-04-21T141617.200.json
+
+###
+
+DELETE http://localhost:3000/roles/9c23f1a2-3f44-4b5f-9b7e-915e0265cf7d
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2026-04-21T141610.200.json
+
+###
+
+DELETE http://localhost:3000/roles/934ed150-ab47-46fb-993b-283c98f3da7f
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2026-04-21T141602.200.json
+
+###
+
+DELETE http://localhost:3000/roles/8bb35725-172f-48f6-a04d-2cd62a55183d
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2026-04-21T141507.500.json
+
+###
+
+DELETE http://localhost:3000/roles/8bb35725-172f-48f6-a04d-2cd62a55183d
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2026-04-21T141454.500.json
+
+###
+
+DELETE http://localhost:3000/roles/7aa1eff9-a498-46bb-ae65-486d917ab979
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2026-04-21T141448.200.json
+
+###
+
+DELETE http://localhost:3000/roles/2d134607-c07c-4757-89df-aaa8460f4d26
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2026-04-21T141440.200.json
+
+###
+
+DELETE http://localhost:3000/roles/22b0b929-81a4-468f-a8b3-8ac790a3ca0e
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2026-04-21T141431.200.json
+
+###
+
+DELETE http://localhost:3000/roles/05dab8ca-0861-4a19-be9b-581a062b7a7d
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2026-04-21T141423.500.json
+
+###
+
+DELETE http://localhost:3000/roles/04d6639c-5d33-492f-9228-81373a6580d8
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2026-04-21T141409.200.json
+
+###
+
+POST http://localhost:3000/pages
+Content-Type: application/json
+Content-Length: 23
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "Sectors"
+}
+
+<> 2026-04-21T141046.201.json
+
+###
+
+POST http://localhost:3000/pages
+Content-Type: application/json
+Content-Length: 28
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "Designations"
+}
+
+<> 2026-04-21T141038.201.json
+
+###
+
+POST http://localhost:3000/pages
+Content-Type: application/json
+Content-Length: 21
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "Users"
+}
+
+<> 2026-04-21T141030.201.json
+
+###
+
+POST http://localhost:3000/pages
+Content-Type: application/json
+Content-Length: 24
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "Churches"
+}
+
+<> 2026-04-21T141023.201.json
+
+###
+
+POST http://localhost:3000/pages
+Content-Type: application/json
+Content-Length: 24
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "Settings"
+}
+
+<> 2026-04-21T141016.201.json
+
+###
+
+POST http://localhost:3000/pages
+Content-Type: application/json
+Content-Length: 23
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "Reports"
+}
+
+<> 2026-04-21T140958.201.json
+
+###
+
+POST http://localhost:3000/pages
+Content-Type: application/json
+Content-Length: 21
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "Cards"
+}
+
+<> 2026-04-21T140947.201.json
+
+###
+
+POST http://localhost:3000/pages
+Content-Type: application/json
+Content-Length: 25
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "Companies"
+}
+
+<> 2026-04-21T140942.201.json
+
+###
+
+POST http://localhost:3000/pages
+Content-Type: application/json
+Content-Length: 23
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "Members"
+}
+
+<> 2026-04-21T140936.201.json
+
+###
+
+POST http://localhost:3000/pages
+Content-Type: application/json
+Content-Length: 24
+User-Agent: IntelliJ HTTP Client/WebStorm 2026.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "Expenses"
+}
+
+<> 2026-04-21T140920.201.json
+
+###
+
