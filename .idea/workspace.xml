@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4253a2e1-3079-47e3-8a9b-af28fa2349ea" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Routes/branchesRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Routes/branchesRoutes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Routes/cardsRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Routes/cardsRoutes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Routes/companiesRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Routes/companiesRoutes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Routes/expensesRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Routes/expensesRoutes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +84,7 @@
       <workItem from="1780317095860" duration="233000" />
       <workItem from="1780319604053" duration="550000" />
       <workItem from="1780323381583" duration="313000" />
-      <workItem from="1782733013591" duration="4417000" />
+      <workItem from="1782733013591" duration="5010000" />
     </task>
     <servers />
   </component>
