@@ -54,8 +54,8 @@ export class UserController {
 
             reply.setCookie("token", token, {
                 httpOnly: true,
-                secure: false,
-                sameSite: "strict",
+                secure: true,
+                sameSite: "none",
                 path: "/"
             });
 
