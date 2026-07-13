@@ -1,4 +1,4 @@
-export class UserController {
+export class UsersController {
     constructor(authService, userRepository, getUserInfos) {
         this.authService = authService;
         this.userRepository = userRepository;
@@ -61,7 +61,7 @@ export class UserController {
 
             return reply.send({
                 success: true,
-                route: "/main"
+                route: "/dashboard"
             })
 
         } catch (err) {

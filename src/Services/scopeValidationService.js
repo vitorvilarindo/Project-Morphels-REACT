@@ -1,5 +1,5 @@
 export class ScopeValidationService {
-    async validateAccessScope(repository, scope, userId, searchTerm) {
+    async validateAccessScope(repository, scope, userId, searchTerm, dates = null) {
 
         const scopes = {
             local: repository.listAllWithLocalPermission,
@@ -11,6 +11,6 @@ export class ScopeValidationService {
         if (!executeQuery) {
             throw new Error(`Escopo de acesso inválido ou não autorizado: ${scope}`);
         }
-        return await executeQuery(userId, searchTerm);
+        return await executeQuery(userId, searchTerm, dates);
     }
 }

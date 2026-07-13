@@ -2,7 +2,7 @@ export class CompaniesController {
     constructor(companiesRepository) {
         this.companiesRepository = companiesRepository
     }
-    create = async function (request, reply) {
+    create = async (request, reply) => {
         try{
             const companyCreate = await this.companiesRepository.createCompany(request.body, request.userID)
             if(!companyCreate){
@@ -14,9 +14,9 @@ export class CompaniesController {
             return reply.status(500).send({message: "Error creating companies."})
         }
     }
-    list = async function (request, reply) {
+    list = async (request, reply) => {
         try{
-            const companies = await this.companiesRepository.listCompanies(request.userID)
+            const companies = await this.companiesRepository.listCompanies(request.userID);
             if(!companies){
                 return reply.status(400).send({message: "No company found."})
             }
@@ -26,7 +26,7 @@ export class CompaniesController {
             return reply.status(500).send({message: "Error listing companies."})
         }
     }
-    update = async function (request, reply) {
+    update = async  (request, reply) => {
         try{
             const companyUpdate = await this.companiesRepository.updateCompany(request.body, request.params.id)
             if(!companyUpdate){
@@ -38,7 +38,7 @@ export class CompaniesController {
             return reply.status(500).send({message: "Error updating companies."})
         }
     }
-    delete = async function (request, reply) {
+    delete = async (request, reply) => {
         try{
             const companyDeleted = await this.companiesRepository.deleteCompany(request.params.id)
             if(!companyDeleted){

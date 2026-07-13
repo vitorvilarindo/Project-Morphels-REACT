@@ -21,7 +21,7 @@ export class MembersController {
             if (!members) {
                 return reply.status(400).send({error: "Failed to list of members"})
             }
-            return reply.status(200).send({members: members})
+            return reply.status(200).send(members)
         }catch(err){
             console.log(err)
             return reply.status(500).send({error: "Failed to list of members"})

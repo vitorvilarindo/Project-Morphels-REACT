@@ -1,10 +1,5 @@
-import { CardsRepository } from "../Repositories/cardsRepository.js"
-import { CardsController } from "../controllers/cardsController.js"
-
 export default async function cardsRoutes(server) {
-    const cardsRepository = new CardsRepository()
-    const cardsController = new CardsController(cardsRepository, server.services.validationService)
-
+    const cardsController = server.controllers.cards
 
     server.post("/cards", {preHandler: server.checkPermissions("can_add"), handler: cardsController.create})
     server.get("/cards", {preHandler: server.checkPermissions("can_view"), handler: cardsController.list})

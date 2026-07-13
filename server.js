@@ -13,6 +13,7 @@ import sectorsRoutes from "./src/routes/sectorsRoutes.js";
 import churchesRoutes from "./src/routes/branchesRoutes.js";
 import repostsRotes from "./src/routes/repostsRoutes.js";
 import cardsRoutes from "./src/routes/cardsRoutes.js";
+import dashBordRoutes from "./src/Routes/dashBordRoutes.js";
 import containerPlugin from "./src/Services/containerPlugin.js";
 import {sql} from "./db.js";
 
@@ -37,21 +38,6 @@ await server.register(jwt, {
 await server.register(cookie)
 await server.register(containerPlugin)
 
-// Capturador global de erros para expor o culpado no console
-server.setErrorHandler((error, request, reply) => {
-    console.error("❌ ERRO CAPTURADO NO FLUXO:", error);
-
-    // Garante que mesmo dando erro interno, o CORS seja injetado na resposta
-    reply.header("Access-Control-Allow-Origin", "http://localhost:5173");
-    reply.header("Access-Control-Allow-Credentials", "true");
-
-    reply.status(error.statusCode || 500).send({
-        error: error.name,
-        message: error.message
-    });
-});
-
-
 // Rotas
 server.register(usersRoutes)
 server.register(revenuesRoutes)
@@ -63,6 +49,7 @@ server.register(sectorsRoutes)
 server.register(churchesRoutes)
 server.register(repostsRotes)
 server.register(cardsRoutes)
+server.register(dashBordRoutes)
 
 
 // Middlewares

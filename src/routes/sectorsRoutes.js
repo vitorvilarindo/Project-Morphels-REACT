@@ -1,9 +1,5 @@
-import {SectorsRepository} from '../Repositories/sectorsRepository.js'
-import {SectorsController} from '../controllers/sectorsController.js'
-
 export default async function sectorsRoutes(server) {
-    const sectorRepository = new SectorsRepository()
-    const sectorController = new SectorsController(sectorRepository)
+    const sectorController = server.controllers.sectors
 
     server.post('/sectors', {preHandler: server.checkPermissions("can_add"),handler: sectorController.create})
     server.get('/sectors', {preHandler: server.checkPermissions("can_view"),handler: sectorController.list})

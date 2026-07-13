@@ -2,7 +2,7 @@ import {sql} from "../../db.js";
 
 export class CompaniesRepository {
     async createCompany (companyData, userId) {
-        return await sql`INSERT INTO companies (cnpj, company_name, fantasy_name, estate_registration,
+        return sql`INSERT INTO companies (cnpj, company_name, fantasy_name, estate_registration,
                                               munincipal_registration, open_date, situation, cep, street, number,
                                               complement, neighborhood, city, uf, cellphone, email, cnae,
                                               activity_description, pixkey, pixtype, institution)
@@ -32,20 +32,20 @@ export class CompaniesRepository {
                                     JOIN sectors s ON b.sector = s.id
                                     WHERE u.id = ${userId}
                                 )
-        RETURNING id`
+        RETURNING id`;
     }
 
     async listCompanies (userId){
-        return await sql`SELECT * FROM companies c
+        return sql`SELECT * FROM companies c
                                 JOIN institutions i ON i.id = c.institution
                                 JOIN sectors s ON s.institution = i.id
                                 JOIN branches b ON b.sector = s.id
                                 JOIN users u ON u.branchs = b.id
-                                WHERE u.id = ${userId}`
+                                WHERE u.id = ${userId}`;
     }
 
     async updateCompany(data, id){
-        return await sql`UPDATE companies 
+        return sql`UPDATE companies 
                         SET cnpj                    = ${data.member},
                             company_name            = ${data.type},
                             fantasy_name            = ${data.value},
@@ -66,10 +66,10 @@ export class CompaniesRepository {
                             pixkey = ${data.pixkey}
                             pixtype = {data.pixtype}
                         WHERE id = ${id}
-                        RETURNING id`
+                        RETURNING id`;
     }
     async deleteCompany (companyId) {
-        return await sql`DELETE FROM companies
-                        WHERE id = ${companyId}`
+        return sql`DELETE FROM companies
+                        WHERE id = ${companyId}`;
     }
 }

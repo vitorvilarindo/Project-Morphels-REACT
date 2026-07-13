@@ -2,26 +2,64 @@ import "dotenv/config";
 import { neon } from "@neondatabase/serverless";
 import pg from "pg";
 
-let sql;
+const isLocal = process.env.DATABASE_URL.includes("localhost") || process.env.DATABASE_URL.includes("127.0.0.1");
 
-// Verifica se a URL do banco aponta para a sua máquina local (Docker)
-if (process.env.DATABASE_URL.includes("localhost") || process.env.DATABASE_URL.includes("127.0.0.1")) {
-    // Cria uma conexão com o seu Postgres local
-    const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
+// Inicializa os bancos correspondentes ao ambiente
+const pool = isLocal ? new pg.Pool({ connectionString: process.env.DATABASE_URL }) : null;
+const neonClient = isLocal ? null : neon(process.env.DATABASE_URL);
 
-    // Essa função imita o comportamento do neon() para que suas rotas continuem funcionando idênticas
-    sql = async (strings, ...values) => {
-        let queryText = strings[0];
-        for (let i = 1; i < strings.length; i++) {
-            queryText += `$${i}${strings[i]}`;
-        }
-        const result = await pool.query(queryText, values);
-        return result.rows; // Retorna os resultados no mesmo formato que o neon() retorna
-    };
-} else {
-    // Se não for localhost (ou seja, se for o link do Neon em produção), usa o driver do Neon original
-    sql = neon(process.env.DATABASE_URL);
+// Função central que executa a query final no banco correto
+async function executeQuery(text, values) {
+    if (isLocal) {
+        const result = await pool.query(text, values);
+        return result.rows;
+    } else {
+        return await neonClient(text, values);
+    }
 }
 
-export { sql };
+// Função recursiva mágica que junta e monta as queries aninhadas/condicionais
+function buildQuery(strings, values, flatValues = []) {
+    let text = "";
+    for (let i = 0; i < strings.length; i++) {
+        text += strings[i];
+        if (i < values.length) {
+            const val = values[i];
 
+            // Se o valor for OUTRA query do sql``, ele desestrutura e junta as duas
+            if (val && val.__isSqlQuery) {
+                text += buildQuery(val.strings, val.values, flatValues);
+            } else {
+                // Se for um dado comum (id, search, etc), adiciona na lista de parâmetros ($1, $2...)
+                flatValues.push(val);
+                text += `$${flatValues.length}`;
+            }
+        }
+    }
+    return text;
+}
+
+// O export principal do seu app
+export function sql(strings, ...values) {
+    // Se foi usado como Template Literal: sql`SELECT...`
+    if (Array.isArray(strings)) {
+        return {
+            __isSqlQuery: true,
+            strings,
+            values,
+            // O "then" permite que o comando seja "awaitado" normalmente pelo Fastify
+            then(resolve, reject) {
+                const flatValues = [];
+                const text = buildQuery(strings, values, flatValues);
+                executeQuery(text, flatValues).then(resolve, reject);
+            }
+        };
+    }
+rosan
+    // Se foi usado como função normal: sql("SELECT...", [params])
+    return {
+        then(resolve, reject) {
+            executeQuery(strings, values[0] || []).then(resolve, reject);
+        }
+    };
+}

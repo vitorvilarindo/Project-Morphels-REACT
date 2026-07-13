@@ -5,8 +5,35 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4253a2e1-3079-47e3-8a9b-af28fa2349ea" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/data_sources_history.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/data_sources_history.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Services/getFinanceData.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/controllers/dashBoardController.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/dashBordRoutes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.js" beforeDir="false" afterPath="$PROJECT_DIR$/db.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repositories/companiesRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repositories/companiesRepository.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repositories/expensesRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repositories/expensesRepository.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repositories/membersRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repositories/membersRepository.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repositories/revenuesRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repositories/revenuesRepository.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repositories/userRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repositories/usersRepository.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Services/containerPlugin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/containerPlugin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Services/getFinanceDataToReports.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Services/scopeValidationService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/scopeValidationService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/companiesController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/companiesController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/membersController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/membersController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/usersController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/usersController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/branchesRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/branchesRoutes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/cardsRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/cardsRoutes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/companiesRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/companiesRoutes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/expensesRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/expensesRoutes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/membersRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/membersRoutes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/repostsRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/repostsRoutes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/revenuesRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/revenuesRoutes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/rolesRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/rolesRoutes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/sectorsRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/sectorsRoutes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/usersRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/usersRoutes.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,6 +44,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Dockerfile" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -85,6 +113,11 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="dev" />
+    </option>
+  </component>
   <component name="RunManager">
     <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
@@ -105,7 +138,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-WS-261.25134.101" />
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-WS-261.26222.58" />
       </set>
     </attachedChunks>
   </component>
@@ -126,6 +159,15 @@
       <workItem from="1783082777949" duration="6936000" />
       <workItem from="1783167351483" duration="72000" />
       <workItem from="1783167437786" duration="209000" />
+      <workItem from="1783342368330" duration="1357000" />
+      <workItem from="1783345603176" duration="1000" />
+      <workItem from="1783423921322" duration="25000" />
+      <workItem from="1783516359951" duration="961000" />
+      <workItem from="1783593729569" duration="2279000" />
+      <workItem from="1783604335002" duration="673000" />
+      <workItem from="1783687147078" duration="52000" />
+      <workItem from="1783701238379" duration="3782000" />
+      <workItem from="1783944459037" duration="12696000" />
     </task>
     <servers />
   </component>

@@ -1,9 +1,5 @@
-import {MembersRepository} from '../Repositories/membersRepository.js'
-import {MembersController} from '../controllers/membersController.js'
-
 export default async function revenuesRoutes(server) {
-    const membersRepository = new MembersRepository()
-    const membersController = new MembersController(membersRepository, server.services.validationService)
+    const membersController = server.controllers.members
 
     server.post("/members", {preHandler: server.checkPermissions("can_add"),handler: membersController.create})
     server.get("/members", {preHandler: server.checkPermissions("can_view"),handler: membersController.list})
