@@ -65,7 +65,8 @@ export class ReportsController {
     }
     delete = async (request, reply) => {
         try{
-            const deleteReport = await this.repository.deleteReport(request.params.id)
+            console.log(request.query.id)
+            const deleteReport = await this.repository.deleteReports(request.params.id)
             if (!deleteReport){
                 return reply.status(303).send({error: "Failed to delete report"})
             }

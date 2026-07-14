@@ -22,7 +22,7 @@ export class RevenuesRepository {
                          WHERE u.id = ${userId} 
                          ${searchTerm ? sql`AND r.name ILIKE ${searchTerm}`
             : sql``}
-                               ${dates ? sql`AND r.date BETWEEN ${dates[0].start_date} AND ${dates[0].end_date}` : sql``}
+                               ${dates ? sql`AND r.date BETWEEN ${dates.start_date} AND ${dates.end_date}` : sql``}
                          `;
     }
 
@@ -37,12 +37,13 @@ export class RevenuesRepository {
                     ? sql`AND r.name ILIKE
                     ${searchTerm}`
                     : sql``}
-                  ${dates ? sql`AND r.date BETWEEN ${dates[0].start_date} AND ${dates[0].end_date}` : sql``}
+                  ${dates ? sql`AND r.date BETWEEN ${dates.start_date} AND ${dates.end_date}` : sql``}
         `;
     }
 
     async listAllWithGlobalPermissions (userId, searchTerm, dates = null){
         console.log(dates)
+        console.log(userId)
         return sql`SELECT r.*, SUM(r.value) OVER() as revenues_sum
                    FROM revenues r
                             JOIN branches b ON r.branch = b.id
@@ -50,11 +51,9 @@ export class RevenuesRepository {
                             JOIN sectors us ON s.institution = us.institution
                             JOIN branches ub ON us.id = ub.sector
                             JOIN users u ON u.branch = ub.id
-                   WHERE u.id = ${userId} ${searchTerm
-                           ? sql`AND r.name ILIKE
-                           ${searchTerm}`
-                           : sql``}
-                         ${dates ? sql`AND r.date BETWEEN ${dates[0].start_date} AND ${dates[0].end_date}` : sql``}
+                   WHERE u.id = ${userId} 
+                       ${searchTerm ? sql`AND r.name ILIKE ${searchTerm}` : sql``}
+                       ${dates ? sql`AND r.date BETWEEN ${"2026-07-01T00:00:00.000Z"} AND ${"2026-07-14T23:59:59.999Z"} ` : sql``}
                    `;
     }
 

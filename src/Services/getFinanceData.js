@@ -21,7 +21,7 @@ export class GetFinanceData {
             dates = await this.reportsRepository.getReportsDataById(reportId)
         }
 
-        const {revenues, expenses} = await this.getData(scope, userId, searchTerm, dates);
+        const {revenues, expenses} = await this.getData(scope, userId, searchTerm, dates[0]);
 
         return {
             filterRevenues: revenues,

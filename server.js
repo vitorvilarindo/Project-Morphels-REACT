@@ -11,7 +11,7 @@ import companiesRoutes from "./src/routes/companiesRoutes.js";
 import rolesRoutes from "./src/routes/rolesRoutes.js";
 import sectorsRoutes from "./src/routes/sectorsRoutes.js";
 import churchesRoutes from "./src/routes/branchesRoutes.js";
-import repostsRotes from "./src/routes/repostsRoutes.js";
+import repostsRotes from "./src/Routes/reportsRoutes.js";
 import cardsRoutes from "./src/routes/cardsRoutes.js";
 import dashBordRoutes from "./src/Routes/dashBordRoutes.js";
 import containerPlugin from "./src/Services/containerPlugin.js";

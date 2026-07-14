@@ -5,35 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4253a2e1-3079-47e3-8a9b-af28fa2349ea" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Services/getFinanceData.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/controllers/dashBoardController.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/dashBordRoutes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/reportsRoutes.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.js" beforeDir="false" afterPath="$PROJECT_DIR$/db.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repositories/companiesRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repositories/companiesRepository.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Repositories/expensesRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repositories/expensesRepository.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repositories/membersRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repositories/membersRepository.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repositories/reportsRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repositories/reportsRepository.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Repositories/revenuesRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repositories/revenuesRepository.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repositories/userRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repositories/usersRepository.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Services/containerPlugin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/containerPlugin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Services/getFinanceDataToReports.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Services/scopeValidationService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/scopeValidationService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/companiesController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/companiesController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/membersController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/membersController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/usersController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/usersController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/branchesRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/branchesRoutes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/cardsRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/cardsRoutes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/companiesRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/companiesRoutes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/expensesRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/expensesRoutes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/membersRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/membersRoutes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/repostsRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/repostsRoutes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/revenuesRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/revenuesRoutes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/rolesRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/rolesRoutes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/sectorsRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/sectorsRoutes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/usersRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/usersRoutes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Services/getFinanceData.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/getFinanceData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/dashBoardController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/dashBoardController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/reportsController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/reportsController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/repostsRoutes.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,6 +149,7 @@
       <workItem from="1783687147078" duration="52000" />
       <workItem from="1783701238379" duration="3782000" />
       <workItem from="1783944459037" duration="12696000" />
+      <workItem from="1784026786040" duration="5194000" />
     </task>
     <servers />
   </component>

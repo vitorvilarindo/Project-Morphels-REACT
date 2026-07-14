@@ -23,7 +23,7 @@ export class ExpensesRepository {
                          WHERE u.id = ${userId} 
                          ${searchTerm ? sql`AND e.name ILIKE ${searchTerm}`
             : sql``}
-                               ${dates ? sql`AND e.date BETWEEN ${dates[0].start_date} AND ${dates[0].end_date}` : sql``}
+                               ${dates ? sql`AND e.date BETWEEN ${dates.start_date} AND ${dates.end_date}` : sql``}
                          `;
     }
 
@@ -39,7 +39,7 @@ export class ExpensesRepository {
                     ? sql`AND e.name ILIKE
                     ${searchTerm}`
                     : sql``}
-            ${dates ? sql`AND e.date BETWEEN ${dates[0].start_date} AND ${dates[0].end_date}` : sql``}
+            ${dates ? sql`AND e.date BETWEEN ${dates.start_date} AND ${dates.end_date}` : sql``}
         `;
     }
 
@@ -55,7 +55,7 @@ export class ExpensesRepository {
                            ? sql`AND e.name ILIKE
                            ${searchTerm}`
                            : sql``}
-                         ${dates ? sql`AND e.date BETWEEN ${dates[0].start_date} AND ${dates[0].end_date}` : sql``}
+                         ${dates ? sql`AND e.date BETWEEN ${dates.start_date} AND ${dates.end_date}` : sql``}
                    `;
     }
 
