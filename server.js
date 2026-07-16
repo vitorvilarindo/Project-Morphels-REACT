@@ -69,6 +69,7 @@ server.addHook('preHandler', async (request, reply) => {
     try {
         const decoded = await request.jwtVerify();
         request.userID = decoded.sub;
+        request.userBranch = decoded.branch;
     } catch (err) {
         return reply.status(401).send({ error: 'Invalid or expired token.' });
     }

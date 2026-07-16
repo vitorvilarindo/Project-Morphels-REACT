@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4253a2e1-3079-47e3-8a9b-af28fa2349ea" name="Changes" comment="" />
+    <list default="true" id="4253a2e1-3079-47e3-8a9b-af28fa2349ea" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Services/validateBranchWriteAccess.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repositories/branchesRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repositories/branchesRepository.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Services/containerPlugin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/containerPlugin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Services/scopeValidationService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/scopeValidationService.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -139,6 +147,11 @@
       <workItem from="1783701238379" duration="3782000" />
       <workItem from="1783944459037" duration="12696000" />
       <workItem from="1784026786040" duration="7913000" />
+      <workItem from="1784128874817" duration="2206000" />
+      <workItem from="1784165816238" duration="9000" />
+      <workItem from="1784203100887" duration="15000" />
+      <workItem from="1784207360669" duration="1253000" />
+      <workItem from="1784208808553" duration="8144000" />
     </task>
     <servers />
   </component>

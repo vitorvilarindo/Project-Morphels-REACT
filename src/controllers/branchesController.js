@@ -1,6 +1,7 @@
 export class BranchesController {
-    constructor(branchesRepository) {
+    constructor(branchesRepository, validationService) {
         this.branchesRepository = branchesRepository
+        this.scopeValidationService = validationService
     }
     create = async (request, reply) =>{
         try {
@@ -16,14 +17,14 @@ export class BranchesController {
     }
     list = async (request, reply) =>{
         try{
-            const branches = await this.branchesRepository.listBranches(request.userID)
+            const branches = await this.scopeValidationService.validateAccessScope(this.branchesRepository, request.access_scope, request.userID, request.query.search)
             if (!branches) {
                 return reply.status(404).send({message: `Branch not found`})
             }
-            return reply.status(200).send({message: `Branches list successfully.`})
+            return reply.status(200).send(branches)
         }catch (e) {
             console.error(e)
-            return reply.status(400).send(branches)
+            return reply.status(400).send({error: e})
         }
     }
     update = async (request, reply) =>{

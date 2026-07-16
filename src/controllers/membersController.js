@@ -1,16 +1,21 @@
 export class MembersController {
-    constructor(membersRepository, scopeValidationService) {
+    constructor(membersRepository, scopeValidationService, branchesValidationService) {
         this.repository = membersRepository
         this.validationService = scopeValidationService;
+        this.branchesValidationService = branchesValidationService
     }
     create = async (request, reply) => {
         try{
+            await this.branchesValidationService.validateAccess(request.access_scope, request.userID, request.userBranch, request.body.branch)
             const memberCreated = await this.repository.createMember(request.body);
             if (!memberCreated) {
                 return reply.status(400).send({error: "Failed to create report"})
             }
             return reply.status(201).send({error: "Member created successfully"})
         }catch(err){
+            if (err.statusCode){
+                return reply.status(err.statusCode).send({error: err.message})
+            }
             console.log(err)
             return reply.status(500).send({error: "Failed to create report"})
         }

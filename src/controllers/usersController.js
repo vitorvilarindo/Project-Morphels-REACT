@@ -50,7 +50,7 @@ export class UsersController {
                 return reply.status(401).send({message: 'Invalid login credentials'});
             }
 
-            const token = reply.server.jwt.sign({sub: user.id, user: user.email}, {expiresIn: "1h"});
+            const token = reply.server.jwt.sign({sub: user.id, user: user.email, branch: user.branch}, {expiresIn: "1h"});
 
             reply.setCookie("token", token, {
                 httpOnly: true,

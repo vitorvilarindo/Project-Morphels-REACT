@@ -17,7 +17,7 @@ import { FilterService } from "./filterService.js";
 import { GetUserInfos } from "./getUserInfos.js";
 import { ScopeValidationService } from './scopeValidationService.js'
 import { GetFinanceData } from "./getFinanceData.js";
-
+import { ValidateBranchWriteAccess } from "./validateBranchWriteAccess.js";
 
 //  CONTROLLERS IMPORTS
 import { RevenuesController } from '../Controllers/revenuesController.js'
@@ -53,16 +53,17 @@ async function containerPlugin(server, options) {
     const filterService = new FilterService(validationService)
     const getFinanceData = new GetFinanceData(repos.revenues, repos.expenses, validationService, repos.sectors)
     const getUserInfos = new GetUserInfos(repos.users, repos.branches, repos.sectors)
+    const branchesWriteValidation = new ValidateBranchWriteAccess(repos.branches)
 
     //  INSTANCE CONTROLLERS
     const controllers = {
-        revenues: new RevenuesController(filterService, validationService, repos.revenues),
-        expenses: new ExpensesController(validationService, filterService, repos.expenses),
-        branches: new BranchesController(repos.branches),
+        revenues: new RevenuesController(filterService, validationService, branchesWriteValidation, repos.revenues),
+        expenses: new ExpensesController(validationService, filterService, branchesWriteValidation, repos.expenses),
+        branches: new BranchesController(repos.branches, validationService),
         sectors: new SectorsController(repos.sectors),
         cards: new CardsController(repos.cards, validationService),
         companies: new CompaniesController(repos.companies),
-        members: new MembersController(repos.members, validationService),
+        members: new MembersController(repos.members, validationService, branchesWriteValidation),
         reports: new ReportsController(repos.reports, validationService, getFinanceData),
         roles: new RolesController(repos.roles),
         users: new UsersController(authService, repos.users, getUserInfos),

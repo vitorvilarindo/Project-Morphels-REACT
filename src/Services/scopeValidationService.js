@@ -7,6 +7,8 @@ export class ScopeValidationService {
             global: repository.listAllWithGlobalPermissions
         };
         const executeQuery = scopes[scope];
+        console.log(userId)
+        console.log(executeQuery)
 
         if (!executeQuery) {
             throw new Error(`Escopo de acesso inválido ou não autorizado: ${scope}`);
