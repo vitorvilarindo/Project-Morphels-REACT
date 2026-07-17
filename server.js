@@ -14,7 +14,7 @@ import churchesRoutes from "./src/routes/branchesRoutes.js";
 import reportsRoutes from "./src/routes/reportsRoutes.js";
 import cardsRoutes from "./src/routes/cardsRoutes.js";
 import dashBordRoutes from "./src/routes/dashBordRoutes.js";
-import containerPlugin from "./src/services/containerPlugin.js";
+import containerPlugin from "./src/Services/containerPlugin.js";
 import {sql} from "./db.js";
 
 
