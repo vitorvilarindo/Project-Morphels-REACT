@@ -20,17 +20,17 @@ import { GetFinanceData } from "./getFinanceData.js";
 import { ValidateBranchWriteAccess } from "./validateBranchWriteAccess.js";
 
 //  CONTROLLERS IMPORTS
-import { RevenuesController } from '../Controllers/revenuesController.js'
-import { ExpensesController } from '../Controllers/expensesController.js'
-import { BranchesController } from '../Controllers/branchesController.js'
-import { SectorsController } from '../Controllers/sectorsController.js'
-import { CardsController } from "../Controllers/cardsController.js";
-import { CompaniesController } from '../Controllers/companiesController.js'
-import { MembersController } from "../Controllers/membersController.js";
-import { ReportsController } from "../Controllers/reportsController.js";
-import { RolesController } from "../Controllers/rolesController.js";
-import { UsersController } from "../Controllers/usersController.js";
-import { DashBoardController } from "../Controllers/dashBoardController.js";
+import { RevenuesController } from '../controllers/revenuesController.js'
+import { ExpensesController } from '../controllers/expensesController.js'
+import { BranchesController } from '../controllers/branchesController.js'
+import { SectorsController } from '../controllers/sectorsController.js'
+import { CardsController } from "../controllers/cardsController.js";
+import { CompaniesController } from '../controllers/companiesController.js'
+import { MembersController } from "../controllers/membersController.js";
+import { ReportsController } from "../controllers/reportsController.js";
+import { RolesController } from "../controllers/rolesController.js";
+import { UsersController } from "../controllers/usersController.js";
+import { DashBoardController } from "../controllers/dashBoardController.js";
 
 async function containerPlugin(server, options) {
     // INSTANCE REPOSITORIES
