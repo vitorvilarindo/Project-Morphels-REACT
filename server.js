@@ -11,11 +11,12 @@ import companiesRoutes from "./src/routes/companiesRoutes.js";
 import rolesRoutes from "./src/routes/rolesRoutes.js";
 import sectorsRoutes from "./src/routes/sectorsRoutes.js";
 import churchesRoutes from "./src/routes/branchesRoutes.js";
-import repostsRotes from "./src/Routes/reportsRoutes.js";
+import reportsRoutes from "./src/Routes/reportsRoutes.js";
 import cardsRoutes from "./src/routes/cardsRoutes.js";
 import dashBordRoutes from "./src/Routes/dashBordRoutes.js";
 import containerPlugin from "./src/Services/containerPlugin.js";
 import {sql} from "./db.js";
+
 
 const server = Fastify({ logger: true })
 
@@ -47,7 +48,7 @@ server.register(companiesRoutes)
 server.register(rolesRoutes)
 server.register(sectorsRoutes)
 server.register(churchesRoutes)
-server.register(repostsRotes)
+server.register(reportsRoutes)
 server.register(cardsRoutes)
 server.register(dashBordRoutes)
 

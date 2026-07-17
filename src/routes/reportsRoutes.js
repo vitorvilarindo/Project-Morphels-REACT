@@ -1,4 +1,4 @@
-export default async function repostsRotes(server) {
+export default async function reportsRoutes(server) {
     const reportsController = server.controllers.reports
 
     server.post("/reports", {preHandler: server.checkPermissions("can_add"), handler: reportsController.create})
