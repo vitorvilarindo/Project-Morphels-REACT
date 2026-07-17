@@ -1,4 +1,4 @@
-export class UserController {
+export class UsersController {
     constructor(authService, userRepository, getUserInfos) {
         this.authService = authService;
         this.userRepository = userRepository;
@@ -50,7 +50,7 @@ export class UserController {
                 return reply.status(401).send({message: 'Invalid login credentials'});
             }
 
-            const token = reply.server.jwt.sign({sub: user.id, user: user.email}, {expiresIn: "1h"});
+            const token = reply.server.jwt.sign({sub: user.id, user: user.email, branch: user.branch}, {expiresIn: "1h"});
 
             reply.setCookie("token", token, {
                 httpOnly: true,
@@ -61,7 +61,7 @@ export class UserController {
 
             return reply.send({
                 success: true,
-                route: "/main"
+                route: "/dashboard"
             })
 
         } catch (err) {

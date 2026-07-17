@@ -1,12 +1,5 @@
-import { FilterService } from "../Services/filterService.js";
-import { RevenuesRepository } from "../Repositories/revenuesRepository.js";
-import { RevenuesController } from "../controllers/revenuesController.js";
-
 export default async function revenuesRoutes(server) {
-    const revenuesRepository = new RevenuesRepository();
-    const filterService = new FilterService(server.services.validationService);
-    const revenuesController = new RevenuesController(filterService, server.services.validationService, revenuesRepository);
-
+    const revenuesController = server.controllers.revenues
 
     server.post("/revenues", {preHandler: server.checkPermissions("can_add"),handler: revenuesController.create})
     server.get("/revenues", {preHandler: server.checkPermissions("can_view"),handler: revenuesController.list})

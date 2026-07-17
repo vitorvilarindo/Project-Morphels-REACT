@@ -1,0 +1,201 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model branches {
+  id            String          @id(map: "churchs_pkey") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name          String          @db.VarChar(200)
+  sector        String?         @db.Uuid
+  owner         String          @db.VarChar(100)
+  institution   String?         @db.Uuid
+  institutions  institutions?   @relation(fields: [institution], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  sectors       sectors?        @relation(fields: [sector], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "churchs_sector_fkey")
+  expenses      expenses[]
+  members       members[]
+  reports       reports[]
+  revenues      revenues[]
+  users         users[]
+  users_churchs users_churchs[]
+}
+
+model cards {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  code       String   @db.VarChar(200)
+  member     String?  @db.Uuid
+  issue_date DateTime @db.Timestamp(6)
+  due_date   DateTime @db.Date
+  status     DateTime @db.Date
+  members    members? @relation(fields: [member], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model companies {
+  id                     String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  cnpj                   String        @db.VarChar(200)
+  company_name           String        @db.VarChar(200)
+  fantasy_name           String?       @db.VarChar(200)
+  estate_registration    String?       @db.VarChar(100)
+  municipal_registration String?       @db.VarChar(100)
+  open_date              String        @db.VarChar(100)
+  situation              String        @db.VarChar(50)
+  cep                    String        @db.VarChar(20)
+  street                 String        @db.VarChar(200)
+  number                 String        @db.VarChar(20)
+  complement             String?       @db.VarChar(100)
+  neighborhood           String        @db.VarChar(100)
+  city                   String        @db.VarChar(100)
+  uf                     String        @db.VarChar(50)
+  cellphone              String        @db.VarChar(300)
+  email                  String        @db.VarChar(100)
+  cnae                   String?       @db.VarChar(100)
+  activity_description   String?       @db.VarChar(300)
+  pixkey                 String        @db.VarChar(100)
+  pixtype                String        @db.VarChar(20)
+  intitution             String?       @db.Uuid
+  institutions           institutions? @relation(fields: [intitution], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model expenses {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title       String    @db.VarChar(200)
+  type        String    @db.VarChar(50)
+  value       Decimal   @db.Decimal(12, 2)
+  payment     String    @db.VarChar(25)
+  date        DateTime  @db.Timestamp(6)
+  beneficiary String    @db.VarChar(200)
+  branch      String?   @db.Uuid
+  branches    branches? @relation(fields: [branch], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "expenses_church_fkey")
+}
+
+model institutions {
+  id               String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name             String      @db.VarChar(300)
+  cnpj             String      @db.VarChar(50)
+  email            String      @db.VarChar(100)
+  phone            String      @db.VarChar(100)
+  inscription_date DateTime?   @default(now()) @db.Timestamp(6)
+  branches         branches[]
+  companies        companies[]
+  roles            roles[]
+  sectors          sectors[]
+}
+
+model members {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name       String    @db.VarChar(200)
+  cellphone  String    @db.VarChar(20)
+  date_birth DateTime  @db.Date
+  pixkey     String    @db.VarChar(100)
+  pixtype    String    @db.VarChar(20)
+  sector     String?   @db.Uuid
+  branch     String?   @db.Uuid
+  cards      cards[]
+  branches   branches? @relation(fields: [branch], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "members_church_fkey")
+  sectors    sectors?  @relation(fields: [sector], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model pages {
+  id          String        @id(map: "resourses_pkey") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name        String        @db.VarChar(200)
+  permissions permissions[]
+}
+
+model permissions {
+  id           String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  role_id      String?      @db.Uuid
+  page_id      String?      @db.Uuid
+  can_view     Boolean?     @default(false)
+  can_add      Boolean?     @default(false)
+  can_edit     Boolean?     @default(false)
+  can_delete   Boolean?     @default(false)
+  access_scope scope_level? @default(local)
+  pages        pages?       @relation(fields: [page_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  roles        roles?       @relation(fields: [role_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([role_id, page_id])
+}
+
+model reports {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title      String    @db.VarChar(200)
+  type       String    @db.VarChar(200)
+  date       DateTime  @db.Timestamp(6)
+  start_date DateTime  @db.Timestamp(6)
+  end_date   DateTime  @db.Timestamp(6)
+  by         String    @db.VarChar(100)
+  sector     String?   @db.Uuid
+  branch     String?   @db.Uuid
+  items      Json?
+  branches   branches? @relation(fields: [branch], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "reports_church_fkey")
+  sectors    sectors?  @relation(fields: [sector], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model revenues {
+  id       String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  member   String    @db.VarChar(200)
+  type     String    @db.VarChar(50)
+  value    Decimal   @db.Decimal(12, 2)
+  payment  String    @db.VarChar(25)
+  date     DateTime  @db.Timestamp(6)
+  branch   String?   @db.Uuid
+  branches branches? @relation(fields: [branch], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "revenues_church_fkey")
+}
+
+model roles {
+  id           String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name         String        @db.VarChar(200)
+  description  String        @db.VarChar(200)
+  institution  String?       @db.Uuid
+  permissions  permissions[]
+  institutions institutions? @relation(fields: [institution], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users        users[]
+}
+
+model sectors {
+  id                        String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                      String        @db.VarChar(50)
+  sectorial_cordenator      String        @db.VarChar(100)
+  vice_sectorial_cordenator String        @db.VarChar(100)
+  institution               String?       @db.Uuid
+  branches                  branches[]
+  members                   members[]
+  reports                   reports[]
+  institutions              institutions? @relation(fields: [institution], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users                     users[]
+}
+
+model users {
+  id            String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name          String          @db.VarChar(200)
+  email         String          @unique @db.VarChar(100)
+  password      String          @db.VarChar(200)
+  designation   String?         @db.Uuid
+  sector        String?         @db.Uuid
+  branch        String?         @db.Uuid
+  last_access   DateTime?       @db.Timestamp(6)
+  sing_up_date  DateTime?       @db.Timestamp(6)
+  phone_number  String?         @db.VarChar(50)
+  roles         roles?          @relation(fields: [designation], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_users_designation")
+  branches      branches?       @relation(fields: [branch], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "users_church_fkey")
+  sectors       sectors?        @relation(fields: [sector], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users_churchs users_churchs[]
+}
+
+model users_churchs {
+  user_id   String   @db.Uuid
+  church_id String   @db.Uuid
+  branches  branches @relation(fields: [church_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users     users    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([user_id, church_id])
+}
+
+enum scope_level {
+  global
+  sector
+  local
+}

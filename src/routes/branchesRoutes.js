@@ -1,12 +1,8 @@
-import { BranchesRepository } from "../Repositories/branchesRepository.js"
-import { BranchesController } from "../controllers/branchesController.js"
-
 export default async function branchesRoutes(server) {
-    const branchesRepository = new BranchesRepository()
-    const branchesController = new BranchesController(branchesRepository)
+    const branchesController = server.controllers.branches
 
-    server.post("/churchs", {preHandler: server.checkPermissions("can_add"),handler: branchesController.create})
-    server.get("/churchs", {preHandler: server.checkPermissions("can_view"),handler: branchesController.list})
-    server.put("/churchs/:id", {preHandler: server.checkPermissions("can_edit"),handler: branchesController.update})
-    server.delete("/churchs/:id", {preHandler: server.checkPermissions("can_delete"),handler: branchesController.delete})
+    server.post("/branches", {preHandler: server.checkPermissions("can_add"),handler: branchesController.create})
+    server.get("/branches", {preHandler: server.checkPermissions("can_view"),handler: branchesController.list})
+    server.put("/branches/:id", {preHandler: server.checkPermissions("can_edit"),handler: branchesController.update})
+    server.delete("/branches/:id", {preHandler: server.checkPermissions("can_delete"),handler: branchesController.delete})
 }

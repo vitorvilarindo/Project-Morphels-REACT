@@ -1,22 +1,26 @@
 export class RevenuesController {
-    constructor(filterService, validationService, revenuesRepository) {
+    constructor(filterService, validationService, branchesValidationService, revenuesRepository) {
         this._filterService = filterService;
         this._validationService = validationService;
         this._revenuesRepository = revenuesRepository;
+        this._branchesValidationService = branchesValidationService;
     }
 
     create = async (request, reply) => {
         try{
+            await this._branchesValidationService.validateAccess(request.access_scope, request.userID, request.userBranch, request.body.branch);
             const createdRevenue = await this._revenuesRepository.createRevenue(request.body);
             if (!createdRevenue) {
                 return reply.status(300).send({message: 'Revenue can not be crated'});
             }
 
             return reply.status(200).send({message: 'Revenue created successfully'});
-        }catch(err){
-            console.error(err);
+        }catch(error){
+            if (error.statusCode){
+                return reply.status(error.statusCode).json({ error: error.message });
+            }
+            console.error(error);
             return reply.status(400).send({message: 'Revenue creation failed'});
-
         }
 
     }

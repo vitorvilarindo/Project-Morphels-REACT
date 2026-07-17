@@ -1,9 +1,5 @@
-import { CompaniesRepository } from "../Repositories/companiesRepository.js"
-import { CompaniesController } from "../controllers/companiesController.js"
-
 export default async function companiesRoutes(server) {
-    const companiesRepository = new CompaniesRepository()
-    const companiesController = new CompaniesController(companiesRepository)
+    const companiesController = server.controllers.companies
 
     server.post("/companies", {preHandler: server.checkPermissions("can_add"),handler: companiesController.create})
     server.get("/companies", {preHandler: server.checkPermissions("can_view"),handler: companiesController.list})

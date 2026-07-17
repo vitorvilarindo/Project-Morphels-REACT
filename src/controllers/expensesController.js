@@ -1,11 +1,13 @@
 export class ExpensesController {
-    constructor(scopeValidationService, filterService, expensesRepository) {
+    constructor(scopeValidationService, filterService, branchesValidationService, expensesRepository) {
         this._scopeValidationService = scopeValidationService;
         this._filterService = filterService;
         this._expensesRepository = expensesRepository;
+        this._branchesValidationService = branchesValidationService
     }
     create = async (request, reply) => {
         try {
+            await this._branchesValidationService.validateAccess(request.access_scope, request.userID, request.userBranch, request.body.branch)
             const createdExpense = await this._expensesRepository.createExpenses(request.body);
 
             if (!createdExpense){
@@ -13,6 +15,10 @@ export class ExpensesController {
             }
             return reply.status(201).send({message: 'Successfully created expense'});
         }catch(err){
+            if (err.statusCode){
+                return reply.status(err.statusCode).send({erro: err.message});
+            }
+            console.error(err);
             return reply.status(400).send({message: 'Something went wrong'});
 
         }

@@ -2,7 +2,7 @@ import {sql} from "../../db.js";
 
 export class BranchesRepository {
     async createBranch (branch_data, userId) {
-        return await sql`INSERT INTO branches (name, sector, owner, insitution)
+        return sql`INSERT INTO branches (name, sector, owner, insitution)
         VALUES(
                ${branch_data.name},
                (SELECT id FROM sectors WHERE name = ${branch_data.sector}),
@@ -13,7 +13,7 @@ export class BranchesRepository {
                           JOIN sectors s ON b.sector = s.id
                  WHERE u.id = ${userId}
               )
-        RETURNING id`
+        RETURNING id`;
     }
 
     async findBranchById(branchId) {
@@ -23,25 +23,48 @@ export class BranchesRepository {
         return branch
     }
 
-    async listBranches(userId) {
-        return await sql`SELECT bb.*
-                         FROM branches bb
-                                  JOIN institions i ON bb.institution = i.id
-                                  JOIN sectors us ON i.id = us.institution
-                                  JOIN branches ub ON us.id = ub.sector
-                                  JOIN users u ON ub.id = u.branch
-                         WHERE u.id = ${userId}`
+    async listAllWithLocalPermission (userId, searchTerm = null) {
+        return sql`
+            SELECT b.*
+            FROM branches b
+                     JOIN users u ON u.branch = b.id
+            WHERE u.id = ${userId}
+                ${searchTerm ? sql`AND b.nome ILIKE ${searchTerm}` : sql``}
+        `;
     }
 
+    async listAllWithSectorPermission (userId, searchTerm = null) {
+
+        return sql`
+        SELECT b.*
+        FROM branches b
+        JOIN branches ub ON b.sector = ub.sector
+        JOIN users u ON u.branch = ub.id
+        WHERE u.id = ${userId}
+        ${searchTerm ? sql`AND b.nome ILIKE ${searchTerm}` : sql``}
+    `;
+    }
+
+    async listAllWithGlobalPermissions (userId, searchTerm = null) {
+
+        return sql`
+        SELECT b.*
+        FROM branches b
+        JOIN branches ub ON b.institution = ub.institution
+        JOIN users u ON u.branch = ub.id
+        WHERE u.id = ${userId}
+        ${searchTerm ? sql`AND b.nome ILIKE ${searchTerm}` : sql``}
+    `;
+    }
 
     async updateBranch (data){
-        return await sql`UPDATE branches
+        return sql`UPDATE branches
                          SET name        = ${data.name},
                              description = ${data.description},
-                        RETURNING id`
+                        RETURNING id`;
     }
     async deleteBranch (roleId) {
-        return await sql`DELETE FROM expenses 
-                        WHERE id = ${roleId}`
+        return sql`DELETE FROM expenses 
+                        WHERE id = ${roleId}`;
     }
 }

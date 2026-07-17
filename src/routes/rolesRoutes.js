@@ -1,9 +1,5 @@
-import {RolesRepository} from '../Repositories/rolesRepository.js'
-import {RolesController} from '../controllers/rolesController.js'
-
 export default async function rolesRoutes(server) {
-    const rolesRepository = new RolesRepository()
-    const rolesController = new RolesController(rolesRepository)
+    const rolesController = server.controllers.roles
 
     server.post("/roles", {preHandler: server.checkPermissions("can_add"),handler: rolesController.create})
     server.get("/roles", {preHandler: server.checkPermissions("can_view"),handler: rolesController.list})
