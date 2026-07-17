@@ -4,15 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4253a2e1-3079-47e3-8a9b-af28fa2349ea" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Services/validateBranchWriteAccess.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repositories/branchesRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repositories/branchesRepository.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Services/containerPlugin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/containerPlugin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Services/scopeValidationService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/scopeValidationService.js" afterDir="false" />
-    </list>
+    <list default="true" id="4253a2e1-3079-47e3-8a9b-af28fa2349ea" name="Changes" comment="resolve name conflicts" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -47,12 +39,12 @@
     &quot;assignee&quot;: &quot;vitorvilarindo&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/vitorvilarindo/Project-Morphels-REACT.git&quot;,
-    &quot;accountId&quot;: &quot;e9b672d2-8c47-4f83-995c-9a54b9e21f9a&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/vitorvilarindo/Project-Morphels-REACT.git",
+    "accountId": "a3854cc7-ce98-4a27-92e0-ca17a929a676"
   }
-}</component>
+}]]></component>
   <component name="HttpClientOnboardingState">{
   &quot;isOnboardingCommentShown&quot;: true
 }</component>
@@ -152,10 +144,35 @@
       <workItem from="1784203100887" duration="15000" />
       <workItem from="1784207360669" duration="1253000" />
       <workItem from="1784208808553" duration="8144000" />
+      <workItem from="1784326230051" duration="461000" />
     </task>
+    <task id="LOCAL-00001" summary="resolve name conflicts">
+      <option name="closed" value="true" />
+      <created>1784326395574</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1784326395574</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="resolve name conflicts" />
+    <option name="LAST_COMMIT_MESSAGE" value="resolve name conflicts" />
   </component>
 </project>

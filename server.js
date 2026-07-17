@@ -11,10 +11,10 @@ import companiesRoutes from "./src/routes/companiesRoutes.js";
 import rolesRoutes from "./src/routes/rolesRoutes.js";
 import sectorsRoutes from "./src/routes/sectorsRoutes.js";
 import churchesRoutes from "./src/routes/branchesRoutes.js";
-import reportsRoutes from "./src/Routes/reportsRoutes.js";
+import reportsRoutes from "./src/routes/reportsRoutes.js";
 import cardsRoutes from "./src/routes/cardsRoutes.js";
-import dashBordRoutes from "./src/Routes/dashBordRoutes.js";
-import containerPlugin from "./src/Services/containerPlugin.js";
+import dashBordRoutes from "./src/routes/dashBordRoutes.js";
+import containerPlugin from "./src/services/containerPlugin.js";
 import {sql} from "./db.js";
 
 
