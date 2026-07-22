@@ -62,7 +62,7 @@ export class ExpensesController {
     }
     delete = async (request, reply) => {
         try{
-            const deleteExpense = await this._expensesRepository.deleteExpenses(request.query.id, request.userID);
+            const deleteExpense = await this._expensesRepository.deleteExpenses(request.params.id, request.userID);
             if (!deleteExpense){
                 return reply.status(400).send({message: 'Expenses not found'});
             }

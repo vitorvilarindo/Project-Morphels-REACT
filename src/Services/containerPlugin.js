@@ -51,7 +51,7 @@ async function containerPlugin(server, options) {
     const authService = new AuthService(repos.users)
     const validationService = new ScopeValidationService()
     const filterService = new FilterService(validationService)
-    const getFinanceData = new GetFinanceData(repos.revenues, repos.expenses, validationService, repos.sectors)
+    const getFinanceData = new GetFinanceData(repos.revenues, repos.expenses, validationService, repos.reports)
     const getUserInfos = new GetUserInfos(repos.users, repos.branches, repos.sectors)
     const branchesWriteValidation = new ValidateBranchWriteAccess(repos.branches)
 

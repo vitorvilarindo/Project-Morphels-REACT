@@ -9,7 +9,7 @@ export class RevenuesRepository {
                ${revenuesData.value},
                ${revenuesData.payment},
                ${revenuesData.date},
-                (SELECT id FROM branches WHERE name = ${revenuesData.branch})
+               ${revenuesData.branch}
               )
         RETURNING id`;
     }
@@ -53,7 +53,7 @@ export class RevenuesRepository {
                             JOIN users u ON u.branch = ub.id
                    WHERE u.id = ${userId} 
                        ${searchTerm ? sql`AND r.name ILIKE ${searchTerm}` : sql``}
-                       ${dates ? sql`AND r.date BETWEEN ${"2026-07-01T00:00:00.000Z"} AND ${"2026-07-14T23:59:59.999Z"} ` : sql``}
+                       ${dates ? sql`AND r.date BETWEEN ${dates.start_date} AND ${dates.end_date}` : sql``}
                    `;
     }
 
@@ -70,8 +70,13 @@ export class RevenuesRepository {
     }
     async deleteRevenue (revenueId, userId) {
         return sql`DELETE FROM revenues r
-                        JOIN branches b on r.branch = b.id
-                        WHERE b.intitution = (SELECT intitution from users WHERE id = ${userId}  ) 
-                        AND r.id = ${revenueId}`;
+                   WHERE r.id = ${revenueId}
+                     AND r.branch IN (
+                       SELECT b.id
+                       FROM branches b
+                                JOIN branches ub ON b.institution = ub.institution
+                                JOIN users u ON u.branch = ub.id
+                       WHERE u.id = ${userId}
+                   )`;
     }
 }

@@ -9,8 +9,8 @@ export class MembersRepository {
                ${membersData.date_birth},
                ${membersData.pixkey},
                ${membersData.pixtype},
-               (SELECT s.id FROM sectors s JOIN branches b ON b.sector = s.id WHERE b.name = ${membersData.branch})
-                (SELECT id FROM branches WHERE name = ${membersData.branch})
+               (SELECT s.id FROM sectors s JOIN branches b ON b.sector = s.id WHERE b.id = ${membersData.branch})
+               ${membersData.branch}
               )
         RETURNING id`;
     }

@@ -22,9 +22,9 @@ export class UsersRepository {
                            ${userData.email},
                            ${userData.password},
                            ${userData.phone_number},
-                           (SELECT id FROM roles WHERE name = ${userData.designation}),
-                           (SELECT id FROM sectors WHERE name = ${userData.sector}),
-                           (SELECT id FROM branches WHERE name = ${userData.branch}),
+                           ${userData.designation},
+                           ${userData.sector},
+                           ${userData.branch},
                            NOW(),
                            NOW()) RETURNING id;
         `;

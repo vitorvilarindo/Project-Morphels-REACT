@@ -4,7 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4253a2e1-3079-47e3-8a9b-af28fa2349ea" name="Changes" comment="resolve import´s name conflicts" />
+    <list default="true" id="4253a2e1-3079-47e3-8a9b-af28fa2349ea" name="Changes" comment="resolve import´s name conflicts">
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repositories/companiesRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repositories/companiesRepository.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repositories/expensesRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repositories/expensesRepository.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repositories/membersRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repositories/membersRepository.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repositories/reportsRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repositories/reportsRepository.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repositories/revenuesRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repositories/revenuesRepository.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repositories/usersRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repositories/usersRepository.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Services/containerPlugin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/containerPlugin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Services/getFinanceData.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/getFinanceData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/expensesController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/expensesController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/reportsController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/reportsController.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -70,7 +85,7 @@
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/vitor/Documents/GitHub/Project-Morphels-REACT&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Pichau/OneDrive/Documentos/Project-Morphels-REACT&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -147,6 +162,10 @@
       <workItem from="1784326230051" duration="2012000" />
       <workItem from="1784466960429" duration="811000" />
       <workItem from="1784470388059" duration="110000" />
+      <workItem from="1784470516897" duration="33000" />
+      <workItem from="1784470572179" duration="104000" />
+      <workItem from="1784727144918" duration="2540000" />
+      <workItem from="1784733761179" duration="4554000" />
     </task>
     <task id="LOCAL-00001" summary="resolve name conflicts">
       <option name="closed" value="true" />
