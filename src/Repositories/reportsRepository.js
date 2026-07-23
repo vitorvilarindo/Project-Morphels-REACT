@@ -1,17 +1,18 @@
 import {sql} from "../../db.js";
 
 export class ReportsRepository {
-    async createReports (reportsData) {
-        return sql`INSERT INTO reports (title, type, data, start_date, end_date, by, sector, branch, items)
+    async createReports (reportsData, userId) {
+        return sql`INSERT INTO reports (title, type, date, start_date, end_date, by, sector, branch, items)
         VALUES(
                ${reportsData.title},
                ${reportsData.type},
                ${reportsData.data},
-               ${reportsData.star_date},
+               ${reportsData.start_date},
                ${reportsData.end_date},
-               ${reportsData.by},
-               (SELECT s.id FROM sectors s JOIN branches b ON b.sector = s.id WHERE b.name = ${reportsData.branch})
-                (SELECT id FROM branches WHERE name = ${reportsData.branch})
+               ${userId},
+               (SELECT s.id FROM sectors s JOIN branches b ON b.sector = s.id WHERE b.id = ${reportsData.branch}),
+               ${reportsData.branch},
+               ${reportsData.options}
               )
         RETURNING id`;
     }

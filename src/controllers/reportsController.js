@@ -6,7 +6,8 @@ export class ReportsController {
     }
     create = async (request, reply) => {
         try{
-            const createReport = await this.repository.createReport(request.body, request.userID)
+            console.log(request.body);
+            const createReport = await this.repository.createReports(request.body, request.userID)
             if (!createReport){
                 return reply.status(303).send({error: "Failed to create report"})
             }

@@ -10,7 +10,7 @@ export class ExpensesRepository {
                ${expensesData.payment},
                ${expensesData.date},
                ${expensesData.beneficiary},
-                (SELECT id FROM branches WHERE name = ${expensesData.branch})
+               ${expensesData.branch}
               )
         RETURNING id`;
     }
@@ -72,8 +72,13 @@ export class ExpensesRepository {
     }
     async deleteExpenses (expenseId, userId) {
         return sql`DELETE FROM expenses e
-                        JOIN branches b on e.branch = b.id
-                        WHERE b.intitution = (SELECT intitution from users WHERE id = ${userId}  ) 
-                        AND e.id = ${expenseId}`;
+                   WHERE e.id = ${expenseId}
+                     AND e.branch IN (
+                       SELECT b.id
+                       FROM branches b
+                                JOIN branches ub ON b.institution = ub.institution
+                                JOIN users u ON u.branch = ub.id
+                       WHERE u.id = ${userId}
+                   )`;
     }
 }

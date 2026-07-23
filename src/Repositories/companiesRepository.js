@@ -40,7 +40,7 @@ export class CompaniesRepository {
                                 JOIN institutions i ON i.id = c.institution
                                 JOIN sectors s ON s.institution = i.id
                                 JOIN branches b ON b.sector = s.id
-                                JOIN users u ON u.branchs = b.id
+                                JOIN users u ON u.branch = b.id
                                 WHERE u.id = ${userId}`;
     }
 
