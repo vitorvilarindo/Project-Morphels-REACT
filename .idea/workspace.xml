@@ -39,12 +39,12 @@
     &quot;assignee&quot;: &quot;vitorvilarindo&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/vitorvilarindo/Project-Morphels-REACT.git",
-    "accountId": "a3854cc7-ce98-4a27-92e0-ca17a929a676"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/vitorvilarindo/Project-Morphels-REACT.git&quot;,
+    &quot;accountId&quot;: &quot;a3854cc7-ce98-4a27-92e0-ca17a929a676&quot;
   }
-}]]></component>
+}</component>
   <component name="HttpClientOnboardingState">{
   &quot;isOnboardingCommentShown&quot;: true
 }</component>
