@@ -14,6 +14,7 @@ import churchesRoutes from "./src/routes/branchesRoutes.js";
 import reportsRoutes from "./src/routes/reportsRoutes.js";
 import cardsRoutes from "./src/routes/cardsRoutes.js";
 import dashBordRoutes from "./src/routes/dashBordRoutes.js";
+import permissionsRoutes from "./src/routes/permissionsRoutes.js";
 import containerPlugin from "./src/Services/containerPlugin.js";
 import {sql} from "./db.js";
 
@@ -51,22 +52,20 @@ server.register(churchesRoutes)
 server.register(reportsRoutes)
 server.register(cardsRoutes)
 server.register(dashBordRoutes)
+server.register(permissionsRoutes)
 
 
 // Middlewares
 server.addHook('preHandler', async (request, reply) => {
-    // 1. SE FOR REQUEST DE CORS (OPTIONS), RESPONDE 204/200 IMEDIATAMENTE E TRAVA O HOOK
     if (request.method === 'OPTIONS') {
         return reply.status(204).send();
     }
 
-    // 2. SE FOR ROTA PÚBLICA, DEIXA CONTINUAR
     const publicRoutes = ['/users/login'];
     if (publicRoutes.includes(request.url)) {
         return;
     }
 
-    // 3. CASO CONTRÁRIO, VALIDA O JWT
     try {
         const decoded = await request.jwtVerify();
         request.userID = decoded.sub;
@@ -85,6 +84,8 @@ server.decorate('checkPermissions', function (action) {
             const rawPath = request.routerPath || request.url.split('?')[0];
 
             const pageName = rawPath.split('/')[1];
+
+            console.log(pageName)
 
             const permission = await sql`
                 SELECT ${action} as has_permission

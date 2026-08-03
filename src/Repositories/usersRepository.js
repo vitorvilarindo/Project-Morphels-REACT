@@ -30,10 +30,20 @@ export class UsersRepository {
         `;
     }
 
-    async listAllWithRoles() {
-        return sql`SELECT u.name, u.email, r.name as designation_name, u.last_access, u.sing_up_date
+    async listAllWithRoles(userId) {
+        return sql`SELECT
+                       u.name,
+                       u.email,
+                       u.phone_number,
+                       r.name AS designation_name,
+                       u.last_access,
+                       u.sing_up_date
                    FROM users u
+                            JOIN branches b ON b.id = u.branch
+                            JOIN branches ub ON ub.institution = b.institution
+                            JOIN users uu ON ub.id = uu.branch
                             LEFT JOIN roles r ON u.designation = r.id
+                   WHERE uu.id = ${userId}
         `;
     }
 

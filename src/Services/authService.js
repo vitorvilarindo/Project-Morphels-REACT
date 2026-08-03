@@ -7,15 +7,13 @@ export class AuthService {
 
     async login(email, password) {
         const user = await this.userRepository.findUserByEmail(email);
-        console.log(user.password)
         const isValidPassword = await bcrypt.compare(password, user.password);
-        console.log(isValidPassword);
 
         if (!user || !isValidPassword) {
             throw new Error("Invalid email or password");
         }
 
-        await this.userRepository.updateLastAccess(user.id);
+        await this.userRepository.updateLastAccess(email);
         return user;
     }
 

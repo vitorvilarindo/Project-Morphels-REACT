@@ -10,6 +10,7 @@ import { MembersRepository } from "../Repositories/membersRepository.js";
 import { ReportsRepository } from "../Repositories/reportsRepository.js";
 import { RolesRepository } from "../Repositories/rolesRepository.js";
 import { UsersRepository } from "../Repositories/usersRepository.js";
+import { PermissionsRepository } from "../Repositories/permissionsRepository.js";
 
 //  SERVICES IMPORTS
 import { AuthService } from "./authService.js";
@@ -31,6 +32,7 @@ import { ReportsController } from "../controllers/reportsController.js";
 import { RolesController } from "../controllers/rolesController.js";
 import { UsersController } from "../controllers/usersController.js";
 import { DashBoardController } from "../controllers/dashBoardController.js";
+import { PermissionsController } from "../controllers/permissionsController.js";
 
 async function containerPlugin(server, options) {
     // INSTANCE REPOSITORIES
@@ -45,6 +47,7 @@ async function containerPlugin(server, options) {
         reports: new ReportsRepository(),
         roles: new RolesRepository(),
         users: new UsersRepository(),
+        permissions: new PermissionsRepository(),
     }
 
     //  INSTANCE SERVICES
@@ -68,6 +71,7 @@ async function containerPlugin(server, options) {
         roles: new RolesController(repos.roles),
         users: new UsersController(authService, repos.users, getUserInfos),
         dashboard: new DashBoardController(getFinanceData),
+        permissions: new PermissionsController(repos.permissions),
     }
 
 

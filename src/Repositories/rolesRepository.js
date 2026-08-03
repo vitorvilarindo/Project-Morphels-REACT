@@ -18,8 +18,7 @@ export class RolesRepository {
     async listRoles(userId) {
         return await sql`SELECT r.*
                          FROM roles r
-                                  JOIN institions i ON r.institution = i.id
-                                  JOIN sectors us ON i.id = us.institution
+                                  JOIN sectors us ON r.institution = us.institution
                                   JOIN branches ub ON us.id = ub.sector
                                   JOIN users u ON ub.id = u.branch
                          WHERE u.id = ${userId}`

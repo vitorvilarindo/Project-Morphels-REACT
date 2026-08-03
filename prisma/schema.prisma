@@ -55,8 +55,8 @@ model companies {
   activity_description   String?       @db.VarChar(300)
   pixkey                 String        @db.VarChar(100)
   pixtype                String        @db.VarChar(20)
-  intitution             String?       @db.Uuid
-  institutions           institutions? @relation(fields: [intitution], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  institution            String?       @db.Uuid
+  institutions           institutions? @relation(fields: [institution], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "companies_intitution_fkey")
 }
 
 model expenses {

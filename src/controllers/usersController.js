@@ -21,11 +21,17 @@ export class UsersController {
     }
 
     list = async (request, reply) => {
-        const user = await this.userRepository().listAllWithRoles();
-        if (!user) {
-            return reply.status(401).send({message: 'No one user found.'});
+        try {
+            const user = await this.userRepository.listAllWithRoles(request.userID);
+            if (!user) {
+                return reply.status(401).send({message: 'No one user found.'});
+            }
+            return reply.status(200).send(user);
+        }catch (err) {
+            console.log(err)
+            return reply.status(500).send({message: "Error trying to list users"});
         }
-        return reply.status(200).send(user);
+
     }
 
     getInfos = async (request, reply) => {

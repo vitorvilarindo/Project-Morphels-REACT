@@ -4,8 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4253a2e1-3079-47e3-8a9b-af28fa2349ea" name="Changes" comment="resolve import´s name conflicts">
+    <list default="true" id="8dc6fab0-c442-4f27-85bb-d950fe67704c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Repositories/permissionsRepository.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/controllers/permissionsController.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/permissionsRoutes.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/schema.prisma" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repositories/rolesRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repositories/rolesRepository.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repositories/usersRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repositories/usersRepository.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Services/authService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/authService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Services/containerPlugin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/containerPlugin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/usersController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/usersController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/pagesRoutes.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,24 +26,11 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Dockerfile" />
         <option value="JavaScript File" />
       </list>
     </option>
   </component>
-  <component name="FormatOnSaveOptions">
-    <option name="myRunOnSave" value="false" />
-    <option name="myAllFileTypesSelected" value="true" />
-    <option name="mySelectedFileTypes">
-      <set />
-    </option>
-  </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="main" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -47,71 +45,34 @@
     &quot;accountId&quot;: &quot;a3854cc7-ce98-4a27-92e0-ca17a929a676&quot;
   }
 }</component>
-  <component name="HttpClientOnboardingState">{
-  &quot;isOnboardingCommentShown&quot;: true
-}</component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 7,
-  &quot;fromUser&quot;: false
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 7
 }</component>
-  <component name="ProjectId" id="3CX6ispZivFcFTbzFcuCMDeRNRy" />
+  <component name="ProjectId" id="3HEvZZPw2lgqrLZfNikfFAEntZ0" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
     &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Project-Morphels-REACT.1.1&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Pichau/OneDrive/Documentos/Project-Morphels-REACT&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.jshint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.jshint&quot;: &quot;&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;npm.dev.executor&quot;: &quot;Run&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\WebStorm 2026.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
-  },
-  &quot;keyToStringList&quot;: {
-    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
-      &quot;TEXT&quot;
-    ]
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\WebStorm 2026.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;
   }
-}]]></component>
-  <component name="RunAnythingCache">
-    <option name="myCommands">
-      <command value="dev" />
-    </option>
-  </component>
-  <component name="RunManager">
-    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="dev" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="npm.dev" />
-      </list>
-    </recent_temporary>
-  </component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -121,89 +82,18 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="4253a2e1-3079-47e3-8a9b-af28fa2349ea" name="Changes" comment="" />
-      <created>1776519698058</created>
+      <changelist id="8dc6fab0-c442-4f27-85bb-d950fe67704c" name="Changes" comment="" />
+      <created>1785446102913</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1776519698058</updated>
-      <workItem from="1776519699826" duration="16000" />
-      <workItem from="1776519930062" duration="922000" />
-      <workItem from="1780317095860" duration="233000" />
-      <workItem from="1780319604053" duration="550000" />
-      <workItem from="1780323381583" duration="313000" />
-      <workItem from="1782733013591" duration="9791000" />
-      <workItem from="1783008076048" duration="3247000" />
-      <workItem from="1783082777949" duration="6936000" />
-      <workItem from="1783167351483" duration="72000" />
-      <workItem from="1783167437786" duration="209000" />
-      <workItem from="1783342368330" duration="1357000" />
-      <workItem from="1783345603176" duration="1000" />
-      <workItem from="1783423921322" duration="25000" />
-      <workItem from="1783516359951" duration="961000" />
-      <workItem from="1783593729569" duration="2279000" />
-      <workItem from="1783604335002" duration="673000" />
-      <workItem from="1783687147078" duration="52000" />
-      <workItem from="1783701238379" duration="3782000" />
-      <workItem from="1783944459037" duration="12696000" />
-      <workItem from="1784026786040" duration="7913000" />
-      <workItem from="1784128874817" duration="2206000" />
-      <workItem from="1784165816238" duration="9000" />
-      <workItem from="1784203100887" duration="15000" />
-      <workItem from="1784207360669" duration="1253000" />
-      <workItem from="1784208808553" duration="8144000" />
-      <workItem from="1784326230051" duration="2012000" />
-      <workItem from="1784466960429" duration="811000" />
-      <workItem from="1784470388059" duration="110000" />
-      <workItem from="1784470516897" duration="33000" />
-      <workItem from="1784470572179" duration="104000" />
-      <workItem from="1784727144918" duration="2540000" />
-      <workItem from="1784733761179" duration="4554000" />
-      <workItem from="1784812670961" duration="1102000" />
+      <updated>1785446102913</updated>
+      <workItem from="1785446111944" duration="1555000" />
+      <workItem from="1785690500466" duration="4474000" />
+      <workItem from="1785714489175" duration="3206000" />
     </task>
-    <task id="LOCAL-00001" summary="resolve name conflicts">
-      <option name="closed" value="true" />
-      <created>1784326395574</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1784326395574</updated>
-    </task>
-    <task id="LOCAL-00002" summary="resolve import´s name conflicts">
-      <option name="closed" value="true" />
-      <created>1784327008602</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1784327008602</updated>
-    </task>
-    <task id="LOCAL-00003" summary="resolve import´s name conflicts">
-      <option name="closed" value="true" />
-      <created>1784327639528</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1784327639528</updated>
-    </task>
-    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="resolve name conflicts" />
-    <MESSAGE value="resolve import´s name conflicts" />
-    <option name="LAST_COMMIT_MESSAGE" value="resolve import´s name conflicts" />
   </component>
 </project>
