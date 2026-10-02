@@ -65,11 +65,12 @@ export class ExpensesRepository {
 
     async updateExpenses(data, id){
         return sql`UPDATE expenses 
-                        SET member      = ${data.member},
+                        SET title      = ${data.title},
                             type        = ${data.type},
                             value       = ${data.value},
                             payment     = ${data.payment},
                             date        = ${data.date},
+                            beneficity  = ${data.beneficiary}
                             branch      = ${data.branch}
                         WHERE id = ${id}
                         RETURNING id`;
