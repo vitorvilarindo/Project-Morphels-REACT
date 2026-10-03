@@ -26,10 +26,10 @@ export class RevenuesController {
     }
     list = async (request, reply) => {
         try{
-            const revenues = await this._validationService.validateAccessScope(this._revenuesRepository, request.access_scope, request.userID, request.query.search)
+            const revenues = await this._validationService.validateAccessScope(this._revenuesRepository, request.access_scope, request.userID, request.query.search, request.params = null)
 
             if (revenues.length === 0) {
-                return reply.status(400).send({message: 'Revenue does not exist'});
+                return reply.status(404).send({message: 'Revenue does not exist'});
             }
             return reply.status(200).send(revenues)
         }catch(err){
@@ -38,18 +38,7 @@ export class RevenuesController {
         }
 
     }
-    filter = async (request, reply) => {
-        try {
-            const {type, start_date, end_date} = request.body;
 
-            const revenues = await this._filterService.filter(request.accessScope, request.userID, request.query.search, type, start_date, end_date);
-
-            return reply.status(200).send(revenues)
-        }catch(err){
-            console.error(err);
-            return reply.status(500).send({message: 'There is no revenue'});
-        }
-    }
     update = async (request, reply) => {
         try{
             const updateRevenue = await this._revenuesRepository.updateRevenue(request.body, request.params.id);

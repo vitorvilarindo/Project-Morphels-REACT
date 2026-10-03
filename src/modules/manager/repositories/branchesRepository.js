@@ -17,7 +17,7 @@ export class BranchesRepository {
     }
 
     async findBranchById(branchId) {
-        const [branch] = await sql`SELECT *
+        const [branch] = await sql`SELECT name, sector, owner
                                    FROM branches
                                    WHERE id = ${branchId}`
         return branch

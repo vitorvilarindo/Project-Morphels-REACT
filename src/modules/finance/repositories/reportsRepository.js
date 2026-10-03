@@ -17,7 +17,7 @@ export class ReportsRepository {
         RETURNING id`;
     }
 
-    async getReportsDataById (id) {
+    async findReportsDataById (id) {
         return sql`SELECT * FROM reports WHERE id = ${id}`;
     }
 

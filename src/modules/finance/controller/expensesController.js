@@ -25,7 +25,7 @@ export class ExpensesController {
     }
     list = async (request, reply) => {
         try{
-            const expenses = await this._scopeValidationService.validateAccessScope(this._expensesRepository, request.access_scope, request.userID, request.query.search)
+            const expenses = await this._scopeValidationService.validateAccessScope(this._expensesRepository, request.access_scope, request.userID, request.query.search, request.body)
             if (expenses.length === 0) {
                 return reply.status(400).send({message: 'There can not list expenses'});
             }
@@ -35,19 +35,7 @@ export class ExpensesController {
             return reply.status(400).send({message: 'Something went wrong'});
         }
     }
-    filter = async (request, reply) => {
-        try{
-            const {type, start_date, end_date} = request.body;
-            const expenses = await this._filterService.filter(request.access_scope, request.userID, request.query.search, type, start_date, end_date);
-            if (expenses.length === 0) {
-                return reply.status(400).send({message: 'There are no expenses'});
-            }
-            return reply.status(200).send({message: 'Successfully filtered expense'});
-        }catch(err){
-            console.log(err)
-            return reply.status(500).send({message: 'Something went wrong'});
-        }
-    }
+
     update = async (request, reply) => {
         try{
             const updateExpense = await this._expensesRepository.updateExpenses(request.body, request.params.id);

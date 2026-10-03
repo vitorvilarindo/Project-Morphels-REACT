@@ -33,6 +33,18 @@ export class UsersController {
         }
 
     }
+    getById = async (request, reply) => {
+        try {
+            const user = await this.userRepository.findUserById(request.params.id);
+            if (!user) {
+                return reply.status(401).send({message: 'No one user found.'});
+            }
+            return reply.status(200).send(user);
+        }catch (err) {
+            console.log(err)
+            return reply.status(500).send({message: "Error trying to list users"});
+        }
+    }
 
     getInfos = async (request, reply) => {
         try{

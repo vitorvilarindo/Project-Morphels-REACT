@@ -9,7 +9,7 @@ export class UsersRepository {
     }
 
     async findUserById(userId) {
-        const [user] = await sql`SELECT * 
+        const [user] = await sql`SELECT name, email, designation, sector, branch, last_access, sing_up_date, phone_number 
                                 FROM users
                                 WHERE id = ${userId}`;
         return user;

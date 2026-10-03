@@ -28,7 +28,7 @@ export class ReportsController {
     }
     getReportById = async (request, reply) => {
         try{
-            const reportData = await this.repository.getReportsDataById(request.params.id)
+            const reportData = await this.repository.findReportsDataById(request.params.id)
             if (!reportData){
                 return reply.status(400).send({error: "Report not found"})
             }
@@ -36,19 +36,6 @@ export class ReportsController {
         }catch(err){
             console.log(err)
             return reply.status(500).send({error: "Failed to get report"})
-        }
-    }
-
-    getFinanceReportsData = async (request, reply) => {
-        try{
-            const data = await this.getFinanceData.filter(request.access_scope, request.userID, request.query.search, request.params.id)
-            if (!data){
-                return reply.status(404).send({error: "Failed to get finance report"})
-            }
-            return reply.status(200).send(data)
-        } catch(err){
-            console.log(err)
-            return reply.status(500).send({error: "Failed to get finance report"})
         }
     }
 

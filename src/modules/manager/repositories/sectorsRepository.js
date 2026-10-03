@@ -17,7 +17,7 @@ export class SectorsRepository{
     }
 
     async findSectorById(sectorId) {
-        const [sector] = await sql`SELECT *
+        const [sector] = await sql`SELECT name, sectorial_cordenator, vice_sectorial_cordenator
                                    FROM sectors
                                    WHERE id = ${sectorId}`
         return sector;
