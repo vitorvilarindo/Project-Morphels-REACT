@@ -19,12 +19,24 @@ export class SectorsController {
         try{
             const sectors = await this.repository.listSectors(request.userID)
             if (sectors.length === 0) {
-                return reply.status(401).send({message: "Não foi possível localizar nenhum setor"})
+                return reply.status(404).send({message: "Não foi possível localizar nenhum setor"})
             }
-            return reply.status(200).send(sectors)
+            return reply.status(201).send(sectors)
         }catch(err){
             console.error(err)
-            return reply.status(500).send({message: err})
+            return reply.status(503).send({message: err})
+        }
+    }
+    getById = async (request, reply) => {
+        try{
+            const sector = await this.repository.findSectorById(request.params.id)
+            if (sector.length === 0) {
+                return reply.status(404).send({message: "Não foi possível localizar nenhum setor"})
+            }
+            return reply.status(201).send(sector)
+        }catch(err){
+            console.error(err)
+            return reply.status(503).send({message: err})
         }
     }
     update = async (request, reply) => {
@@ -36,19 +48,19 @@ export class SectorsController {
             return reply.status(200).send({message: 'Setor atualizado com sucesso'})
         }catch(err){
             console.error(err)
-            return reply.status(500).send({message: "Não foi possível atualizar o sertor por um erro interno"})
+            return reply.status(503).send({message: "Não foi possível atualizar o sertor por um erro interno"})
         }
     }
     delete = async (request, reply) => {
         try{
             const deleteSector = await this.repository.deleteSector(request.params.id)
             if (deleteSector.length === 0) {
-                return reply.status(303).send({message: "Setor não encontrado"})
+                return reply.status(404).send({message: "Setor não encontrado"})
             }
             return reply.status(200).send({message: 'Setor deletado com sucesso'})
         }catch(err){
             console.error(err)
-            return reply.status(500).send({message: "Não foi possível deletar o sertor por um erro interno"})
+            return reply.status(503).send({message: "Não foi possível deletar o sertor por um erro interno"})
         }
     }
 }
