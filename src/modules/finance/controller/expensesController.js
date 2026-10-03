@@ -25,7 +25,7 @@ export class ExpensesController {
     }
     list = async (request, reply) => {
         try{
-            const expenses = await this._scopeValidationService.validateAccessScope(this._expensesRepository, request.access_scope, request.userID, request.query.search, request.body)
+            const expenses = await this._scopeValidationService.validateAccessScope(this._expensesRepository, request.access_scope, request.userID, request.query.search, request.params = null)
             if (expenses.length === 0) {
                 return reply.status(400).send({message: 'There can not list expenses'});
             }
