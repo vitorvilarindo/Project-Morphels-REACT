@@ -2,11 +2,11 @@ import {sql} from "../../../../db.js";
 
 export class BranchesRepository {
     async createBranch (branch_data, userId) {
-        return sql`INSERT INTO branches (name, sector, owner, insitution)
+        return sql`INSERT INTO branches (name, sector, owner, institution)
         VALUES(
                ${branch_data.name},
                (SELECT id FROM sectors WHERE name = ${branch_data.sector}),
-               ${branch_data.owner}
+               ${branch_data.owner},
                 (SELECT s.institution
                  FROM users u
                           JOIN branches b ON u.branch = b.id

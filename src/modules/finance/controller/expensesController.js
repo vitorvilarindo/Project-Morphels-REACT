@@ -25,7 +25,20 @@ export class ExpensesController {
     }
     list = async (request, reply) => {
         try{
-            const expenses = await this._scopeValidationService.validateAccessScope(this._expensesRepository, request.access_scope, request.userID, request.query.search, request.params = null)
+            const expenses = await this._scopeValidationService.validateAccessScope(this._expensesRepository, request.access_scope, request.userID)
+            if (expenses.length === 0) {
+                return reply.status(400).send({message: 'There can not list expenses'});
+            }
+            return reply.status(200).send(expenses);
+        } catch (err){
+            console.log(err)
+            return reply.status(400).send({message: 'Something went wrong'});
+        }
+    }
+
+    listWithDates = async (request, reply) => {
+        try{
+            const expenses = await this._scopeValidationService.validateAccessScope(this._expensesRepository, request.access_scope, request.userID, request.query.search, request.params)
             if (expenses.length === 0) {
                 return reply.status(400).send({message: 'There can not list expenses'});
             }
