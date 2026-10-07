@@ -73,16 +73,23 @@ export class RevenuesRepository {
             `
     }
 
-    async updateRevenue(data, id){
-        return sql`UPDATE revenues 
+    async updateRevenue(data, id, userId){
+        return sql`UPDATE revenues r
                         SET member      = ${data.member},
                             type        = ${data.type},
                             value       = ${data.value},
                             payment     = ${data.payment},
                             date        = ${data.date},
                             branch      = ${data.branch}
-                        WHERE id = ${id}
-                        RETURNING id`;
+                        WHERE r.id = ${id}
+                          AND r.branch IN (
+                            SELECT b.id
+                            FROM branches b
+                                     JOIN branches ub ON b.institution = ub.institution
+                                     JOIN users u ON u.branch = ub.id
+                            WHERE u.id = ${userId}
+                        )
+                        RETURNING r.id`;
     }
     async deleteRevenue (revenueId, userId) {
         return sql`DELETE FROM revenues r
