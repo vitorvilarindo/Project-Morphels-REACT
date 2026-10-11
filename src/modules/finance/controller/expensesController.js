@@ -27,7 +27,7 @@ export class ExpensesController {
         try{
             const expenses = await this._scopeValidationService.validateAccessScope(this._expensesRepository, request.access_scope, request.userID)
             if (expenses.length === 0) {
-                return reply.status(400).send({message: 'There can not list expenses'});
+                return reply.status(200).send(null);
             }
             return reply.status(200).send(expenses);
         } catch (err){
@@ -40,7 +40,7 @@ export class ExpensesController {
         try{
             const expenses = await this._scopeValidationService.validateAccessScope(this._expensesRepository, request.access_scope, request.userID, request.query.search, request.params)
             if (expenses.length === 0) {
-                return reply.status(400).send({message: 'There can not list expenses'});
+                return reply.status(200).send({message: 'There can not list expenses'});
             }
             return reply.status(200).send(expenses);
         } catch (err){

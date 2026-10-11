@@ -29,7 +29,7 @@ export class RevenuesController {
             const revenues = await this._validationService.validateAccessScope(this._revenuesRepository, request.access_scope, request.userID)
 
             if (revenues.length === 0) {
-                return reply.status(404).send({message: 'Revenue does not exist'});
+                return reply.status(200).send({message: 'Revenue does not exist'});
             }
             return reply.status(200).send(revenues)
         }catch(err){
@@ -44,7 +44,7 @@ export class RevenuesController {
             const revenues = await this._validationService.validateAccessScope(this._revenuesRepository, request.access_scope, request.userID, request.query.search, request.params)
 
             if (revenues.length === 0) {
-                return reply.status(404).send({message: 'Revenue does not exist'});
+                return reply.status(200).send({message: 'Revenue does not exist'});
             }
             return reply.status(200).send(revenues)
         }catch(err){
