@@ -5,7 +5,7 @@
   "description": "I'll reacreate the morphels project using React and Node.js",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest run",
     "start": "node server.js",
     "dev": "node --watch server.js"
   },
@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "dotenv": "^17.2.1",
-    "prisma": "^7.8.0"
+    "prisma": "^7.8.0",
+    "vitest": "^5.0.3"
   }
 }

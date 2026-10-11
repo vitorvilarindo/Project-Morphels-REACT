@@ -79,11 +79,13 @@ export async function buildApp() {
     });
 
     // Rotas
-
     server.register(financeModule)
     server.register(managerModule)
     server.register(globalModule)
     server.register(rhModule)
+    server.get("/health", async (request, reply) => {
+        return reply.status(200).send({"message": "O usuário está autenticado"})
+    })
 
     return server;
 }

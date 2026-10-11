@@ -29,7 +29,7 @@ export class RevenuesController {
             const revenues = await this._validationService.validateAccessScope(this._revenuesRepository, request.access_scope, request.userID)
 
             if (revenues.length === 0) {
-                return reply.status(404).send({message: 'Revenue does not exist'});
+                return reply.status(200).send({message: 'Revenue does not exist'});
             }
             return reply.status(200).send(revenues)
         }catch(err){
@@ -44,7 +44,7 @@ export class RevenuesController {
             const revenues = await this._validationService.validateAccessScope(this._revenuesRepository, request.access_scope, request.userID, request.query.search, request.params)
 
             if (revenues.length === 0) {
-                return reply.status(404).send({message: 'Revenue does not exist'});
+                return reply.status(200).send({message: 'Revenue does not exist'});
             }
             return reply.status(200).send(revenues)
         }catch(err){
@@ -56,7 +56,7 @@ export class RevenuesController {
 
     update = async (request, reply) => {
         try{
-            const updateRevenue = await this._revenuesRepository.updateRevenue(request.body, request.params.id);
+            const updateRevenue = await this._revenuesRepository.updateRevenue(request.body, request.params.id, request.userID);
             if (!updateRevenue) {
                 return reply.status(400).send({message: 'Revenue does not exist'});
             }
@@ -70,12 +70,12 @@ export class RevenuesController {
         try {
             const deleteRevenue = await this._revenuesRepository.deleteRevenue(request.params.id, request.userID);
             if (deleteRevenue.length === 0) {
-                return reply.status(400).send({message: 'Revenue does not exist'});
+                return reply.status(404).send({message: 'Revenue does not exist'});
             }
             return reply.status(200).send({message: 'Revenue deleted successfully'});
         }catch(err){
             console.error(err);
-            return reply.status(500).send({message: 'There is no revenues'});
+            return reply.status(503).send({message: 'There is no revenues'});
         }
     }
 
