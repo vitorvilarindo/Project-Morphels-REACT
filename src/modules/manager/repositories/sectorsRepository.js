@@ -1,7 +1,7 @@
 import {sql} from "../../../../db.js";
 export class SectorsRepository{
     async createSector (sectorData, userId) {
-        return await sql`INSERT INTO expenses (name, sectorial_cordenator, vice_sectorial_cordenator, institution)
+        return await sql`INSERT INTO sectors (name, sectorial_cordenator, vice_sectorial_cordenator, institution)
         VALUES(
                ${sectorData.name},
                ${sectorData.sectorial_cordenator},
